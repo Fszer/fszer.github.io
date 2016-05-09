@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="再开," />
+  <meta name="keywords" content="内存池,性能优化," />
 
 
 
@@ -84,18 +84,16 @@
 
 
 
-<meta name="description" content="又是我，又是一个博客，不知道这次可以支持多久？">
+<meta name="description" content="内存池原理说明本文是对网上看到的几份相关文档的简单总结">
 <meta property="og:type" content="article">
-<meta property="og:title" content="'hello_again'">
-<meta property="og:url" content="http://yoursite.com/2016/05/09/hello-again/index.html">
+<meta property="og:title" content="内存池">
+<meta property="og:url" content="http://yoursite.com/2015/08/20/内存池/index.html">
 <meta property="og:site_name" content="聆听群山的怒号">
-<meta property="og:description" content="又是我，又是一个博客，不知道这次可以支持多久？">
-<meta property="og:image" content="https://cloud.githubusercontent.com/assets/18730194/15117261/4b116106-1639-11e6-925a-26416d1a98d9.jpg">
-<meta property="og:updated_time" content="2016-05-09T15:04:45.662Z">
+<meta property="og:description" content="内存池原理说明本文是对网上看到的几份相关文档的简单总结">
+<meta property="og:updated_time" content="2016-05-09T15:21:11.239Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="'hello_again'">
-<meta name="twitter:description" content="又是我，又是一个博客，不知道这次可以支持多久？">
-<meta name="twitter:image" content="https://cloud.githubusercontent.com/assets/18730194/15117261/4b116106-1639-11e6-925a-26416d1a98d9.jpg">
+<meta name="twitter:title" content="内存池">
+<meta name="twitter:description" content="内存池原理说明本文是对网上看到的几份相关文档的简单总结">
 
 
 
@@ -113,7 +111,7 @@
   };
 </script>
 
-  <title> 'hello_again' | 聆听群山的怒号 </title>
+  <title> 内存池 | 聆听群山的怒号 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -233,7 +231,7 @@
             
             
               
-                'hello_again'
+                内存池
               
             
           </h1>
@@ -245,8 +243,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-05-09T22:45:06+08:00" content="2016-05-09">
-              2016-05-09
+            <time itemprop="dateCreated" datetime="2015-08-20T23:04:41+08:00" content="2015-08-20">
+              2015-08-20
             </time>
           </span>
 
@@ -273,8 +271,50 @@
       
 
       
-        <p><img src="https://cloud.githubusercontent.com/assets/18730194/15117261/4b116106-1639-11e6-925a-26416d1a98d9.jpg" alt="08"></p>
-<h1 id="又是我，又是一个博客，不知道这次可以支持多久？"><a href="#又是我，又是一个博客，不知道这次可以支持多久？" class="headerlink" title="又是我，又是一个博客，不知道这次可以支持多久？"></a>又是我，又是一个博客，不知道这次可以支持多久？</h1>
+        <h1 id="内存池原理说明"><a href="#内存池原理说明" class="headerlink" title="内存池原理说明"></a>内存池原理说明</h1><p>本文是对网上看到的几份相关文档的简单总结<br><a id="more"></a></p>
+<h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>主要有两个问题</p>
+<h3 id="内存申请与释放所引起的性能损失问题"><a href="#内存申请与释放所引起的性能损失问题" class="headerlink" title="内存申请与释放所引起的性能损失问题"></a>内存申请与释放所引起的性能损失问题</h3><p>c的malloc/free，c++的new/delete<br>这类内存申请与释放涉及到以下问题</p>
+<ol>
+<li><p>申请时寻找合适的内存块，根据不同的算法有不同的方案</p>
+<ul>
+<li>分配不小于申请时大小</li>
+<li>分配能分配的最大内存块</li>
+<li>分配最接近申请内存大小的内存块</li>
+</ul>
+</li>
+<li><p>进一步分割内存块到合适大小</p>
+</li>
+<li><p>释放时对内存进行整理，例如</p>
+<ul>
+<li>合并连续内存块</li>
+</ul>
+</li>
+<li>多线程问题</li>
+</ol>
+<p>综上，调用库中的内存分配函数，本身就相对复杂，<br>可见，如果应用程序频繁地在堆上分配和释放内存，<br>在比较恶劣的情况下会极大的拖慢程序，进而导致性能的损失。</p>
+<h3 id="内存碎片问题"><a href="#内存碎片问题" class="headerlink" title="内存碎片问题"></a>内存碎片问题</h3><p>上面说到的频繁内存申请与释放除了本身运行会很耗时之外<br>还会引起内存碎片问题。<br>即<br><strong>连续的内存空间被分割不同大小的内存分割出去，内存空间不再连续，而是碎片化的</strong><br>假如这时再申请一块内存，尽管剩余内存的总和可能大于所要分配的内存大小，<br>但系统就找不到连续的内存，也就是足够大的内存块，所以导致分配错误。</p>
+<h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>内存池技术是一种应用程序自己对内存管理的方案,<br>又可叫批发零售模型<del>（不确定）</del>，一般有以下特性</p>
+<h3 id="提前申请"><a href="#提前申请" class="headerlink" title="提前申请"></a>提前申请</h3><p>在程序真正申请必要的内存之前，提前申请一块大的内存，<br>所有的程序需要的内存从这块内存中二次分配。<br>直到该大内存不足时再去再系统申请，<br>减少内存申请的次数</p>
+<h3 id="大小固定"><a href="#大小固定" class="headerlink" title="大小固定"></a>大小固定</h3><p>两部分</p>
+<ul>
+<li>向系统申请的大块内存大小是固定的</li>
+<li>大块内存中二次分配的内存也是按固定大小的小块管理</li>
+</ul>
+<p>在调用内存分配函数的时候，大部分时间所分配的内存大小都是一定的，<br>所以可以采用每次都分配固定大小的内存块，这样就避免了内存碎片产生的可能。</p>
+<h3 id="重复利用"><a href="#重复利用" class="headerlink" title="重复利用"></a>重复利用</h3><p>重复如字面意思，在大块内存二次分配出去的小块内存释放时并不是真的调用free/delete释放<br>而是使用内存池的管理，将其重新标记为可二次分配，等待再次内存池分配出去利用<br>只有当一整块的大块内存都处于空闲时才释放给操作系统<br>减少内存释放的次数</p>
+<h2 id="结尾"><a href="#结尾" class="headerlink" title="结尾"></a>结尾</h2><p>通过以上说明，与系统管理内存相比，特别是涉及到频繁内存申请与释放的时候<br>内存池的操作非常迅速，它在性能优化方面的优点主要如下</p>
+<ol>
+<li>针对特殊情况，例如需要频繁分配释放固定大小的内存对象时，不需要复杂的分配算法和多线程保护。也不需要维护内存空闲表的额外开销，从而获得较高的性能。</li>
+<li>由于开辟一定数量的连续内存空间作为内存池块，因而一定程度上提高了程序局部性，提升了程序性能。</li>
+<li>比较容易控制页边界对齐和内存字节对齐，没有内存碎片的问题。</li>
+</ol>
+<p>这里涉及到简单内存的理论说明<br>下面几篇文章有更详实的讨论以及简单c++线程池实现例子</p>
+<ul>
+<li><a href="http://www.cnblogs.com/dylantsou/archive/2012/05/13/2498491.html" target="_blank" rel="external">内存池技术的原理与实现</a></li>
+<li><a href="http://www.ibm.com/developerworks/cn/linux/l-cn-ppp/index6.html" target="_blank" rel="external"> C++ 应用程序性能优化，第 6 章：内存池</a></li>
+<li><a href="http://www.codeproject.com/Articles/27487/Why-to-use-memory-pool-and-how-to-implement-it" target="_blank" rel="external">Why to use memory pool and how to implement it</a></li>
+</ul>
+
       
     </div>
 
@@ -295,7 +335,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/再开/" rel="tag">#再开</a>
+            <a href="/tags/内存池/" rel="tag">#内存池</a>
+          
+            <a href="/tags/性能优化/" rel="tag">#性能优化</a>
           
         </div>
       
@@ -304,13 +346,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/08/20/内存池/" rel="next" title="内存池">
-                <i class="fa fa-chevron-left"></i> 内存池
-              </a>
-            
           </div>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/05/09/hello-again/" rel="prev" title="'hello_again'">
+                'hello_again' <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -417,7 +459,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#又是我，又是一个博客，不知道这次可以支持多久？"><span class="nav-number">1.</span> <span class="nav-text">又是我，又是一个博客，不知道这次可以支持多久？</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#内存池原理说明"><span class="nav-number">1.</span> <span class="nav-text">内存池原理说明</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#问题"><span class="nav-number">1.1.</span> <span class="nav-text">问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#内存申请与释放所引起的性能损失问题"><span class="nav-number">1.1.1.</span> <span class="nav-text">内存申请与释放所引起的性能损失问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#内存碎片问题"><span class="nav-number">1.1.2.</span> <span class="nav-text">内存碎片问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#原理"><span class="nav-number">1.2.</span> <span class="nav-text">原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#提前申请"><span class="nav-number">1.2.1.</span> <span class="nav-text">提前申请</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#大小固定"><span class="nav-number">1.2.2.</span> <span class="nav-text">大小固定</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#重复利用"><span class="nav-number">1.2.3.</span> <span class="nav-text">重复利用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结尾"><span class="nav-number">1.3.</span> <span class="nav-text">结尾</span></a></li></ol></li></ol></div>
             
           </div>
         </section>
