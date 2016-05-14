@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="内存池,性能优化," />
+  <meta name="keywords" content="杂谈,gulp," />
 
 
 
@@ -84,16 +84,28 @@
 
 
 
-<meta name="description" content="内存池原理说明本文是对网上看到的几份相关文档的简单总结">
+<meta name="description" content="一步一步来
+gulp watch error (ENOSPC)这周在工作的时候，需要同时启动两个项目。都是用 gulp 做自动化监控，自然不可避免的需要使用到 gulp 的 watch 方法。结果就报标题所示的错误
+gulp watch error (ENOSPC)
+谷歌一番发现倒也是个挺常见的问题，官方 github 的issues历里也有相关的问题。
+原因： 讲道理，这是倒不是 gulp 的问">
 <meta property="og:type" content="article">
-<meta property="og:title" content="内存池">
-<meta property="og:url" content="http://yoursite.com/2015/08/20/内存池/index.html">
+<meta property="og:title" content="杂谈日记">
+<meta property="og:url" content="http://yoursite.com/2016/05/14/杂谈日记/index.html">
 <meta property="og:site_name" content="聆听群山的怒号">
-<meta property="og:description" content="内存池原理说明本文是对网上看到的几份相关文档的简单总结">
-<meta property="og:updated_time" content="2016-05-10T12:33:10.811Z">
+<meta property="og:description" content="一步一步来
+gulp watch error (ENOSPC)这周在工作的时候，需要同时启动两个项目。都是用 gulp 做自动化监控，自然不可避免的需要使用到 gulp 的 watch 方法。结果就报标题所示的错误
+gulp watch error (ENOSPC)
+谷歌一番发现倒也是个挺常见的问题，官方 github 的issues历里也有相关的问题。
+原因： 讲道理，这是倒不是 gulp 的问">
+<meta property="og:updated_time" content="2016-05-14T02:43:13.124Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="内存池">
-<meta name="twitter:description" content="内存池原理说明本文是对网上看到的几份相关文档的简单总结">
+<meta name="twitter:title" content="杂谈日记">
+<meta name="twitter:description" content="一步一步来
+gulp watch error (ENOSPC)这周在工作的时候，需要同时启动两个项目。都是用 gulp 做自动化监控，自然不可避免的需要使用到 gulp 的 watch 方法。结果就报标题所示的错误
+gulp watch error (ENOSPC)
+谷歌一番发现倒也是个挺常见的问题，官方 github 的issues历里也有相关的问题。
+原因： 讲道理，这是倒不是 gulp 的问">
 
 
 
@@ -111,7 +123,7 @@
   };
 </script>
 
-  <title> 内存池 | 聆听群山的怒号 </title>
+  <title> 杂谈日记 | 聆听群山的怒号 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -251,7 +263,7 @@
             
             
               
-                内存池
+                杂谈日记
               
             
           </h1>
@@ -263,8 +275,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-08-20T23:04:41+08:00" content="2015-08-20">
-              2015-08-20
+            <time itemprop="dateCreated" datetime="2016-05-14T09:58:07+08:00" content="2016-05-14">
+              2016-05-14
             </time>
           </span>
 
@@ -277,8 +289,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/总结/" itemprop="url" rel="index">
-                    <span itemprop="name">总结</span>
+                  <a href="/categories/杂谈/" itemprop="url" rel="index">
+                    <span itemprop="name">杂谈</span>
                   </a>
                 </span>
 
@@ -310,49 +322,26 @@
       
 
       
-        <h1 id="内存池原理说明"><a href="#内存池原理说明" class="headerlink" title="内存池原理说明"></a>内存池原理说明</h1><p>本文是对网上看到的几份相关文档的简单总结<br><a id="more"></a></p>
-<h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>主要有两个问题</p>
-<h3 id="内存申请与释放所引起的性能损失问题"><a href="#内存申请与释放所引起的性能损失问题" class="headerlink" title="内存申请与释放所引起的性能损失问题"></a>内存申请与释放所引起的性能损失问题</h3><p>c的malloc/free，c++的new/delete<br>这类内存申请与释放涉及到以下问题</p>
-<ol>
-<li><p>申请时寻找合适的内存块，根据不同的算法有不同的方案</p>
+        <p>一步一步来</p>
+<h2 id="gulp-watch-error-ENOSPC"><a href="#gulp-watch-error-ENOSPC" class="headerlink" title="gulp watch error (ENOSPC)"></a>gulp watch error (ENOSPC)</h2><p>这周在工作的时候，需要同时启动两个项目。都是用 gulp 做自动化监控，自然不可避免的需要使用到 gulp 的 watch 方法。结果就报标题所示的错误</p>
+<pre><code>gulp watch error (ENOSPC)
+</code></pre><p>谷歌一番发现倒也是个挺常见的问题，官方 github 的issues历里也有相关的<a href="https://github.com/gulpjs/gulp/issues/217" target="_blank" rel="external">问题</a>。</p>
+<h3 id="原因："><a href="#原因：" class="headerlink" title="原因："></a>原因：</h3><p> 讲道理，这是倒不是 gulp 的问题，而是 linux 系统的问题。与系统的文件描述符有关。</p>
+<p> <a href="https://www.wikiwand.com/zh/%E6%96%87%E4%BB%B6%E6%8F%8F%E8%BF%B0%E7%AC%A6" target="_blank" rel="external">文件描述符的详细介绍参见维基相关词条</a></p>
+<p> 简单来说，就是每个文件打开的时候都会有一个文件描述符，而 liunx 中操作文件依赖文件描述符，理论上，文件描述符应该随着文件打开而增加，上限应当与内存大小有关。</p>
+<p> 但实际上 linux 会对文件描述符的数量做限制，总的数量上一般限制为系统内存的10%，在单个进程上也会限制默认值一番是1024。这是为了保证这一资源不会被单个进程消耗殆尽。</p>
+<p>在 gulp watch 执行过程中涉及大量的文件操作。比如 scss，babel 对 css，js 文件的预处理编译，输出到开发文件夹中，监控文件的改动等等。随着开发文件的增加，所需的描述符也会增加。</p>
+<p>显然，是我双开消耗了过多的描述符，导致了 enospc 的错误。<br>但是我还有一些小的疑问</p>
 <ul>
-<li>分配不小于申请时大小</li>
-<li>分配能分配的最大内存块</li>
-<li>分配最接近申请内存大小的内存块</li>
+<li>gulp 双开也是算在同一个进程限制？</li>
+<li>我开发文件夹中的数目数量并没到达1024这个量级，两个加起来也没有</li>
 </ul>
-</li>
-<li><p>进一步分割内存块到合适大小</p>
-</li>
-<li><p>释放时对内存进行整理，例如</p>
-<ul>
-<li>合并连续内存块</li>
-</ul>
-</li>
-<li>多线程问题</li>
-</ol>
-<p>综上，调用库中的内存分配函数，本身就相对复杂，<br>可见，如果应用程序频繁地在堆上分配和释放内存，<br>在比较恶劣的情况下会极大的拖慢程序，进而导致性能的损失。</p>
-<h3 id="内存碎片问题"><a href="#内存碎片问题" class="headerlink" title="内存碎片问题"></a>内存碎片问题</h3><p>上面说到的频繁内存申请与释放除了本身运行会很耗时之外<br>还会引起内存碎片问题。<br>即<br><strong>连续的内存空间被分割不同大小的内存分割出去，内存空间不再连续，而是碎片化的</strong><br>假如这时再申请一块内存，尽管剩余内存的总和可能大于所要分配的内存大小，<br>但系统就找不到连续的内存，也就是足够大的内存块，所以导致分配错误。</p>
-<h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>内存池技术是一种应用程序自己对内存管理的方案,<br>又可叫批发零售模型<del>（不确定）</del>，一般有以下特性</p>
-<h3 id="提前申请"><a href="#提前申请" class="headerlink" title="提前申请"></a>提前申请</h3><p>在程序真正申请必要的内存之前，提前申请一块大的内存，<br>所有的程序需要的内存从这块内存中二次分配。<br>直到该大内存不足时再去再系统申请，<br>减少内存申请的次数</p>
-<h3 id="大小固定"><a href="#大小固定" class="headerlink" title="大小固定"></a>大小固定</h3><p>两部分</p>
-<ul>
-<li>向系统申请的大块内存大小是固定的</li>
-<li>大块内存中二次分配的内存也是按固定大小的小块管理</li>
-</ul>
-<p>在调用内存分配函数的时候，大部分时间所分配的内存大小都是一定的，<br>所以可以采用每次都分配固定大小的内存块，这样就避免了内存碎片产生的可能。</p>
-<h3 id="重复利用"><a href="#重复利用" class="headerlink" title="重复利用"></a>重复利用</h3><p>重复如字面意思，在大块内存二次分配出去的小块内存释放时并不是真的调用free/delete释放<br>而是使用内存池的管理，将其重新标记为可二次分配，等待再次内存池分配出去利用<br>只有当一整块的大块内存都处于空闲时才释放给操作系统<br>减少内存释放的次数</p>
-<h2 id="结尾"><a href="#结尾" class="headerlink" title="结尾"></a>结尾</h2><p>通过以上说明，与系统管理内存相比，特别是涉及到频繁内存申请与释放的时候<br>内存池的操作非常迅速，它在性能优化方面的优点主要如下</p>
-<ol>
-<li>针对特殊情况，例如需要频繁分配释放固定大小的内存对象时，不需要复杂的分配算法和多线程保护。也不需要维护内存空闲表的额外开销，从而获得较高的性能。</li>
-<li>由于开辟一定数量的连续内存空间作为内存池块，因而一定程度上提高了程序局部性，提升了程序性能。</li>
-<li>比较容易控制页边界对齐和内存字节对齐，没有内存碎片的问题。</li>
-</ol>
-<p>这里涉及到简单内存的理论说明<br>下面几篇文章有更详实的讨论以及简单c++线程池实现例子</p>
-<ul>
-<li><a href="http://www.cnblogs.com/dylantsou/archive/2012/05/13/2498491.html" target="_blank" rel="external">内存池技术的原理与实现</a></li>
-<li><a href="http://www.ibm.com/developerworks/cn/linux/l-cn-ppp/index6.html" target="_blank" rel="external"> C++ 应用程序性能优化，第 6 章：内存池</a></li>
-<li><a href="http://www.codeproject.com/Articles/27487/Why-to-use-memory-pool-and-how-to-implement-it" target="_blank" rel="external">Why to use memory pool and how to implement it</a></li>
-</ul>
+<h3 id="修改方法也很简单"><a href="#修改方法也很简单" class="headerlink" title="修改方法也很简单"></a>修改方法也很简单</h3><p>在上面提到的 issue 中，已经有人给出了解决方法，既然上限不足，那就手动修改上限就好了吗</p>
+<p>在终端中输入</p>
+<blockquote>
+<p>echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf &amp;&amp; sudo sysctl -p</p>
+</blockquote>
+<p>修改 fs.inotify.max_user_watches 的上限就好了</p>
 
       
     </div>
@@ -374,9 +363,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/内存池/" rel="tag">#内存池</a>
+            <a href="/tags/杂谈/" rel="tag">#杂谈</a>
           
-            <a href="/tags/性能优化/" rel="tag">#性能优化</a>
+            <a href="/tags/gulp/" rel="tag">#gulp</a>
           
         </div>
       
@@ -385,13 +374,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2016/05/09/hello-again/" rel="next" title="'hello_again'">
+                <i class="fa fa-chevron-left"></i> 'hello_again'
+              </a>
+            
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2015/08/22/二叉树/" rel="prev" title="二叉树">
-                二叉树 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -505,7 +494,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#内存池原理说明"><span class="nav-number">1.</span> <span class="nav-text">内存池原理说明</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#问题"><span class="nav-number">1.1.</span> <span class="nav-text">问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#内存申请与释放所引起的性能损失问题"><span class="nav-number">1.1.1.</span> <span class="nav-text">内存申请与释放所引起的性能损失问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#内存碎片问题"><span class="nav-number">1.1.2.</span> <span class="nav-text">内存碎片问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#原理"><span class="nav-number">1.2.</span> <span class="nav-text">原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#提前申请"><span class="nav-number">1.2.1.</span> <span class="nav-text">提前申请</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#大小固定"><span class="nav-number">1.2.2.</span> <span class="nav-text">大小固定</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#重复利用"><span class="nav-number">1.2.3.</span> <span class="nav-text">重复利用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结尾"><span class="nav-number">1.3.</span> <span class="nav-text">结尾</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#gulp-watch-error-ENOSPC"><span class="nav-number">1.</span> <span class="nav-text">gulp watch error (ENOSPC)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#原因："><span class="nav-number">1.1.</span> <span class="nav-text">原因：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改方法也很简单"><span class="nav-number">1.2.</span> <span class="nav-text">修改方法也很简单</span></a></li></ol></li></ol></div>
             
           </div>
         </section>
