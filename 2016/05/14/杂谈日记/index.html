@@ -84,29 +84,29 @@
 
 
 
-<meta name="description" content="一步一步来
-gulp watch error (ENOSPC)这周在工作的时候，需要同时启动两个项目。都是用 gulp 做自动化监控，自然不可避免的需要使用到 gulp 的 watch 方法。结果就报标题所示的错误
-gulp watch error (ENOSPC)
-谷歌一番发现倒也是个挺常见的问题，官方 github 的issues历里也有相关的问题。
-原因： 讲道理，这是倒不是 gulp 的">
+<meta name="description" content="解决方法在终端中输入
+
+echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf &amp;amp;&amp;amp; sudo sysctl -p
+
+gulp watch error (ENOSPC)这周在工作的时候，需要同时启动两个项目。都是用 gulp 做自动化监控，自然不可避免的需要使用到 gulp 的 watch 方法">
 <meta property="og:type" content="article">
-<meta property="og:title" content="杂谈日记">
+<meta property="og:title" content="gulp watch error (ENOSPC)">
 <meta property="og:url" content="http://yoursite.com/2016/05/14/杂谈日记/index.html">
 <meta property="og:site_name" content="聆听群山的怒号">
-<meta property="og:description" content="一步一步来
-gulp watch error (ENOSPC)这周在工作的时候，需要同时启动两个项目。都是用 gulp 做自动化监控，自然不可避免的需要使用到 gulp 的 watch 方法。结果就报标题所示的错误
-gulp watch error (ENOSPC)
-谷歌一番发现倒也是个挺常见的问题，官方 github 的issues历里也有相关的问题。
-原因： 讲道理，这是倒不是 gulp 的">
+<meta property="og:description" content="解决方法在终端中输入
+
+echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf &amp;amp;&amp;amp; sudo sysctl -p
+
+gulp watch error (ENOSPC)这周在工作的时候，需要同时启动两个项目。都是用 gulp 做自动化监控，自然不可避免的需要使用到 gulp 的 watch 方法">
 <meta property="og:image" content="https://cloud.githubusercontent.com/assets/18730194/15265779/f5a51fb0-19c0-11e6-9a07-c8f4c36eced8.jpg">
-<meta property="og:updated_time" content="2016-05-14T03:04:41.804Z">
+<meta property="og:updated_time" content="2016-05-22T13:37:55.411Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="杂谈日记">
-<meta name="twitter:description" content="一步一步来
-gulp watch error (ENOSPC)这周在工作的时候，需要同时启动两个项目。都是用 gulp 做自动化监控，自然不可避免的需要使用到 gulp 的 watch 方法。结果就报标题所示的错误
-gulp watch error (ENOSPC)
-谷歌一番发现倒也是个挺常见的问题，官方 github 的issues历里也有相关的问题。
-原因： 讲道理，这是倒不是 gulp 的">
+<meta name="twitter:title" content="gulp watch error (ENOSPC)">
+<meta name="twitter:description" content="解决方法在终端中输入
+
+echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf &amp;amp;&amp;amp; sudo sysctl -p
+
+gulp watch error (ENOSPC)这周在工作的时候，需要同时启动两个项目。都是用 gulp 做自动化监控，自然不可避免的需要使用到 gulp 的 watch 方法">
 <meta name="twitter:image" content="https://cloud.githubusercontent.com/assets/18730194/15265779/f5a51fb0-19c0-11e6-9a07-c8f4c36eced8.jpg">
 
 
@@ -125,7 +125,7 @@ gulp watch error (ENOSPC)
   };
 </script>
 
-  <title> 杂谈日记 | 聆听群山的怒号 </title>
+  <title> gulp watch error (ENOSPC) | 聆听群山的怒号 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -265,7 +265,7 @@ gulp watch error (ENOSPC)
             
             
               
-                杂谈日记
+                gulp watch error (ENOSPC)
               
             
           </h1>
@@ -325,26 +325,21 @@ gulp watch error (ENOSPC)
 
       
         <p><img src="https://cloud.githubusercontent.com/assets/18730194/15265779/f5a51fb0-19c0-11e6-9a07-c8f4c36eced8.jpg" alt="黑魂大法好"></p>
-<p>一步一步来</p>
-<h2 id="gulp-watch-error-ENOSPC"><a href="#gulp-watch-error-ENOSPC" class="headerlink" title="gulp watch error (ENOSPC)"></a>gulp watch error (ENOSPC)</h2><p>这周在工作的时候，需要同时启动两个项目。都是用 gulp 做自动化监控，自然不可避免的需要使用到 gulp 的 watch 方法。结果就报标题所示的错误</p>
-<pre><code>gulp watch error (ENOSPC)
-</code></pre><p>谷歌一番发现倒也是个挺常见的问题，官方 github 的issues历里也有相关的<a href="https://github.com/gulpjs/gulp/issues/217" target="_blank" rel="external">问题</a>。</p>
-<h3 id="原因："><a href="#原因：" class="headerlink" title="原因："></a>原因：</h3><p> 讲道理，这是倒不是 gulp 的问题，而是 linux 系统的问题。与系统的文件描述符有关。</p>
-<p> <a href="https://www.wikiwand.com/zh/%E6%96%87%E4%BB%B6%E6%8F%8F%E8%BF%B0%E7%AC%A6" target="_blank" rel="external">文件描述符的详细介绍参见维基相关词条</a></p>
-<p> 简单来说，就是每个文件打开的时候都会有一个文件描述符，而 liunx 中操作文件依赖文件描述符，理论上，文件描述符应该随着文件打开而增加，上限应当与内存大小有关。</p>
-<p> 但实际上 linux 会对文件描述符的数量做限制，总的数量上一般限制为系统内存的10%，在单个进程上也会限制默认值一番是1024。这是为了保证这一资源不会被单个进程消耗殆尽。</p>
-<p>在 gulp watch 执行过程中涉及大量的文件操作。比如 scss，babel 对 css，js 文件的预处理编译，输出到开发文件夹中，监控文件的改动等等。随着开发文件的增加，所需的描述符也会增加。</p>
-<p>显然，是我双开消耗了过多的描述符，导致了 enospc 的错误。<br>但是我还有一些小的疑问</p>
-<ul>
-<li>gulp 双开也是算在同一个进程限制？</li>
-<li>我开发文件夹中的数目数量并没到达1024这个量级，两个加起来也没有</li>
-</ul>
-<h3 id="修改方法也很简单"><a href="#修改方法也很简单" class="headerlink" title="修改方法也很简单"></a>修改方法也很简单</h3><p>在上面提到的 issue 中，已经有人给出了解决方法，既然上限不足，那就手动修改上限就好了吗</p>
-<p>在终端中输入</p>
+<h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><p>在终端中输入</p>
 <blockquote>
 <p>echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf &amp;&amp; sudo sysctl -p</p>
 </blockquote>
-<p>修改 fs.inotify.max_user_watches 的上限就好了</p>
+<h2 id="gulp-watch-error-ENOSPC"><a href="#gulp-watch-error-ENOSPC" class="headerlink" title="gulp watch error (ENOSPC)"></a>gulp watch error (ENOSPC)</h2><p>这周在工作的时候，需要同时启动两个项目。都是用 gulp 做自动化监控，自然不可避免的需要使用到 gulp 的 watch 方法。结果就报标题所示的错误</p>
+<pre><code>gulp watch error (ENOSPC)
+</code></pre><p>谷歌一番发现倒也是个挺常见的问题，官方 github 的issues历里也有相关的<a href="https://github.com/gulpjs/gulp/issues/217" target="_blank" rel="external">问题</a>。</p>
+<h3 id="原因："><a href="#原因：" class="headerlink" title="原因："></a>原因：</h3><p> 讲道理，这是倒不是 gulp 的问题，而是 linux 系统的问题。与系统的文件系统有关。</p>
+<p> <a href="https://www.wikiwand.com/zh/%E6%96%87%E4%BB%B6%E6%8F%8F%E8%BF%B0%E7%AC%A6" target="_blank" rel="external">文件描述符的详细介绍参见维基相关词条</a></p>
+<p>一开始我以为跟文件描述符有关， 简单来说，就是每个文件打开的时候都会有一个文件描述符，而 liunx 中操作文件依赖文件描述符，理论上，文件描述符应该随着文件打开而增加，上限应当与内存大小有关。</p>
+<p> 但实际上 linux 会对文件描述符的数量做限制，总的数量上一般限制为系统内存的10%，在单个进程上也会限制默认值一番是1024。这是为了保证这一资源不会被单个进程消耗殆尽。</p>
+<p>在 gulp watch 执行过程中涉及大量的文件操作。比如 scss，babel 对 css，js 文件的预处理编译，输出到开发文件夹中，监控文件的改动等等。随着开发文件的增加，所需的描述符也会增加。</p>
+<p>不过实际上并不是，或者说并不直接是。一方面，gulp watch 那小小数量的文件并不足以引起默认的文件描述符的上限；另一方面，看回解决方法，我发现问题不是在文件描述符，而是更高一层的抽象，fs.inotify。</p>
+<h2 id="fs-inotify"><a href="#fs-inotify" class="headerlink" title="fs.inotify"></a>fs.inotify</h2><p>是 linux 中专门处理文件监控的文件系统事件监控框架。即为文件的增删改查提供响应事件，就像gulp watch 所做那样。但是 inotify 更底层提供比gulp watch 更丰富的事件响应。实际上 node 的 fs 包内相关的方法就依赖 inotify 来实现。而 gulp watch 无疑依赖于 fs 包。inotify 设定文件监控数量的默认值要远比文件描述符要小，更关键的一点是：<br><strong>inotify 不像 文件描述符，按文件数量计算。inotify 中监控文件增删改查都会导致计数的增加，所以当我们频繁的进行开发的时候，gulp watch 不断监控响应，inotify 就被快速消耗了</strong></p>
+<h2 id="end"><a href="#end" class="headerlink" title="end"></a>end</h2><p>所以说修改 fs.inotify.max_user_watches 的上限就好了……</p>
 
       
     </div>
@@ -384,6 +379,10 @@ gulp watch error (ENOSPC)
           </div>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/05/20/【译】vuex基础：指引与解析/" rel="prev" title="【译】vuex基础：指引与解析">
+                【译】vuex基础：指引与解析 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -451,7 +450,7 @@ gulp watch error (ENOSPC)
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">4</span>
+              <span class="site-state-item-count">5</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -459,7 +458,7 @@ gulp watch error (ENOSPC)
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-count">3</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -468,7 +467,7 @@ gulp watch error (ENOSPC)
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-count">10</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -497,7 +496,7 @@ gulp watch error (ENOSPC)
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#gulp-watch-error-ENOSPC"><span class="nav-number">1.</span> <span class="nav-text">gulp watch error (ENOSPC)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#原因："><span class="nav-number">1.1.</span> <span class="nav-text">原因：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改方法也很简单"><span class="nav-number">1.2.</span> <span class="nav-text">修改方法也很简单</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#解决方法"><span class="nav-number">1.</span> <span class="nav-text">解决方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gulp-watch-error-ENOSPC"><span class="nav-number">2.</span> <span class="nav-text">gulp watch error (ENOSPC)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#原因："><span class="nav-number">2.1.</span> <span class="nav-text">原因：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#fs-inotify"><span class="nav-number">3.</span> <span class="nav-text">fs.inotify</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#end"><span class="nav-number">4.</span> <span class="nav-text">end</span></a></li></ol></div>
             
           </div>
         </section>
