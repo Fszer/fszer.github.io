@@ -86,7 +86,7 @@
 
 <meta name="description" content="在 css3.0 中 flex 突出一个莽。解决了css多年的尴尬症–人们能把人送上太空，却依然无法在页面上做出垂直居中这种简单的事。而需要各种 hack 简直让人爆炸。而现在有了 flex 想水平居中就水平居中，想垂直居中就垂直居中。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="flexbox 要闻">
+<meta property="og:title" content="flexbox要闻">
 <meta property="og:url" content="http://yoursite.com/2016/06/05/flexbox/index.html">
 <meta property="og:site_name" content="聆听群山的怒号">
 <meta property="og:description" content="在 css3.0 中 flex 突出一个莽。解决了css多年的尴尬症–人们能把人送上太空，却依然无法在页面上做出垂直居中这种简单的事。而需要各种 hack 简直让人爆炸。而现在有了 flex 想水平居中就水平居中，想垂直居中就垂直居中。">
@@ -94,9 +94,9 @@
 <meta property="og:image" content="http://www.ruanyifeng.com/blogimg/asset/2015/bg2015071004.png">
 <meta property="og:image" content="http://www.ruanyifeng.com/blogimg/asset/2015/bg2015071005.png">
 <meta property="og:image" content="https://cloud.githubusercontent.com/assets/18730194/16083494/c0abee9c-3347-11e6-88fb-5bafcecf852c.png">
-<meta property="og:updated_time" content="2016-06-19T12:19:47.585Z">
+<meta property="og:updated_time" content="2016-06-19T12:20:45.156Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="flexbox 要闻">
+<meta name="twitter:title" content="flexbox要闻">
 <meta name="twitter:description" content="在 css3.0 中 flex 突出一个莽。解决了css多年的尴尬症–人们能把人送上太空，却依然无法在页面上做出垂直居中这种简单的事。而需要各种 hack 简直让人爆炸。而现在有了 flex 想水平居中就水平居中，想垂直居中就垂直居中。">
 <meta name="twitter:image" content="https://cloud.githubusercontent.com/assets/18730194/16177289/5fda976a-365a-11e6-81ee-b6bd33e52922.jpg">
 
@@ -116,7 +116,7 @@
   };
 </script>
 
-  <title> flexbox 要闻 | 聆听群山的怒号 </title>
+  <title> flexbox要闻 | 聆听群山的怒号 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -256,7 +256,7 @@
             
             
               
-                flexbox 要闻
+                flexbox要闻
               
             
           </h1>
@@ -363,7 +363,7 @@
 <p>而当我们定义 <code>align-items：center</code> 时就有所不同了。<br>它实际上是令到每个子元素的中线都对齐交叉轴的中点，某个子元素更宽一些或者更高一些也并不会影响其他子元素的中线对齐交叉轴的中点。上面提到<code>align-self</code>可以让某个子元素单独覆盖<code>align-items</code>的值，其实就是换了一个对齐的点，由于其子元素的不相关性，这对其他元素没有任何副作用。</p>
 <p>综上所述，主轴与交叉轴不同的计算方式导致了只有交叉轴上有单独调整的可能。</p>
 <p>当然，回到我最先的问题，假如我想要的第一个元素在主轴上对齐flex-start，而其他继续居中。一个简单的方法就是把需要居中的元素包多一层像这样</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span><br><span class="line">    .box&#123;</span><br><span class="line">        display:flex;</span><br><span class="line">        justify-content:flex-start;</span><br><span class="line">    &#125;</span><br><span class="line">    .content&#123;</span><br><span class="line">        display:flex;</span><br><span class="line">        justify-content:center;</span><br><span class="line">    &#125;</span><br><span class="line"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"box"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h1</span> <span class="attr">class</span>=<span class="string">"children"</span>&gt;</span><span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">section</span> <span class="attr">class</span>=<span class="string">"content"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">"children"</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">"children"</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">section</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="css"></span><br><span class="line">    <span class="selector-class">.box</span>&#123;</span><br><span class="line">        <span class="attribute">display</span>:flex;</span><br><span class="line">        <span class="attribute">justify-content</span>:flex-start;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="selector-class">.content</span>&#123;</span><br><span class="line">        <span class="attribute">display</span>:flex;</span><br><span class="line">        <span class="attribute">justify-content</span>:center;</span><br><span class="line">    &#125;</span><br><span class="line"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"box"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h1</span> <span class="attr">class</span>=<span class="string">"children"</span>&gt;</span><span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">section</span> <span class="attr">class</span>=<span class="string">"content"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">"children"</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">"children"</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">section</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <h2 id="flexbox-如何实现自适应侧边居中对齐？"><a href="#flexbox-如何实现自适应侧边居中对齐？" class="headerlink" title="flexbox 如何实现自适应侧边居中对齐？"></a>flexbox 如何实现自适应侧边居中对齐？</h2><p>大概来说就是这种布局<br><img src="https://cloud.githubusercontent.com/assets/18730194/16083494/c0abee9c-3347-11e6-88fb-5bafcecf852c.png" alt=""></p>
 <p>这种布局的一种应用场景就是form表单的 label跟input的排列方式<br>左边是label，右边是input框</p>
 <p>其中，这个布局有以下的一些特性</p>
