@@ -1,0 +1,712 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="css,布局,兼容," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="在 css3.0 中 flex 突出一个莽。解决了css多年的尴尬症–人们能把人送上太空，却依然无法在页面上做出垂直居中这种简单的事。而需要各种 hack 简直让人爆炸。而现在有了 flex 想水平居中就水平居中，想垂直居中就垂直居中。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="flexbox 要闻">
+<meta property="og:url" content="http://yoursite.com/2016/06/05/flexbox 要闻 /index.html">
+<meta property="og:site_name" content="聆听群山的怒号">
+<meta property="og:description" content="在 css3.0 中 flex 突出一个莽。解决了css多年的尴尬症–人们能把人送上太空，却依然无法在页面上做出垂直居中这种简单的事。而需要各种 hack 简直让人爆炸。而现在有了 flex 想水平居中就水平居中，想垂直居中就垂直居中。">
+<meta property="og:image" content="https://cloud.githubusercontent.com/assets/18730194/16177289/5fda976a-365a-11e6-81ee-b6bd33e52922.jpg">
+<meta property="og:image" content="http://www.ruanyifeng.com/blogimg/asset/2015/bg2015071004.png">
+<meta property="og:image" content="http://www.ruanyifeng.com/blogimg/asset/2015/bg2015071005.png">
+<meta property="og:image" content="https://cloud.githubusercontent.com/assets/18730194/16083494/c0abee9c-3347-11e6-88fb-5bafcecf852c.png">
+<meta property="og:updated_time" content="2016-06-19T12:22:47.001Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="flexbox 要闻">
+<meta name="twitter:description" content="在 css3.0 中 flex 突出一个莽。解决了css多年的尴尬症–人们能把人送上太空，却依然无法在页面上做出垂直居中这种简单的事。而需要各种 hack 简直让人爆炸。而现在有了 flex 想水平居中就水平居中，想垂直居中就垂直居中。">
+<meta name="twitter:image" content="https://cloud.githubusercontent.com/assets/18730194/16177289/5fda976a-365a-11e6-81ee-b6bd33e52922.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> flexbox 要闻 | 聆听群山的怒号 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">聆听群山的怒号</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                flexbox 要闻
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-06-05T09:13:57+08:00" content="2016-06-05">
+              2016-06-05
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/杂谈/" itemprop="url" rel="index">
+                    <span itemprop="name">杂谈</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="https://cloud.githubusercontent.com/assets/18730194/16177289/5fda976a-365a-11e6-81ee-b6bd33e52922.jpg" alt="57436787_p0"></p>
+<p>在 css3.0 中 flex 突出一个莽。解决了css多年的尴尬症–人们能把人送上太空，却依然无法在页面上做出垂直居中这种简单的事。而需要各种 hack 简直让人爆炸。而现在有了 flex 想水平居中就水平居中，想垂直居中就垂直居中。</p>
+<a id="more"></a>
+<p>说起 flex 就不得不提到阮一峰的<a href="http://www.ruanyifeng.com/blog/2015/07/flex-grammar.html" target="_blank" rel="external">教程</a>，里面的内容简洁明了，非常值得一读。</p>
+<p>本篇文章不会详细解释每个属性如何使用，仅仅是我个人的一些理解而不是教程。</p>
+<h2 id="flex-前言"><a href="#flex-前言" class="headerlink" title="flex 前言"></a>flex 前言</h2><p>flex 实际上解决了最核心的两个需求，这是一个非常平常的需求。令人惊讶的是人们却到现在才实现了他。</p>
+<ol>
+<li>控制子元素在以父元素的宽为轴的水平方向上的位置</li>
+<li>控制子元素在以父元素的高为轴的垂直方向上的位置</li>
+</ol>
+<p>这两点看起来见简单得不行。但是在没有 flex 的时代，我们就是没有很好的方法解决他。</p>
+<p>第一点我们习惯用<code>margin: 0 auto</code>解决。这能让计算机自动计算外边距，以达到水平居中的效果。但是有这么几个问题：</p>
+<ul>
+<li>父元素要求有确定宽度</li>
+<li>这个方法只针对单个子元素居中，无法直接处理多个子元素居中问题。</li>
+<li>这个方法实际上无法处理元素靠左靠右的问题。比如我想要子元素向右对齐</li>
+</ul>
+<p>第二点由于历史原因，甚至没有像第一点那样简陋的解决方法，光是单独垂直居中就能单独写一大篇文章了。这里不再叙述。</p>
+<p>知道了最核心的两点需求后。我们就不难理解 flex 为什么是不像 float 那样 right or left 明了，而是依赖了水平的主轴（main axis）和垂直的交叉轴（cross axis）这两个概念。表述一个平面坐标需要两个轴，这连小学生都知道了。<br><img src="http://www.ruanyifeng.com/blogimg/asset/2015/bg2015071004.png" alt=""></p>
+<p>如图所示，其中主轴的开始位置（与边框的交叉点）叫做main start，结束位置叫做main end；交叉轴的开始位置叫做cross start，结束位置叫做cross end。</p>
+<p>至于为什么不用 x y 轴，left or right这概念。原因一个是不够清晰，容易混淆，一个是不够抽象，不够 dry。</p>
+<h2 id="xy-轴-or-主轴交叉轴？"><a href="#xy-轴-or-主轴交叉轴？" class="headerlink" title="xy 轴 or 主轴交叉轴？"></a>xy 轴 or 主轴交叉轴？</h2><p>如上文所述 flex 中所用的概念是主轴交叉轴，而不是比较直观的xy轴。这个让我在一开始稍微有点迷惑，不过了解了flex的各个属性后，就豁然开朗了。</p>
+<h3 id="flex-direction"><a href="#flex-direction" class="headerlink" title="flex-direction"></a>flex-direction</h3><p>所谓的主轴交叉轴跟 flex-direction 属性相关。flex-direction 属性决定主轴的方向，即项目的排列方向。<br>其值包括:</p>
+<ul>
+<li>row (default) 水平方向，从左到右。</li>
+<li>row-reverse 水平方向，从右到左，row 的逆序。</li>
+<li>column 垂直方向，从上到下</li>
+<li>column-reverse  垂直方向，从下到上 ，column 的逆序。</li>
+</ul>
+<p><img src="http://www.ruanyifeng.com/blogimg/asset/2015/bg2015071005.png" alt=""></p>
+<p>可以看到，所谓的主轴并不限定就是水平方向，也有可能是垂直方向。你可以在通过flex-direction属性决定主轴是哪一个。</p>
+<p>这时候 flex 其他的属性就针对 flex-firection 定好的主轴交叉轴进行计算处理。</p>
+<p>如果我们套用 x y 轴的概念，你就会发现我们需要重复四套对应不同方向而相同概念的属性。</p>
+<p>前面我说过 xy 轴的概念不够抽象，在这里就可见端倪了。当我们希望用 xy 轴来尽可能简洁的描述同样的事物时，你会发现重复无法避免,而且会有所混淆。</p>
+<p>而将它归纳为主轴，交叉轴的概念时，我们只需要一套属性，外加一个指明方向的属性 flex-firection，实际上是把flex-direction对应的四种模式归纳为统一的概念。</p>
+<h2 id="为什么在交叉轴上可以有align-self-而在主轴上没有对应的属性？"><a href="#为什么在交叉轴上可以有align-self-而在主轴上没有对应的属性？" class="headerlink" title="为什么在交叉轴上可以有align-self 而在主轴上没有对应的属性？"></a>为什么在交叉轴上可以有align-self 而在主轴上没有对应的属性？</h2><p>在阐述这个问题前，简单的回顾一下align-self</p>
+<p><code>align-self</code>属性允许单个项目有与其他项目不一样的对齐方式，可覆盖<code>align-items</code>属性。默认值为<code>auto</code>，表示继承父元素的<code>align-items</code>属性，如果没有父元素，则等同于<code>stretch</code></p>
+<p>回到我们的问题上，有这个问题原因是我在使用flex有时希望主轴上的第一个或者最后一个子元素可以像设置了 <code>space-bewteen</code> 那样靠向两端，而其他的就保持居中。 当然，并没有这样属性。然而在交叉轴上却有<code>align-self</code>这就让我很好奇了。为什么在交叉轴上可以有<code>align-self</code> 而在主轴上没有对应的属性？</p>
+<p>原因在于 <code>align-items</code> 和 <code>justify-content</code> 的作用域不一样。</p>
+<p><code>justify-content</code> 确定主轴上的一个或者多个元素之间如何对齐，作用于父元素<br>而<code>align-items</code> 确定每个元素在交叉轴上对齐哪条线，作用于子元素。</p>
+<h3 id="举个例子"><a href="#举个例子" class="headerlink" title="举个例子"></a>举个例子</h3><p>当我们定义<code>justify-content：space-around</code>，每个元素之间等大间隔，而这个间隔是如何计算出来的？</p>
+<blockquote>
+<p>间隔宽度=（父元素的宽度-各个子元素之间的和）/间隔数</p>
+</blockquote>
+<p>可以看到每个元素最终的所在位子是相互影响的，每个元素更宽一些或者更高一些都会有所不同。我们并不能覆盖单个子元素而不影响其他的子元素。</p>
+<p>而当我们定义 <code>align-items：center</code> 时就有所不同了。<br>它实际上是令到每个子元素的中线都对齐交叉轴的中点，某个子元素更宽一些或者更高一些也并不会影响其他子元素的中线对齐交叉轴的中点。上面提到<code>align-self</code>可以让某个子元素单独覆盖<code>align-items</code>的值，其实就是换了一个对齐的点，由于其子元素的不相关性，这对其他元素没有任何副作用。</p>
+<p>综上所述，主轴与交叉轴不同的计算方式导致了只有交叉轴上有单独调整的可能。</p>
+<p>当然，回到我最先的问题，假如我想要的第一个元素在主轴上对齐flex-start，而其他继续居中。一个简单的方法就是把需要居中的元素包多一层像这样</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span><br><span class="line">    .box&#123;</span><br><span class="line">        display:flex;</span><br><span class="line">        justify-content:flex-start;</span><br><span class="line">    &#125;</span><br><span class="line">    .content&#123;</span><br><span class="line">        display:flex;</span><br><span class="line">        justify-content:center;</span><br><span class="line">    &#125;</span><br><span class="line"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"box"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h1</span> <span class="attr">class</span>=<span class="string">"children"</span>&gt;</span><span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">section</span> <span class="attr">class</span>=<span class="string">"content"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">"children"</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">p</span> <span class="attr">class</span>=<span class="string">"children"</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">section</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="flexbox-如何实现自适应侧边居中对齐？"><a href="#flexbox-如何实现自适应侧边居中对齐？" class="headerlink" title="flexbox 如何实现自适应侧边居中对齐？"></a>flexbox 如何实现自适应侧边居中对齐？</h2><p>大概来说就是这种布局<br><img src="https://cloud.githubusercontent.com/assets/18730194/16083494/c0abee9c-3347-11e6-88fb-5bafcecf852c.png" alt=""></p>
+<p>这种布局的一种应用场景就是form表单的 label跟input的排列方式<br>左边是label，右边是input框</p>
+<p>其中，这个布局有以下的一些特性</p>
+<ol>
+<li>左侧的紫色部分长度是不确定，绿色部分固定宽</li>
+<li>紫色与绿色对齐的轴线由紫色部分最长的一段决定，其他较短紫色部分靠右对齐轴线</li>
+</ol>
+<p>嗯，看到难题所在了吗<br>我们还是先上代码吧<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// 以jade pug 代码为例</span><br><span class="line">section.form</span><br><span class="line">    .row</span><br><span class="line">        .left</span><br><span class="line">        .right</span><br><span class="line">    .row</span><br><span class="line">        .left</span><br><span class="line">        .right</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.form</span>&#123;</span><br><span class="line">       <span class="attribute">display</span>: block;</span><br><span class="line">       <span class="attribute">width</span>:<span class="number">900px</span>;</span><br><span class="line">       <span class="attribute">height</span>:<span class="number">600px</span>;</span><br><span class="line">       <span class="attribute">padding</span>: <span class="number">0</span> <span class="number">20px</span>;</span><br><span class="line">       <span class="attribute">background</span>: <span class="number">#fff</span>;</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="selector-class">.row</span>&#123;</span><br><span class="line">       <span class="attribute">margin-top</span>: <span class="number">20px</span>;</span><br><span class="line">       <span class="attribute">display</span>:flex;</span><br><span class="line">       <span class="attribute">justify-content</span>: flex-start;</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="selector-class">.left</span>&#123;</span><br><span class="line">       <span class="attribute">background</span>: <span class="number">#3a44cc</span>;</span><br><span class="line">       <span class="attribute">width</span>: <span class="number">200px</span>;</span><br><span class="line">       <span class="attribute">height</span>: <span class="number">45px</span>;</span><br><span class="line">       <span class="attribute">margin-right</span>: <span class="number">30px</span>;</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="selector-class">.right</span>&#123;</span><br><span class="line">       <span class="attribute">background</span>: <span class="number">#006600</span>;</span><br><span class="line">       <span class="attribute">width</span>: <span class="number">400px</span>;</span><br><span class="line">       <span class="attribute">height</span>: <span class="number">45px</span>;</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="selector-class">.other-width</span>&#123;</span><br><span class="line">       <span class="attribute">width</span>:<span class="number">250px</span>;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<p>可以看到在left等宽的时候，这样已经达到了我们上面图示的效果，然而我们的希望是不等宽。</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">section</span><span class="selector-class">.form</span></span><br><span class="line">    <span class="selector-class">.row</span></span><br><span class="line">        <span class="selector-class">.left</span></span><br><span class="line">        <span class="selector-class">.right</span></span><br><span class="line">    <span class="selector-class">.row</span></span><br><span class="line">        <span class="selector-class">.left</span><span class="selector-class">.other-width</span> <span class="comment">//这时给第二行的left增加一个宽度</span></span><br><span class="line">        .<span class="attribute">right</span></span><br></pre></td></tr></table></figure>
+<p>这时我们就可以看到justify-content在默认flex-start值下，两行完全靠左对齐。并不是我们想要的效果。<br>这时我做了几个尝试。</p>
+<h2 id="left-增加父元素元素定宽"><a href="#left-增加父元素元素定宽" class="headerlink" title="left 增加父元素元素定宽"></a>left 增加父元素元素定宽</h2><p>像这样<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.row</span></span><br><span class="line">   <span class="selector-class">.left-outer</span></span><br><span class="line">       <span class="selector-class">.left</span></span><br><span class="line">   .<span class="attribute">right</span></span><br></pre></td></tr></table></figure></p>
+<p>同时添加样式让.left 向右对齐<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.left-outer</span>&#123;</span><br><span class="line">        <span class="attribute">width</span>:<span class="number">250px</span>;</span><br><span class="line">        <span class="attribute">display</span>:flex;</span><br><span class="line">        <span class="attribute">justify-content</span>:flex-end;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<p>嗯，看起来不错。然而有一个致命的问题是——左侧的元素宽是固定的，而且为了让.left正常显示，必须是定为最大的可能宽度，即使当前页面的.left 元素其实没有这么宽（实际中，宽度最大的可能出现在另一个页面上，我猜你不会希望为此单独设定[2,NaN]次宽度吧？）。这个时候就比较尴尬了，为了配合这个宽度，在不足宽度的页面上，所有的left元素都会向右偏移</p>
+<p>像这样<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">.left-outer&#123;</span><br><span class="line">        width:300px;</span><br><span class="line">        display:flex;</span><br><span class="line">        justify-content:flex-end;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">// 为了让效果更明显....</span><br><span class="line">.left&#123;</span><br><span class="line">    width:100px;</span><br><span class="line">&#125;</span><br><span class="line">.other-width&#123;</span><br><span class="line">    width:200px;   </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>结果是整个页面像是硬生生向右偏移了100px。不行呀。</p>
+<h2 id="先分列，再分行"><a href="#先分列，再分行" class="headerlink" title="先分列，再分行"></a>先分列，再分行</h2><p>接着我尝试了这个方法</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">section</span><span class="selector-class">.form</span></span><br><span class="line">    <span class="selector-class">.left-outer</span></span><br><span class="line">        <span class="selector-class">.left</span> </span><br><span class="line">        <span class="selector-class">.left</span><span class="selector-class">.outher-width</span></span><br><span class="line">    <span class="attribute">right</span>-outer</span><br><span class="line">        <span class="selector-class">.right</span> <span class="comment">//这时给第二行的left增加一个宽度</span></span><br><span class="line">        .<span class="attribute">right</span></span><br></pre></td></tr></table></figure>
+<p>直接划分成两列<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="selector-class">.form</span>&#123;</span><br><span class="line">    <span class="attribute">display</span>: flex;</span><br><span class="line">    <span class="attribute">width</span>:<span class="number">900px</span>;</span><br><span class="line">    <span class="attribute">height</span>:<span class="number">600px</span>;</span><br><span class="line">    <span class="attribute">padding</span>: <span class="number">0</span> <span class="number">20px</span>;</span><br><span class="line">    <span class="attribute">background</span>: <span class="number">#fff</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.left-outer</span> ,<span class="selector-class">.right-outer</span>&#123;</span><br><span class="line">    <span class="attribute">width</span>:min-content;</span><br><span class="line">    <span class="attribute">display</span>:flex;</span><br><span class="line">    <span class="attribute">flex-direction</span>:column;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>上面的 left-outer 是为让子元素竖向排列，同时min-content的值则是让父元素依照最大不断行内容定宽度，这样一来left-outer的 width 就自然等于.left 子元素最大宽度。当然这里不这样设定他也会是同样效果。</p>
+<p>终于让两边对齐了。而且不会像想上一个方法，产生不必要的偏移。看起来也很好的自适应不同的left宽度，可喜可贺。</p>
+<p>然而…… </p>
+<ol>
+<li>首先，我们把一个应当具有关联的row切断了。如果他们没有明显的关联这样未尝不可。想象一下，假如产品要求在这个row下面添加一个横线分割不同的row，我们该怎么办？</li>
+<li>此外，我们必须维护left-outer与right-outer元素，维护他们与他们的子元素的关系，两边子元素之间的对应关系。</li>
+<li>总结必须要有三点，我想我上面两点的意思是这样不够 dry</li>
+</ol>
+<h2 id="逆转裁判出6啦"><a href="#逆转裁判出6啦" class="headerlink" title="逆转裁判出6啦"></a>逆转裁判出6啦</h2><p>所以说到底要如何保留row的设计的情况下完成这个事情…</p>
+<p>先让我们回到原点<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">section.form</span><br><span class="line">    .row</span><br><span class="line">        .left</span><br><span class="line">        .right</span><br><span class="line">    .row</span><br><span class="line">        .left</span><br><span class="line">        .right</span><br></pre></td></tr></table></figure></p>
+<p>为什么在一开始的这个情况下，无法轴线对齐？</p>
+<p>这是因为我们的 .left 元素 <strong>宽度不一致，而轴线距离左侧的长度正好是这个宽度</strong>，说到底上面两个方法都是为了解决这个问题。难道就没有更好的方法了吗？有，<br>虽然它一开始就在那里但是我们都没有留意到…… right元素是定宽的。</p>
+<blockquote>
+<p>瞎扯淡啥呢 right元素是定宽的又怎么样？不关事啊=。=</p>
+</blockquote>
+<p>不，听我慢慢到来。</p>
+<p>我们一开始这样设定.row<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.row</span>&#123;</span><br><span class="line">        </span><br><span class="line">        <span class="attribute">display</span>:flex;</span><br><span class="line">        <span class="attribute">justify-content</span>: flex-start;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<p>justify-content 为flex-start，center的时候想想都知道不符合我们的需求。但是当justify-content的时候呢？<br>这有什么嘛，不就是向右对齐吗，不也不符…..欸！！！！</p>
+<p>仔细想想由于right元素是等宽的，而当我们取flex-end右对齐的时候，所有right元素是对齐，假如我们从右往左看，我们的轴线因为是从右方算起都间隔了一个right元素的宽度，是完全对齐在一条线上的。当然，left的元素也靠右对齐了</p>
+<p>除了整个form元素是靠右的之外，我们已经完美的达到了对齐轴线的问题。是不是很有趣？<br>接下来我们只要解决靠右的问题就好了。这个解决方法要比上面的直观的多。</p>
+<p>首先为什么会靠右到右边缘？flex布局下的元素不设定宽度的话，会自动占满宽度。<br>这里我们没有设定row的宽度，所以计算为父元素的宽，因此当flex-end的起始位子在右侧边缘。</p>
+<p>这个时候，我们就不用在在row上纠结了，就让它占满父元素的宽度就好了。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">section</span><span class="selector-class">.form</span></span><br><span class="line">    <span class="selector-class">.outer</span></span><br><span class="line">        <span class="selector-class">.row</span></span><br><span class="line">            <span class="selector-class">.left</span></span><br><span class="line">            <span class="selector-class">.right</span></span><br><span class="line">        <span class="selector-class">.row</span></span><br><span class="line">            <span class="selector-class">.left</span><span class="selector-class">.width250</span></span><br><span class="line">            <span class="selector-class">.right</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="selector-class">.outer</span>&#123;</span><br><span class="line">    <span class="attribute">width</span>:min-content;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以看到，已经成了，可喜可贺。可是这里到底又是什么回事！！！</p>
+<p>这里我直接给了多一重的元素，还记得min-content的意义么？定义宽度为子元素的最大不断行宽度。但是row不是等于父元素的宽度吗？死循环？当然不是。宽度会尽可能的小。</p>
+<p>接下来的话有点绕<br>实际上，由于left跟right元素也是有宽度的，父元素的宽度不会小于left和right宽的之和。</p>
+<p>如果不同row的子元素宽度之和不相同（就像我们希望的那样）。</p>
+<p>我们的父元素在min-content控制下必取最大的行宽。</p>
+<p>由上可知，父元素的宽度必定大于等于任意行的行宽。</p>
+<p>然后 row 元素的父元素有足够的宽度，row默认100%父元素宽度</p>
+<p>结果，所有的row等宽。并且自适应于最长的一个row宽度</p>
+<p>即</p>
+<blockquote>
+<p>f.width=row.width=max(left.width+right.width)</p>
+</blockquote>
+<p>对齐轴线依然有效，而且整个outer元素默认行为的靠左</p>
+<p>这不就是我们想要的么？</p>
+<p>赞</p>
+<blockquote>
+<p>p.s 这个方法不适合左右都是不定宽的情况</p>
+</blockquote>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/css/" rel="tag">#css</a>
+          
+            <a href="/tags/布局/" rel="tag">#布局</a>
+          
+            <a href="/tags/兼容/" rel="tag">#兼容</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/05/20/【译】vuex基础：指引与解析/" rel="next" title="【译】vuex基础：指引与解析">
+                <i class="fa fa-chevron-left"></i> 【译】vuex基础：指引与解析
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://cloud.githubusercontent.com/assets/18730194/15146790/dd39acee-16ef-11e6-8ee7-093d1ce74fce.png"
+               alt="Fszer" />
+          <p class="site-author-name" itemprop="name">Fszer</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">6</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#flex-前言"><span class="nav-number">1.</span> <span class="nav-text">flex 前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#xy-轴-or-主轴交叉轴？"><span class="nav-number">2.</span> <span class="nav-text">xy 轴 or 主轴交叉轴？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#flex-direction"><span class="nav-number">2.1.</span> <span class="nav-text">flex-direction</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么在交叉轴上可以有align-self-而在主轴上没有对应的属性？"><span class="nav-number">3.</span> <span class="nav-text">为什么在交叉轴上可以有align-self 而在主轴上没有对应的属性？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#举个例子"><span class="nav-number">3.1.</span> <span class="nav-text">举个例子</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#flexbox-如何实现自适应侧边居中对齐？"><span class="nav-number">4.</span> <span class="nav-text">flexbox 如何实现自适应侧边居中对齐？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#left-增加父元素元素定宽"><span class="nav-number">5.</span> <span class="nav-text">left 增加父元素元素定宽</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#先分列，再分行"><span class="nav-number">6.</span> <span class="nav-text">先分列，再分行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#逆转裁判出6啦"><span class="nav-number">7.</span> <span class="nav-text">逆转裁判出6啦</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Fszer</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>
