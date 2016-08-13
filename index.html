@@ -84,15 +84,12 @@
 
 
 
-<meta name="description">
 <meta property="og:type" content="website">
 <meta property="og:title" content="聆听群山的怒号">
 <meta property="og:url" content="http://yoursite.com/index.html">
 <meta property="og:site_name" content="聆听群山的怒号">
-<meta property="og:description">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="聆听群山的怒号">
-<meta name="twitter:description">
 
 
 
@@ -231,6 +228,161 @@
           <div id="content" class="content">
             
   <section id="posts" class="posts-expand">
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/08/05/build-your-first-thing-with-web-assembly/" itemprop="url">
+                  建立你的第一个 WebAssembly 应用
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-08-05T20:38:48+08:00" content="2016-08-05">
+              2016-08-05
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/翻译/" itemprop="url" rel="index">
+                    <span itemprop="name">翻译</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>当我第一次听见 WebAssembly 消息的时候就觉得它非常酷，我迫不及待地想要开始尝试使用它。然而当我不久之后开始使用 WebAssembly 的时候 ，它给我带来的却更多的令我感到泄气。这篇文章的目的就是让你避免这些令人沮丧的部分。</p>
+<p><a href="http://p4.qhmsg.com/t014315b7ee6ed04cb7.jpg" target="_blank" rel="external"></a></p>
+<h2 id="读者须知"><a href="#读者须知" class="headerlink" title="读者须知"></a>读者须知</h2><p>这篇文章写于 2016 年六月 24 号， WebAssembly 还是一个非常新并且不稳定的技术，随着 WebAssembly 在各个浏览器中形成规范，这篇文章里的说的所有东西都有可能变成错误的。</p>
+<p>有了这些说明……</p>
+<h2 id="到底什么是-WebAssembly-？"><a href="#到底什么是-WebAssembly-？" class="headerlink" title="到底什么是 WebAssembly ？"></a>到底什么是 WebAssembly ？</h2><p>嗯，官方网站的说明就是这样的</p>
+<blockquote>
+<p>WebAssembly or wasm is a new portable, size- and load-time-efficient format suitable for compilation to the web.</p>
+</blockquote>
+<p>蛤？什么？什么的格式？文本?二进制？老实讲这就是个垃圾说明。<br>所以，拿出你的小笔记本儿，我会用上我关于 wasm 的一切经验来给出我自己对 Wasm 的说明</p>
+<blockquote>
+<p>WebAssembly 或者 wasm  是一个用于撰写高性能，浏览器无关网页组件的字节码规范</p>
+</blockquote>
+<p>所以我们还不能一句话说清楚它到底哪里好，不过这里就是说明的余下的部分。<br>WebAssmbly 通过使用比运行时动态类型变量更高效的静态类型变量引用，实现了性能上的提升。它是由  W3C Community Group 开发，最终能被遵循规范的浏览器兼容。而 WebAssembly 的杀手级特性就是，你最终将可以用任意的语言都来编写这些网页组件</p>
+<p>现在听起来是不是厉害多了?</p>
+<h2 id="让我们开始吧"><a href="#让我们开始吧" class="headerlink" title="让我们开始吧"></a>让我们开始吧</h2><p>每当要开始学习一项新的事物，我通常会寻找一个最小的可行范例来研究它是如何工作的。不幸的是，对我们来说还没有实际的 WebAssembly 的例子。就目前状况来看， wasm 基本上只是一个字节码规范而已。假设我们回到 1996年，一些来自 Sun 软件公司的工程师在介绍 JVM……不是 Java 。我想象中那个会议可能有点像这样<br>“嘿，大伙儿来看看我们造的这个字节码虚拟机”<br>“雕，那我们该如何写代码使用它？”</p>
+<p><a href="http://p1.qhmsg.com/t01c5889a9cdf0ef479.png" target="_blank" rel="external"></a></p>
+<p>“嗯……厉害..，我会找个时间来看看它的”<br>“吼啊，请务必让我们知道你的想法，要是你用的时候出了什么差错，记得到我们的 github 主页上给我们留个言”<br>“你说得太对了，我们还是去看看 github 里的其他项目吧”</p>
+<p>即使那是因为 JVM 是基于 java 所以jvm是一个坏的例子，但我希望你能明白个中奥妙<br>如果你的字节码不能在那个场景里被编译它的工具展示出来，你就会有一个非常尴尬的时刻了。所以说，我们到底要如何开始它呢？</p>
+<h2 id="在-WebAssembly-之前…"><a href="#在-WebAssembly-之前…" class="headerlink" title="在 WebAssembly 之前…"></a>在 WebAssembly 之前…</h2><p>大多数技术都是某种革新的结果，尤其是一个合理的尝试会使之逐渐成为一个正式的规范。但是 Wasm 不一样，这实际上是对 asm.js 所做工作的一种延续，asm.js 是通过静态类型，使之可以被编译成汇编的一种javascript 组件编写方法规范。而 Wasm 延续了这个想法，通过制定一个字节码规范使得它可以从任何语言编译而来。随着时间的推移，有许多主流浏览器选择传输二进制文件而非编码过的文本，而不仅仅是 Mozilla。</p>
+<p>asm.js 只是一个使用 javascript 最小语言特性子集的编写 javascript 的规范。你完全可以手写一个简单的 asm.js 例子，如果你愿意弄脏你的手，这就是一个开始 asm.js 的好方法（最好在稍后把这些放到一个单独的文件中，并按照惯例使用 <code>your-module-name.asm.js</code> 命名）</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">MyMathModule</span>(<span class="params">global</span>) </span>&#123;</div><div class="line"><span class="meta">    "use asm"</span>;</div><div class="line">    <span class="keyword">var</span> exp = global.Math.exp;</div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">doubleExp</span>(<span class="params">value</span>) </span>&#123;</div><div class="line">        value = +value;</div><div class="line">        <span class="keyword">return</span> +(+exp(+value) * <span class="number">2.0</span>);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> &#123; doubleExp: doubleExp &#125;;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这不是一个非常有用的函数，不过他是符合规范的。如果对你来说这看起来有点傻，你不是一个人，不过几乎这里每一个字符都是必须的。所有这些一元操作符号 ‘+’ 是作为类型说明，使得编译器知道那些带有’+’符号的变量是双精度的，而无需在运行时才去推断出他们是什么类型。这是相当严苛，不过假如你弄错了写什么，火狐中的控制台会给你一个错误原因来告诉你哪里运行出错了。</p>
+<p>如果你想在浏览器中运行它，工作起来就会像这样的</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> myMath = <span class="keyword">new</span> MyMathModule(<span class="built_in">window</span>);</div><div class="line"><span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="number">5</span>; i++) &#123;</div><div class="line">    <span class="built_in">console</span>.log(myMath.doubleExp(i));</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果你没做错任何事，那输出看起来会像是这样的<br><a href="http://p6.qhmsg.com/t01d27d8a53bcd3c767.png" target="_blank" rel="external"></a></p>
+<h2 id="这就是-WebAssembly-了"><a href="#这就是-WebAssembly-了" class="headerlink" title="这就是 WebAssembly 了"></a>这就是 WebAssembly 了</h2><p>现在我们有一个可用的 asm.js 的部件了，我们可以使用由 WebAssembly github page 提供的工具将他编译成 wasm。现在你需要自己去去克隆这个仓库并构建这个工具。这是最糟糕的一部分。这些工具仍在不断地开发中，因此不时出现断层式改动都是司空见惯的事情。尤其是当你在 window 环境下的时候。</p>
+<p>无论你是在 windows 还是 mac ，你必然会需要 make 和 cmake 安装在你的系统命令行工具中。如果你在 windows ,你还需要安装上 visual studio 2015 。如果你在 mac 中，请查看这些说明，同样的如果你是在 windows 查看这些说明</p>
+<p>直接分发可以使用二进制文件会是 WebAssmbly 团队迈向正确方向的重要一步。</p>
+<p>如果你设法让编译成功，你会看见这个目录下有一个 bin 文件夹被创建，里面包含了一些我们可以用来编译我们的 asm.js 文件为 wasm 的工具。<br>第一个工具是 <code>asm2wasm.exe</code>。这个工具将 asm.js 代码编译成 <code>.s</code> 的格式化代码，这是一钟用于输出到 wasm 抽象语法树的文本表述。一旦你运行这个工具，最终你会得到这样的东西</p>
+<figure class="highlight clojure"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">(<span class="name">module</span></div><div class="line">  (<span class="name">memory</span> <span class="number">256</span> <span class="number">256</span>)</div><div class="line">  (<span class="name">export</span> <span class="string">"memory"</span> memory)</div><div class="line">  (<span class="name"><span class="builtin-name">type</span></span> $FUNCSIG$dd (<span class="name">func</span> (<span class="name">param</span> f64) (<span class="name">result</span> f64)))</div><div class="line">  (<span class="name"><span class="builtin-name">import</span></span> $exp <span class="string">"global.Math"</span> <span class="string">"exp"</span> (<span class="name">param</span> f64) (<span class="name">result</span> f64))</div><div class="line">  (<span class="name">export</span> <span class="string">"doubleExp"</span> $doubleExp)</div><div class="line">  (<span class="name">func</span> $doubleExp (<span class="name">param</span> $<span class="number">0</span> f64) (<span class="name">result</span> f64)</div><div class="line">    (<span class="name">f64.mul</span></div><div class="line">      (<span class="name">call_import</span> $exp</div><div class="line">        (<span class="name">get_local</span> $<span class="number">0</span>)</div><div class="line">      )</div><div class="line">      (<span class="name">f64.const</span> <span class="number">2</span>)</div><div class="line">    )</div><div class="line">  )</div><div class="line">)</div></pre></td></tr></table></figure>
+<p>将来我们可以逐句逐句解析它，但就现在而言，我只是想要向你展示它是什么样的。既然说到 wasm 是一个二进制格式，想要像你对其他 javascript 代码做的那样，右键点击并查看代码是不行的。他看上去会更像上面的字节码。目前的计划是只有当你在 wasm 模块里查看源码时，wasm 才会解析这个二进制格式，让她变得可被人类阅读的。</p>
+<p>我们下一件需要做的事是进一步编译这个 <code>.s</code> 格式的代码为 wasm 二进制代码，我们会用到 <code>wasm-as.exe</code> ，将其汇编化。一旦你运行了这个文件，你最终会的到一份实际上需要用到浏览器的 wasm 字节码。</p>
+<p>然后，拿出你手上的 firefox 或者 chrome canary的最新副本，启用 WebAssmbly</p>
+<p>在火狐里。你要去输入<code>about:config</code> 到地址栏中，然后告诉它你会小心的。在这时之后，输入 wasm 到搜索栏中 并双击 <code>javascript.potions.wasm</code> 直到他的值变成 <code>true</code> 然后重启火狐浏览器</p>
+<p>对于 Chrome Canary 来说，你需要输入 <code>chrome://flags</code> 并滚动到下去直到你找的 <code>Experimental WebAssembly</code> ,点击启用链接并重启浏览器。</p>
+<p>最后一步就是将这个 wasm 模块跑在浏览器中。 这是另一个非常痛苦的地方，因为当我第一次尝试的时候这完全是隐藏起来的，我从 javascript API 中找不到任何规范说明是关于如何使用 Wasm 模块的。我最终只好打开 Chrome Canary 的控制台然后敲入 <code>WebAsse</code> 结果并没有任何东西弹出来。接下来我尝试敲入<code>Was</code> ,结果有了！。看起来这个对象的展示对象仍处于最缺失文档的初始阶段，这件事发生在我用另一个工具（emscripten）去编译 Wasm ，关于我怎么做的那是另一篇博客的主题了。不管怎么说在我做了那些事了以后，我能够做出一个可工作的例子了。</p>
+<p>在我到处点击，并最终反馈了这个设计给 WebAssembly 。我看见一个名叫 Js.md 的文件，于是我点击了它，不用说，那里他娘的当然有一个现成的 javascript Api 文档。最吸引人注意的斜体文字在这个笔记的顶部。可惜这文档最好的部分是在非常底部的一个小片段，非常简单的向你展示了如何加载一个模块。我唯一需要做的就是替换掉相应的部分并尝试用它</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">fetch(<span class="string">"my-math-module.wasm"</span>)</div><div class="line">    .then(<span class="function"><span class="keyword">function</span>(<span class="params">response</span>) </span>&#123;</div><div class="line">        <span class="keyword">return</span> response.arrayBuffer();</div><div class="line">    &#125;)</div><div class="line">    .then(<span class="function"><span class="keyword">function</span>(<span class="params">buffer</span>) </span>&#123;</div><div class="line">        <span class="keyword">var</span> dependencies = &#123;</div><div class="line">            <span class="string">"global"</span>: &#123;&#125;,</div><div class="line">            <span class="string">"env"</span>: &#123;&#125;</div><div class="line">        &#125;;</div><div class="line">        dependencies[<span class="string">"global.Math"</span>] = <span class="built_in">window</span>.Math;</div><div class="line">        <span class="keyword">var</span> moduleBufferView = <span class="keyword">new</span> <span class="built_in">Uint8Array</span>(buffer);</div><div class="line">        <span class="keyword">var</span> myMathModule = Wasm.instantiateModule(moduleBufferView, dependencies);</div><div class="line">        <span class="built_in">console</span>.log(myMathModule.exports.doubleExp);</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="number">5</span>; i++) &#123;</div><div class="line">            <span class="built_in">console</span>.log(myMathModule.exports.doubleExp(i));</div><div class="line">        &#125;</div><div class="line">    &#125;);</div></pre></td></tr></table></figure>
+<p>把这些折腾进一个 html 文件中，在你的本地文件夹中搭建一个服务器，然后加载它。<br>这就是我在两个浏览器所能看到的</p>
+<p>我想是时候去写一个bug报告文件了。记住，这完全是个实验性的技术并且非常不稳定，所以当发生像这样事情的时候，千万不要过分沮丧。</p>
+<h2 id="Congratulations"><a href="#Congratulations" class="headerlink" title="Congratulations!"></a>Congratulations!</h2><p>你已经创建了你的第一个 WEbAssembly 组件了，下一步是什么？我们只是简单的在表面划开了一点而已。手写 asm.js 是这个例子中挺重要的部分。使用 emscripten 来编译一个无关要紧的asm.js小应用太简单了。在那个笔记中。我十分建议你阅读有关 asm.js 的规范，尤其是内存模块，因为其中有许多概念都转移到 WebAssembly 当中了。<br>另一个笑话就是现在你还不能直接传递一个数组当作函数的参数。这里中的一些被一致认为需要做出改变，但是在这个规范中还没有做任何事。去加上你的逻辑吧</p>
+<p>其他需要注意的是，当你开始用 Wasm 做些不平凡的事情的时候，你可能会发现在 WebAssemly 中的实际效果比原生 js 代码还慢。必须记得的是现代 javascript 引擎在编译 javascript的过程中经过了高度的优化而这是需要给 wasm 汇编一些时间迎头赶上。WebAssembly 真的还么准备好用于生产环境。</p>
+<p>如果你有什么问题关于 wasm 或者是这里提到的一些工具，请到 Stack Overflow 提问并加上适当的标签。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
     
       
 
@@ -1058,7 +1210,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">7</span>
+              <span class="site-state-item-count">8</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
