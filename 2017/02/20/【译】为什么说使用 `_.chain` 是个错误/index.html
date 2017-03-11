@@ -1,0 +1,690 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="翻译,javascript," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="为什么说使用 _.chain 是个错误将你的代码从_.chain的枷锁中解放出来。
+图片来源于Jeremy Booth; 特别要感谢Eric Baer, Brooklyn Zelenka &amp;amp; Jason Trill 他们的无私的帮助和知识;也特别要感谢 John-David Dalton 不仅是因为 lodash 本身，还有他谦虚的指出了这篇文章的一些不准确之处以及介绍了许多有关 loda">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【译】为什么说使用 `_.chain` 是个错误">
+<meta property="og:url" content="http://yoursite.com/2017/02/20/【译】为什么说使用 `_.chain` 是个错误/index.html">
+<meta property="og:site_name" content="聆听群山的怒号">
+<meta property="og:description" content="为什么说使用 _.chain 是个错误将你的代码从_.chain的枷锁中解放出来。
+图片来源于Jeremy Booth; 特别要感谢Eric Baer, Brooklyn Zelenka &amp;amp; Jason Trill 他们的无私的帮助和知识;也特别要感谢 John-David Dalton 不仅是因为 lodash 本身，还有他谦虚的指出了这篇文章的一些不准确之处以及介绍了许多有关 loda">
+<meta property="og:updated_time" content="2017-03-11T15:16:04.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【译】为什么说使用 `_.chain` 是个错误">
+<meta name="twitter:description" content="为什么说使用 _.chain 是个错误将你的代码从_.chain的枷锁中解放出来。
+图片来源于Jeremy Booth; 特别要感谢Eric Baer, Brooklyn Zelenka &amp;amp; Jason Trill 他们的无私的帮助和知识;也特别要感谢 John-David Dalton 不仅是因为 lodash 本身，还有他谦虚的指出了这篇文章的一些不准确之处以及介绍了许多有关 loda">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> 【译】为什么说使用 `_.chain` 是个错误 | 聆听群山的怒号 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">聆听群山的怒号</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                【译】为什么说使用 `_.chain` 是个错误
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-02-20T19:20:43+08:00" content="2017-02-20">
+              2017-02-20
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/翻译/" itemprop="url" rel="index">
+                    <span itemprop="name">翻译</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="为什么说使用-chain-是个错误"><a href="#为什么说使用-chain-是个错误" class="headerlink" title="为什么说使用 _.chain 是个错误"></a>为什么说使用 <code>_.chain</code> 是个错误</h2><p>将你的代码从<code>_.chain</code>的枷锁中解放出来。</p>
+<p>图片来源于Jeremy Booth; 特别要感谢Eric Baer, Brooklyn Zelenka &amp; Jason Trill 他们的无私的帮助和知识;也特别要感谢 John-David Dalton 不仅是因为 lodash 本身，还有他谦虚的指出了这篇文章的一些不准确之处以及介绍了许多有关 lodash 内部工作原理的花边知识。</p>
+<a id="more"></a>
+<h3 id="为什么说使用-chain-是个错误-1"><a href="#为什么说使用-chain-是个错误-1" class="headerlink" title="为什么说使用 _.chain 是个错误"></a>为什么说使用 <code>_.chain</code> 是个错误</h3><p>在任何一个使用 <em>.chain 的应用或者是类库当中，都有这样两个微不足道的小问题：它们通常通过将整个lodash 引入到文件中来使用，和他们难以添加扩展出新的方法。首先，让我们去了解一下为什么人们会使用 </em>.chain， 这是一件很有意义的事。然后寻找出我们要如何使用一些编程技巧来去其糟粕，取其精华。我们将会关注如何得到一个2倍的构建时间优化以及1.5倍的文件大小的减少,通过把下面这个:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> _ <span class="keyword">from</span> <span class="string">'lodash'</span></div><div class="line"></div><div class="line">_.chain([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>])</div><div class="line">  .map(x =&gt; [x, x*<span class="number">2</span>])</div><div class="line">  .flatten()</div><div class="line">  .sort()</div><div class="line">  .value();</div></pre></td></tr></table></figure></p>
+<p>转变成这：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> map <span class="keyword">from</span> <span class="string">"lodash/fp/map"</span>;</div><div class="line"><span class="keyword">import</span> flatten <span class="keyword">from</span> <span class="string">"lodash/fp/flatten"</span>;</div><div class="line"><span class="keyword">import</span> sortBy <span class="keyword">from</span> <span class="string">"lodash/fp/sortBy"</span>;</div><div class="line"><span class="keyword">import</span> flow <span class="keyword">from</span> <span class="string">"lodash/fp/flow"</span>;</div><div class="line"></div><div class="line">flow(map(x =&gt; [x, x*<span class="number">2</span>]),flatten,sortBy(x =&gt; x))([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]);</div></pre></td></tr></table></figure>
+<blockquote>
+<p>注意：这篇文章中使用了一些现代 JavaScript 的语言特性：模块，箭头函数以及常量变量。如果你以前还未见过他们，那么你应该去查看一下，以得到最好的阅读体验。</p>
+</blockquote>
+<h2 id="背景介绍"><a href="#背景介绍" class="headerlink" title="背景介绍"></a>背景介绍</h2><p>lodash 库是由 John-David Dalton 构建维护，提供了许多 JavaScript 所没有提供的的一致的，高性能的还有一套统一的函数来做一些常见的工作，又或是一些容易出错的任务。在 lodash 当中有超过 300 个函数， 同时，这个包每个月有超过2千万下载量。这是一个梦幻般的作品。</p>
+<blockquote>
+<p>lodash:一个现代化的 javaScript 工具库提供模块化，高性能和扩展化。</p>
+</blockquote>
+<p>它给出一个清晰的方案，让这些细小的工具函数灵活地连接在一起(同时提高某些场景下的性能)。</p>
+<p>考虑以下操作：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">(_.flatten(_.map([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>], x =&gt; [x, x*<span class="number">2</span>]))).slice().sort();</div></pre></td></tr></table></figure></p>
+<p>按理说，下面这样让输入对象从一个函数流动到下一个函数直到结束，这样的形式会比一系列的传递参数更加“清晰”：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">_.chain([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>])</div><div class="line">  .map(x =&gt; [x, x*<span class="number">2</span>])</div><div class="line">  .flatten()</div><div class="line">  .sort()</div><div class="line">  .value();</div></pre></td></tr></table></figure>
+<p>人们真的真的很喜欢 _.chain 而且事情看起来也不错，直到一段时间以后。</p>
+<h2 id="问题所在"><a href="#问题所在" class="headerlink" title="问题所在"></a>问题所在</h2><p>然而圣光之下潜伏着阴影。随着时间流逝，越来越多的函数被加到 lodash 当中；人们忽然意识到其实他们并不需要所有的功能。人们也同时意识到他们会想要添加他们自己的功能：一个新的方法作为 _.chain 的一部分；但是他们发现这些新的方法并不总是能很好的和其他函数一同运行。</p>
+<h2 id="它可以变的十分庞大"><a href="#它可以变的十分庞大" class="headerlink" title="它可以变的十分庞大"></a>它可以变的十分庞大</h2><p>在一个网页应用中引入 <strong>lodash</strong> 可能会让其体积变得相当巨大。现在有两个 <strong>lodash</strong> 版本（v4）存在：一个是堆满所有东西的厨房水槽以及另一个相对少一些功能的更加微小的构建版本。<br>这俩包的大小（min版并且gz压缩过）大约在21kb和4kb左右。要找到一个正确的平衡点是很难的，最理想的情况是只引入那些你需要的，因为大多数的应用其实只用到 <strong>lodash</strong> 全部功能中相当少的一部分。然而，为了要让 <strong>_.chain</strong> 正常工作，你就可能会引入比你需要的用到的更多的部分。</p>
+<p>这是因为 <strong>_.chain</strong> 函数所需要的，对输入来说，是一个（通常是类数组）对象，接着是返回，或者说是输出，会是一个带有当前 <strong>lodash</strong> 中所有可以被链式调用的函数的链对象。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">_.chain = (array) =&gt; wrap(array, _); <span class="comment">// chain 概念的一个粗糙版本</span></div></pre></td></tr></table></figure>
+<p>因此，你只能引入整个 <strong>lodash</strong> 又或者是将你想要添加的方法扩展到全局的 <strong>lodash</strong> 对象上。</p>
+<p>整个引入是最常见的情形，其结果就是你要在你的构建中带上 <strong>lodash</strong> 全家桶。这种做法最为笨重但也最为方便简单<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> _ <span class="keyword">from</span> <span class="string">"lodash"</span>; <span class="comment">// Import everything.</span></div><div class="line">_.chain([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]).map(x =&gt; x+<span class="number">1</span>).value(); <span class="comment">// Use the methods.</span></div></pre></td></tr></table></figure></p>
+<p>为了避免全盘引入带来的巨大构建大小，你可以混合你想要的函数到一个空的 <strong>lodash</strong> 对象中</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> chain <span class="keyword">from</span> <span class="string">"lodash/chain"</span>;</div><div class="line"><span class="keyword">import</span> value <span class="keyword">from</span> <span class="string">"lodash/value"</span>;</div><div class="line"><span class="keyword">import</span> map <span class="keyword">from</span> <span class="string">"lodash/map"</span>;</div><div class="line"><span class="keyword">import</span> mixin <span class="keyword">from</span> <span class="string">"lodash/mixin"</span>;</div><div class="line"><span class="keyword">import</span> _ <span class="keyword">from</span> <span class="string">"lodash/wrapperLodash"</span>; </div><div class="line"></div><div class="line"><span class="comment">// 添加你想要的方法，chain()就会返回拥有这些方法的对象</span></div><div class="line"><span class="comment">// 现在就有了这些方法了.</span></div><div class="line">mixin(_, &#123;map: map, chain: chain, value: value&#125;);</div><div class="line"></div><div class="line">_.chain([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]).map(x =&gt; x+<span class="number">1</span>).value(); <span class="comment">//使用这些方法.</span></div></pre></td></tr></table></figure>
+<p>这显然是一种非常令人费解的处理方案，不得不引入一个空的包裹原型然后在你调用他们以前构建连接他们。更不要说，修改全局变量重来都不是一个好想法。这里有一个由 <strong>lodash</strong> 提供的，不那么令人费解的方法叫 _.runInContext ，但是这个方法最让人伤心的一点是，他只在整体构建的版本中起作用。所以我们陷入了一个两难之地。</p>
+<h2 id="它对扩展不友好"><a href="#它对扩展不友好" class="headerlink" title="它对扩展不友好"></a>它对扩展不友好</h2><p>添加你自己的处理方法比你想象中更糟糕，他们必须被添加或者注入到这个链对象的包裹当中。有少数办法可以通过肮脏而勉强可被接受的实现做到这一点。</p>
+<p>让我们假定一个虚构的函数，我们想要使用它来测试一个字符串数组并返回他们当中所有的元音字符</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">import filter from &quot;lodash/filter&quot;;</div><div class="line">const vowels = (array) =&gt; filter(array, str =&gt; &quot;/[aeiou]/i&quot;.test(str);</div></pre></td></tr></table></figure>
+<p>就像上面提到的，你在整体构建以及模块化构件中都可以使用 <strong>_.mixin</strong>，<br>而在整体构建的版本中，这样会是相当不错的实现：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> _ <span class="keyword">from</span> <span class="string">"lodash"</span>;</div><div class="line">_.mixin(&#123;vowels: vowels&#125;);</div><div class="line">_.chain([<span class="string">'ab'</span>,<span class="string">'cd'</span>,<span class="string">'ef'</span>]).vowels().value(); <span class="comment">// Use the methods.</span></div></pre></td></tr></table></figure>
+<p>这不算太糟糕，但是当我们转向模块化的版本的时候，事情开始变得更加混乱了。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> chain <span class="keyword">from</span> <span class="string">"lodash/chain"</span>;</div><div class="line"><span class="keyword">import</span> value <span class="keyword">from</span> <span class="string">"lodash/value"</span>;</div><div class="line"><span class="keyword">import</span> map <span class="keyword">from</span> <span class="string">"lodash/map"</span>;</div><div class="line"><span class="keyword">import</span> mixin <span class="keyword">from</span> <span class="string">"lodash/mixin"</span>;</div><div class="line"><span class="keyword">import</span> _ <span class="keyword">from</span> <span class="string">"lodash/wrapperLodash"</span>;</div><div class="line">mixin(_, &#123;</div><div class="line"> chain: chain, </div><div class="line"> value: value,</div><div class="line"> map: map, <span class="comment">// Add existing lodash methods you need.</span></div><div class="line"> vowels: vowels, <span class="comment">// Add your own lodash methods.</span></div><div class="line">&#125;);</div><div class="line">_.chain([<span class="string">'ab'</span>,<span class="string">'cd'</span>,<span class="string">'ef'</span>]).vowels().value(); <span class="comment">// Use the methods.</span></div></pre></td></tr></table></figure>
+<p>最纯净无污染使用 <strong>_.chain </strong> 的方法是用 <strong>_.tap </strong> 或者 <strong>_.thru </strong> 虽然这没有修改全局对象并且保留了流式处理结构，然而这个方法仍然需要将一切函数包裹在它们两个方法中的一个里。再一次，整体构建下与模块构建下的例子：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> _ <span class="keyword">from</span> <span class="string">"lodash"</span>;</div><div class="line">_.chain([<span class="string">'ab'</span>,<span class="string">'cd'</span>,<span class="string">'ef'</span>]).thru(vowels).value();</div></pre></td></tr></table></figure>
+<p>并且再一次的，在模块化的版本中变得十分迟钝：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> chain <span class="keyword">from</span> <span class="string">"lodash/chain"</span>;</div><div class="line"><span class="keyword">import</span> value <span class="keyword">from</span> <span class="string">"lodash/value"</span>;</div><div class="line"><span class="keyword">import</span> mixin <span class="keyword">from</span> <span class="string">"lodash/mixin"</span>;</div><div class="line"><span class="keyword">import</span> thru <span class="keyword">from</span> <span class="string">"lodash/thru"</span>;</div><div class="line"><span class="keyword">import</span> _ <span class="keyword">from</span> <span class="string">"lodash/wrapperLodash"</span>;</div><div class="line"></div><div class="line"><span class="comment">// 这样一份文件只需要引入你需要的核心 lodash 方法</span></div><div class="line">mixin(_, &#123;</div><div class="line"> chain: chain, </div><div class="line"> value: value,</div><div class="line"> thru: thru,</div><div class="line">&#125;);</div><div class="line">_.chain([<span class="string">'ab'</span>,<span class="string">'cd'</span>,<span class="string">'ef'</span>]).thru(vowels).value();</div></pre></td></tr></table></figure></p>
+<p>不用这两种模式中任何一种，（相对与模块化的版本而言）是一个非常具有吸引力的想法，那么我们该做些什么呢？</p>
+<h3 id="无事生非，瞎折腾"><a href="#无事生非，瞎折腾" class="headerlink" title="无事生非，瞎折腾"></a>无事生非，瞎折腾</h3><p>对于这些问题有一个现成的解决方案，简单来说就是“不要用 chain”作为核心“来构建一个新的库”。幸运的是，这个问题也是可以被简单解决的，那些合理的方案连同那些漂亮的函数式编程工具已经存在于 <strong>lodash</strong> 工具箱中了。</p>
+<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><p>事实证明，<strong>_.chain</strong> 完全可以被别的范式所替代。在 <strong>lodash</strong> 中所提供的关于这种范式的两个的关键的机制是 函数柯里化和函数组合；这两种工具在函数式语言中都是相当普通的（比方说 Haskell, Elm, OCaml 和 PureScript），但是令人难以相信的是在普通的 javaScript 世界中这是不支持的</p>
+<h2 id="柯里化"><a href="#柯里化" class="headerlink" title="柯里化"></a>柯里化</h2><p>要提到柯里化，我们必须首先说说关于偏函数，偏函数的意思是输入一个有 n个参数的函数然后返回一个新的函数，只有 n-i个参数（假定i \&lt; n）,i个参数具体是多少这由那个新的函数来控制。这就是说，除了最后一个参数，我们可以按顺序“锁定”每一个参数（不保留一个参数，这个函数就没有偏向了）。在 lodash 当中我们可以用 _.partial 做到这件事：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> add = (a, b) =&gt; a + b;</div><div class="line"><span class="keyword">const</span> add5 = _.partial(add, <span class="number">5</span>); <span class="comment">// 现在参数a被限定为 5</span></div><div class="line"><span class="keyword">const</span> add5 = (b) =&gt; <span class="number">5</span> + b; <span class="comment">// 这是他内部实际上的样子</span></div><div class="line">add5(<span class="number">3</span>); <span class="comment">// 等价于 add(5, 3);</span></div></pre></td></tr></table></figure></p>
+<p>函数柯里化是一个连续的顺序的偏函数，直到最后一个参数也被输入了的时候，这个函数才会返回其结果。一个进过柯里化的版本的加法函数会像是这样的:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> add = (a) =&gt; (b) =&gt; a + b;</div><div class="line">add(<span class="number">1</span>)(<span class="number">2</span>); <span class="comment">// 重复的偏函数</span></div></pre></td></tr></table></figure>
+<p>这就可以创造出一个将除了最后一个参数以外，其他全部的参数的值都确定了的新函数。举个例子，我们可将 add 函数进行柯里化，并得到一个总是加5的新函数：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> add5 = add(<span class="number">5</span>); <span class="comment">// 内含偏函数</span></div></pre></td></tr></table></figure></p>
+<h2 id="组合"><a href="#组合" class="headerlink" title="组合"></a>组合</h2><p>函数组合能让你实现 <strong>_.chain</strong> 最重要的本质功能（将结果从一个步骤传递到下一个步骤），而函数组合最需要说明的一点就是他只适用于函数。不过，它仍然能让那些非常长的，结合在一起的函数的可读性得到显著地提高。举个例子。一个这样的组合版本：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> add8 = (x) =&gt; add5(add3(x));</div></pre></td></tr></table></figure></p>
+<p>可以通过用组合的方式改写成更加清晰形式:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> add8 = compose(add5, add3);</div></pre></td></tr></table></figure></p>
+<p>你将会看见，通过这两个我们可以从 <strong>lodash</strong> 现有功能中得到元素，我们可以获得与 <strong>_.chain</strong> 相同的行为而又没有其不足之处。</p>
+<h2 id="都用起来"><a href="#都用起来" class="headerlink" title="都用起来"></a>都用起来</h2><p>所以说，还记得柯里化就是让你的参数是按顺序地偏函数化。如果我们着眼于看大多数现有的 <strong>lodash</strong> 函数，会发现他们都把 数组作为他们的第一个参数：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> <span class="string">"map"</span> <span class="keyword">from</span> <span class="string">"lodash/map"</span>;</div><div class="line">map([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>], (x) =&gt; x*<span class="number">2</span>);</div></pre></td></tr></table></figure></p>
+<p>这就是为什么我们无法偏函数化映射函数到_.map的原因。我们希望让这变为可能，那么全部这些函数，我们通常只需要输入一个数组作为他们唯一的输入：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> double = map((x) =&gt; x*<span class="number">2</span>); <span class="comment">// 我们想要这样</span></div><div class="line">double([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]); <span class="comment">// 现在这个操作只需要输入数组</span></div></pre></td></tr></table></figure>
+<p>感谢 <strong>lodash</strong> 提供所有这些函数的函数式的兼容，经过柯里化的，数据在后的版本，都在 fp 这个包当中。这个包是支持cherry-picking的，可以在v4.1.0以后的 <strong>lodash</strong> 中找到（即我们想要的，保持构建大小下降）</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> map <span class="keyword">from</span> <span class="string">"lodash/fp/map"</span>;</div><div class="line">map((x) =&gt; x*<span class="number">2</span>)([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]); <span class="comment">// 我们有了它！</span></div></pre></td></tr></table></figure>
+<p>这个 rearg 的行为的文档(以及其他更多的文档)同样是于 <strong>lodash/fp</strong> 文档的一部分 。所以现在我们有了全部的工具来移除掉我们原来的 <strong>_.chain</strong> 了</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> _ <span class="keyword">from</span> <span class="string">"lodash"</span>;</div><div class="line">_.chain([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>])</div><div class="line">  .map(x =&gt; [x, x*<span class="number">2</span>])</div><div class="line">  .flatten()</div><div class="line">  .sort()</div><div class="line">  .value();</div></pre></td></tr></table></figure>
+<p>通过使用 <strong>compose</strong> 来组合先前在上面 chain中提到的单个函数，我们可以到的同样的功能。</p>
+ <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> map <span class="keyword">from</span> <span class="string">"lodash/fp/map"</span>;</div><div class="line"><span class="keyword">import</span> flatten <span class="keyword">from</span> <span class="string">"lodash/fp/flatten"</span>;</div><div class="line"><span class="keyword">import</span> sortBy <span class="keyword">from</span> <span class="string">"lodash/fp/sortBy"</span>;</div><div class="line"><span class="keyword">import</span> compose <span class="keyword">from</span> <span class="string">"lodash/fp/compose"</span>;</div><div class="line">compose(</div><div class="line">  sortBy(x =&gt; x), </div><div class="line">  flatten, </div><div class="line">  map(x =&gt; [x, x*<span class="number">2</span>])</div><div class="line">)([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]);</div></pre></td></tr></table></figure>
+<p>这实际上可以得到你之前用 <strong>_.chain</strong> 所做的全部功能的一个1比1的精确映射。而这仅仅是在语法有些许不同。</p>
+<h2 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h2><p>你可能会想要问一些（也确实该问）问题，比如:’为什么那些参数被逆序了？’，“<strong>_.value()</strong> 到哪里去了?”以及最为重要的“为什么它不工作？！”</p>
+<h2 id="参数的顺序"><a href="#参数的顺序" class="headerlink" title="参数的顺序"></a>参数的顺序</h2><p>参数看起来是逆向的，这是因为这个函数的正常计算顺序就是这样的。在原始的代码中，map 在第一位，然后是 flatten 最后是 sort 。还记得 compose 是如何工作吗，你会看到这到底是发生了什么事：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">compose(</div><div class="line">  sortBy(x =&gt; x), </div><div class="line">  flatten, </div><div class="line">  map(x =&gt; [x, x*<span class="number">2</span>])</div><div class="line">);</div></pre></td></tr></table></figure></p>
+<p>等同于：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">sortBy(x =&gt; x)(</div><div class="line">  flatten(</div><div class="line">    map(x =&gt; [x, x*<span class="number">2</span>])([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>])</div><div class="line">  )</div><div class="line">);</div></pre></td></tr></table></figure></p>
+<p>这里首先计算的是 map 然后将结果传递给flatten 最后传递给sort。不过，因为这还是不够直观。<strong>lodash</strong> 提供了一个反向的组合机制叫 <strong>flow</strong>，它允许将函数排序成相反的（或者说是更加自然的）顺序。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> map <span class="keyword">from</span> <span class="string">"lodash/fp/map"</span>;</div><div class="line"><span class="keyword">import</span> flatten <span class="keyword">from</span> <span class="string">"lodash/fp/flatten"</span>;</div><div class="line"><span class="keyword">import</span> sortBy <span class="keyword">from</span> <span class="string">"lodash/fp/sortBy"</span>;</div><div class="line"><span class="keyword">import</span> flow <span class="keyword">from</span> <span class="string">"lodash/fp/flow"</span>;</div><div class="line">flow(</div><div class="line">  map(x =&gt; [x, x*<span class="number">2</span>]), </div><div class="line">  flatten, </div><div class="line">  sortBy(x =&gt; x)</div><div class="line">)([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]);</div></pre></td></tr></table></figure>
+<h3 id="没有包裹对象"><a href="#没有包裹对象" class="headerlink" title="没有包裹对象"></a>没有包裹对象</h3><p>由于组合工作在真是的数组之上，没有了 lodash 的 chain 包裹对象， 被  <strong>_.chain</strong> 用来从 chain 对象中提取出真正的计算结果的 <strong>_.value()</strong> 方法自然也不再需要了。</p>
+<p>有趣的是：缺少了整体构建也意味着你失去了 <strong>lodash</strong> 提供惰性计算的性能好处。然而缺少 <strong>_.chain</strong> 却不会。</p>
+<blockquote>
+<p>实际上我们的组合化函数 flow/flowRight 在内部使用了链化(当处于整体构建的时候)来支持快速地组合已经组合过的方法。</p>
+</blockquote>
+<p>由于这种特定的应用场景在一般的前端 <strong>lodash</strong> 使用场景中只有相当少的一部分，其性能的差异可以忽略不计。</p>
+<h2 id="小心柯里化"><a href="#小心柯里化" class="headerlink" title="小心柯里化"></a>小心柯里化</h2><p>不是所有 <strong>_.chain</strong> 中的方法都能简单的复制黏贴到函数组合这个新大陆上。要记住，为了让一切工作，<strong>flow</strong> 或者 <strong>compose</strong> 必须调用一系列的函数，这些函数需要返回其每个后续函数所期望的，正确类型的返回值（这个场景中是需要一路数组到底）。</p>
+<p>让我们看看这个 chain 过的 sort ：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">_.chain([<span class="number">1</span>, <span class="number">6</span>, <span class="number">2</span>]).sortBy().value();</div></pre></td></tr></table></figure></p>
+<p>而这个看起来像是函数其组合化的版本却不会工作：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">flow(sortBy)([<span class="number">1</span>, <span class="number">6</span>, <span class="number">2</span>]);</div></pre></td></tr></table></figure></p>
+<p>为什么？ 嗯，这是因为 sortBy 是柯里化的，并且类型签名看起来会像是这样：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> sortBy = (sorter = _.identity) =&gt; (array) =&gt; ...</div></pre></td></tr></table></figure></p>
+<p>这就导致了单个参数的调用会返回一个返回初始数组的函数——完全没有得到 <strong>sortBy</strong> 函数所期望的有效排序，这样当然和组合链中其他的函数不兼容。这可以归结于：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sortBy([<span class="number">1</span>, <span class="number">6</span>, <span class="number">2</span>]);</div></pre></td></tr></table></figure>
+<p>但你真正想要的是<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sortBy(<span class="comment">/* _.identity */</span>)([<span class="number">1</span>, <span class="number">6</span>, <span class="number">2</span>]);</div></pre></td></tr></table></figure></p>
+<p>将其转化为最终的组合形式：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">flow(sortBy())([<span class="number">1</span>, <span class="number">6</span>, <span class="number">2</span>]);</div></pre></td></tr></table></figure></p>
+<p>由于 Javascript 是无类型的，你将不得不去小心翼翼地处理你自己这些错误，一个流式类型检查器是一个非常吸引人的选项，比如说能给一些层级的消息，可能会对定位这一类特定的问题有所帮助。</p>
+<p><strong>lodash/fp</strong> 函数组可能相比起他的原生版本会有稍微的不同。如果在一些场合你忽略了他，这里有一个完整的指导在  <a href="https://github.com/lodash/lodash/wiki/FP-Guide" target="_blank" rel="external">wiki 页</a>上，是关于这个函数式大家族在 <strong>lodash</strong> 中可用部分的说明。</p>
+<h2 id="未来展望"><a href="#未来展望" class="headerlink" title="未来展望"></a>未来展望</h2><p>这整个范式都不是新鲜的：现有的语言已经利用这些技巧非常久了。JavaScript 也在缓慢的开始向结合越来越多的像这样的函数式的工具集。这里有许多非常好的关于 <a href="https://medium.com/making-internets/a-bird-s-eye-view-of-functional-programming-7325853ff9ad" target="_blank" rel="external">函数式风格</a>的想法，以及其他一些让你<a href="https://drboolean.gitbooks.io/mostly-adequate-guide/" target="_blank" rel="external">开始思考关于函数式</a>.的资源。</p>
+<p>举个例子，在 Haskell 中一个函数的声明总是柯里化的，并且可以被解读为一个函数接受一个参数然后返回一个新的函数去接受其他的参数:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">add :: Num -&gt; Num -&gt; Num</div><div class="line">add = x y = x + y</div><div class="line">add 2 4</div></pre></td></tr></table></figure>
+<p>对于经过我们的柯里化的 JavaScript（唯一的一个不同之处就是，JavaScript 需要更加明确的设置这些函数的调用）来说是不是很亲切：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//          Num -&gt; Num -&gt; Num</span></div><div class="line"><span class="keyword">const</span> add = (a) =&gt; (b) =&gt; a + b;</div></pre></td></tr></table></figure></p>
+<p>haskell 有着完全等价，语言级别的函数组合功能的提供，以点符号作为操作符。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">add8 = add5 . add3</div></pre></td></tr></table></figure></p>
+<p>又是如此，看起来如此熟悉而又比在 javaScript 中更加优雅：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//                   add5 . add3</span></div><div class="line"><span class="keyword">const</span> add8 = compose(add5,  add3);</div></pre></td></tr></table></figure></p>
+<p>Haskell不是唯一一种语言提供了这些特性作为一级类型支持。比如说，Elixir 和 bash scripts 有管道操作符（其标记分别像是这样 <strong>|&gt;</strong> and <strong>|</strong> ）来等价于 <strong>flow</strong> 操作。</p>
+<p>为了不被淘汰，这里现在有个javaScript的<a href="https://github.com/mindeavor/es-pipeline-operator" target="_blank" rel="external">语言扩展题案</a>，是关于添加|&gt;符号，来提供给你一些非常清晰美观的代码：</p>
+ <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</div><div class="line"> |&gt; map(x =&gt; [x, x*<span class="number">2</span>])</div><div class="line"> |&gt; flatten, </div><div class="line"> |&gt; sortBy(x =&gt; x);</div></pre></td></tr></table></figure>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p><strong>lodash</strong> 工具集唯一一个由于类似于这两种反范式行为之一， <a href="https://jquery.com/" target="_blank" rel="external">没有一个好的命名</a>以及因为把全部方法都链接到全局变量中而导致小的可怜的利用率，而遭到指责的框架。</p>
+<p>虽然没有银弹，但是有效的函数式工具可以优雅的解决一些特定类型的问题。一旦你从如何将一切用点符号分割的境地跳脱出来。组合是一个在许多情形下都非常优秀的抽象概念， 当然也提供了一个非常清晰的，令人信服的 <strong>_.chain</strong> 替代方案。</p>
+<p>我们这个简单的例子，其完整的形式是这样的：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="string">"presets"</span>: [<span class="string">"metalab"</span>]</div><div class="line">&#125;</div><div class="line">.babelrc</div><div class="line"><span class="keyword">import</span> _ <span class="keyword">from</span> <span class="string">'lodash'</span>;</div><div class="line"></div><div class="line"><span class="built_in">console</span>.log(_.chain([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]).map(x =&gt; [x,x*<span class="number">2</span>]).flatten().sort().value());</div><div class="line">app-chain.js </div><div class="line"><span class="keyword">import</span> map <span class="keyword">from</span> <span class="string">"lodash/fp/map"</span>;</div><div class="line"><span class="keyword">import</span> flatten <span class="keyword">from</span> <span class="string">"lodash/fp/flatten"</span>;</div><div class="line"><span class="keyword">import</span> sortBy <span class="keyword">from</span> <span class="string">"lodash/fp/sortBy"</span>;</div><div class="line"><span class="keyword">import</span> flow <span class="keyword">from</span> <span class="string">"lodash/fp/flow"</span>;</div><div class="line"></div><div class="line"><span class="keyword">const</span> run = flow(map(x =&gt; [x,x*<span class="number">2</span>]), flatten, sortBy(x=&gt;x));</div><div class="line"><span class="built_in">console</span>.log(run([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]));</div><div class="line">app-flow.js </div><div class="line">&#123;</div><div class="line">  <span class="string">"name"</span>: <span class="string">"medium-example"</span>,</div><div class="line">  <span class="string">"version"</span>: <span class="string">"0.1.0"</span>,</div><div class="line">  <span class="string">"scripts"</span>: &#123;</div><div class="line">    <span class="string">"build:flow"</span>: <span class="string">"webpack -p --config ./webpack-flow.js"</span>,</div><div class="line">    <span class="string">"build:chain"</span>: <span class="string">"webpack -p --config ./webpack-chain.js"</span>,</div><div class="line">    <span class="string">"build"</span>: <span class="string">"npm run build:flow &amp;&amp; npm run build:chain"</span></div><div class="line">  &#125;,</div><div class="line">  <span class="string">"dependencies"</span>: &#123;</div><div class="line">    <span class="string">"babel-loader"</span>: <span class="string">"^6.2.1"</span>,</div><div class="line">    <span class="string">"babel-core"</span>: <span class="string">"^6.4.5"</span>,</div><div class="line">    <span class="string">"babel-preset-metalab"</span>: <span class="string">"^0.2.0"</span></div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line">package.json</div><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">  entry: &#123;</div><div class="line">    chain: <span class="string">'./app-chain.js'</span>,</div><div class="line">  &#125;,</div><div class="line">  <span class="built_in">module</span>: &#123;</div><div class="line">    loaders: [&#123;</div><div class="line">      test: <span class="regexp">/\.js$/</span>,</div><div class="line">      loader: <span class="string">"babel-loader?compact=false"</span></div><div class="line">    &#125;],</div><div class="line">  &#125;,</div><div class="line">  output: &#123;</div><div class="line">    filename: <span class="string">"[name].js"</span>,</div><div class="line">  &#125;,</div><div class="line">&#125;;</div><div class="line">webpack-chain.js </div><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">  entry: &#123;</div><div class="line">    flow: <span class="string">'./app-flow.js'</span>,</div><div class="line">  &#125;,</div><div class="line">  <span class="built_in">module</span>: &#123;</div><div class="line">    loaders: [&#123;</div><div class="line">      test: <span class="regexp">/\.js$/</span>,</div><div class="line">      loader: <span class="string">"babel-loader?compact=false"</span></div><div class="line">    &#125;],</div><div class="line">  &#125;,</div><div class="line">  output: &#123;</div><div class="line">    filename: <span class="string">"[name].js"</span>,</div><div class="line">  &#125;,</div><div class="line">&#125;;</div><div class="line"> rawwebpack-flow.js</div></pre></td></tr></table></figure></p>
+<p>通过wepack来构建：</p>
+<p>其生产模式下的输出文件小了 1.4倍同时webpack的编译时间也快了将近 2倍，就像是失去了体重一样，你的结果将会非常依赖于你框架的大小。随着 tree shaking <a href="http://www.2ality.com/2015/12/webpack-tree-shaking.html" target="_blank" rel="external">tree shaking</a>的到来（除非你使用一个 <a href="https://github.com/lodash/babel-plugin-lodash" target="_blank" rel="external">babel 的插件</a>，就目前而言连 lodash-es 都不被支持）以及其他的智能构建工具。要让高效益的网页应用成为现实，真正的模块化还会有很长一段路要走。</p>
+<p>抗击黑夜，振兴javaScript 从停止使用 _.chain 开始。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/翻译/" rel="tag">#翻译</a>
+          
+            <a href="/tags/javascript/" rel="tag">#javascript</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/01/20/让 linting 再一次伟大/" rel="next" title="【译】让 linting 再一次伟大!">
+                <i class="fa fa-chevron-left"></i> 【译】让 linting 再一次伟大!
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://cloud.githubusercontent.com/assets/18730194/15146790/dd39acee-16ef-11e6-8ee7-093d1ce74fce.png"
+               alt="Fszer" />
+          <p class="site-author-name" itemprop="name">Fszer</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">12</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么说使用-chain-是个错误"><span class="nav-number">1.</span> <span class="nav-text">为什么说使用 _.chain 是个错误</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#为什么说使用-chain-是个错误-1"><span class="nav-number">1.1.</span> <span class="nav-text">为什么说使用 _.chain 是个错误</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#背景介绍"><span class="nav-number">2.</span> <span class="nav-text">背景介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题所在"><span class="nav-number">3.</span> <span class="nav-text">问题所在</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#它可以变的十分庞大"><span class="nav-number">4.</span> <span class="nav-text">它可以变的十分庞大</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#它对扩展不友好"><span class="nav-number">5.</span> <span class="nav-text">它对扩展不友好</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#无事生非，瞎折腾"><span class="nav-number">5.1.</span> <span class="nav-text">无事生非，瞎折腾</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解决方案"><span class="nav-number">6.</span> <span class="nav-text">解决方案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#柯里化"><span class="nav-number">7.</span> <span class="nav-text">柯里化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#组合"><span class="nav-number">8.</span> <span class="nav-text">组合</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#都用起来"><span class="nav-number">9.</span> <span class="nav-text">都用起来</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#注意"><span class="nav-number">10.</span> <span class="nav-text">注意</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参数的顺序"><span class="nav-number">11.</span> <span class="nav-text">参数的顺序</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#没有包裹对象"><span class="nav-number">11.1.</span> <span class="nav-text">没有包裹对象</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小心柯里化"><span class="nav-number">12.</span> <span class="nav-text">小心柯里化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#未来展望"><span class="nav-number">13.</span> <span class="nav-text">未来展望</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">14.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Fszer</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>

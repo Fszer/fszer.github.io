@@ -1,0 +1,628 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="翻译,linting," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="作为一个前端开发者我总是寻找一些可以使得反馈路径尽可能短的工具，而我相信 linting 会是其中一个。当然，有了 IDE 与文本编辑器的集成你一定用过它们。另一方面，还有那些云端代码质量工具，比如像是 CodeClimate 等一些工具，又或者是你自定义的 CI 工具，因而你大概也有用到。不过在这两者之间有一个小小的夹缝。
+想象以下情形：你向代码仓库提交了一个 PR， 里面包含了一些类似检查启用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【译】让 linting 再一次伟大!">
+<meta property="og:url" content="http://yoursite.com/2017/01/20/让 linting 再一次伟大/index.html">
+<meta property="og:site_name" content="聆听群山的怒号">
+<meta property="og:description" content="作为一个前端开发者我总是寻找一些可以使得反馈路径尽可能短的工具，而我相信 linting 会是其中一个。当然，有了 IDE 与文本编辑器的集成你一定用过它们。另一方面，还有那些云端代码质量工具，比如像是 CodeClimate 等一些工具，又或者是你自定义的 CI 工具，因而你大概也有用到。不过在这两者之间有一个小小的夹缝。
+想象以下情形：你向代码仓库提交了一个 PR， 里面包含了一些类似检查启用">
+<meta property="og:image" content="http://p0.qhimg.com/t0199e4b94cede7a845.png">
+<meta property="og:image" content="http://p0.qhimg.com/t0147870cf081123364.png">
+<meta property="og:updated_time" content="2017-03-11T15:16:28.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【译】让 linting 再一次伟大!">
+<meta name="twitter:description" content="作为一个前端开发者我总是寻找一些可以使得反馈路径尽可能短的工具，而我相信 linting 会是其中一个。当然，有了 IDE 与文本编辑器的集成你一定用过它们。另一方面，还有那些云端代码质量工具，比如像是 CodeClimate 等一些工具，又或者是你自定义的 CI 工具，因而你大概也有用到。不过在这两者之间有一个小小的夹缝。
+想象以下情形：你向代码仓库提交了一个 PR， 里面包含了一些类似检查启用">
+<meta name="twitter:image" content="http://p0.qhimg.com/t0199e4b94cede7a845.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> 【译】让 linting 再一次伟大! | 聆听群山的怒号 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">聆听群山的怒号</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                【译】让 linting 再一次伟大!
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-01-20T19:20:43+08:00" content="2017-01-20">
+              2017-01-20
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/翻译/" itemprop="url" rel="index">
+                    <span itemprop="name">翻译</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>作为一个前端开发者我总是寻找一些可以使得反馈路径尽可能短的工具，而我相信 linting 会是其中一个。当然，有了 IDE 与文本编辑器的集成你一定用过它们。另一方面，还有那些云端代码质量工具，比如像是 <a href="https://codeclimate.com/" target="_blank" rel="external">CodeClimate</a> 等一些工具，又或者是你自定义的 CI 工具，因而你大概也有用到。不过在这两者之间有一个小小的夹缝。</p>
+<p>想象以下情形：你向代码仓库提交了一个 PR， 里面包含了一些类似检查启用与一些快速提交的代码。几分钟之后，在你已经进入另一个任务状态中的时候，你突然收到一份邮件说 CI 步骤失败了，而且很有可能是因为忘记了分号！切换任务，修复它，提交，等待 CI 通过…… “我希望我可以在提交改动到代码仓库 <em>以前</em> lint 这份代码 ” - 我无数次这样想到。</p>
+<p><img src="http://p0.qhimg.com/t0199e4b94cede7a845.png" alt=""></p>
+<p>但很可惜的是，即使是在有 IDE 集成 linting 的地方，也没有能阻止我和我的同事在不同的项目中提交了带有 linting 错误的代码。在多数时候这不都是一个大问题，然而在极少数的一些情况下，这会令我在这些提交后，反过来花费数小时去寻找 bug 。明明只要我们不允许推送这些 💩 代码到代码仓库中，这些浪费时间的行为就可以被轻易的阻止！<br><a id="more"></a></p>
+<h4 id="Pre-commit-钩子"><a href="#Pre-commit-钩子" class="headerlink" title="Pre-commit 钩子"></a>Pre-commit 钩子</h4><p>“只要设置 Pre-commit 钩子就好了嘛” 你可能也想到这一点。至少我想到了，在 git 里面，你可以 “hook” 到工作流中几乎是任意的时间点上，运行自定义的脚本，无论是在提交，推送或者是合并的时候。这是一个非常有用但被低估的的工具，最有可能是因为它们：</p>
+<ul>
+<li>比较不容易去设置与管理</li>
+<li>几乎不可能在整个团队中共享它</li>
+</ul>
+<p>这里有一个非常棒的<a href="https://www.npmjs.com/package/pre-commit" target="_blank" rel="external">pre-commit</a> 包在 npm 上，来解决这些问题。它允许你在创建一个 commit 以前，运行任意来自你的 package.json 中指定的脚本。从这里可以看到，用它安装一个运行 ESLint 到所有 *.js 文件的 pre-commit hook 是多么容易</p>
+<p>通常到这里就可以了，但是在大型项目中，这可能要花费相当长的一段时间来去跑完这些 linter。还有另一个问题是，这会显示所有的 linting 错误，而不仅仅只是文件中你改动过的部分。</p>
+<p>针对提交中的改动文件使用 linter 不就是一个好的想法吗？这可以同时解决上面俩问题：通常来说，我们也不会在一次提交中推送过多文件（如果你是这样的人，请考虑分割你的提交为更加细小的提交）。而且这确实可以跟自定义的脚本协同工作，但是这样太过于乏味了。相反的，我更愿意在 package.json 中声明 pre-commit linting 配置以及其他的任务。</p>
+<h3 id="lint-staged-介绍"><a href="#lint-staged-介绍" class="headerlink" title="lint-staged 介绍"></a>lint-staged 介绍</h3><p>Lint-staged 是一个 Node.js 脚本，它允许你以最近暂存文件为目标，运行任意脚本。在 git 中，在你 “添加” 一个文件到一个提交当中以后，这个文件会处于“暂存”状态。这就允许你仔细的选择出那些将会进入到你下一个提交中的文件。</p>
+<p>安装配置起来十分直截了当：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm install --save-dev lint-staged pre-commit</div></pre></td></tr></table></figure>
+<p>然后添加一个带有glob模式匹配的命令列表，来匹配那些命令的目标：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">// package.json</div><div class="line">...</div><div class="line">&quot;lint-staged&quot;: &#123;</div><div class="line"> &quot;*.js&quot;: &quot;eslint&quot;,</div><div class="line"> &quot;*.css&quot;: &quot;stylelint&quot;</div><div class="line">&#125;</div><div class="line">...</div></pre></td></tr></table></figure>
+<p>这就可以对<em>最近暂存文件</em>中的<strong>*.js</strong> 文件跑 ESLint， <strong>*.css</strong> 样式文件跑 stylelint。如果这些脚本中有任何检查失败 ，这个提交就会被拒绝。 </p>
+<p><img src="http://p0.qhimg.com/t0147870cf081123364.png" alt=""></p>
+<p>并且因为这是使用了下面的 <strong>npm run</strong> 命令控制，它甚至可以从 package.json 中运行一些功能（举个例子，可以传递一些参数给 linters）。也就是说，如果你使用了 SCSS 语法，你就可以通过传递相应的参数给 stylelint，从而在 stylelint 中启用 scss 语法支持。下面是一份可供参考的配置：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">// package.json</div><div class="line">...</div><div class="line">&quot;scripts&quot; &#123;</div><div class="line"> &quot;lint-staged&quot;: &quot;lint-staged&quot;,</div><div class="line"> &quot;stylelint-staged&quot;: &quot;stylelint --syntax scss&quot;</div><div class="line">&#125;,</div><div class="line">&quot;lint-staged&quot;: &#123;</div><div class="line"> &quot;*.js&quot;: &quot;eslint&quot;,</div><div class="line"> &quot;*.scss&quot;: &quot;stylelint-staged&quot;</div><div class="line">&#125;,</div><div class="line">&quot;pre-commit&quot;: &quot;lint-staged&quot;</div><div class="line">...</div></pre></td></tr></table></figure>
+<p>lint-staged 的源码托管在GitHub上：<a href="https://github.com/okonet/lint-staged" target="_blank" rel="external">https://github.com/okonet/lint-staged</a>。如果你有什么问题或者建议，请提交 issue 或者给我发个 PR ，来让我了解你的想法。</p>
+<p>lint-staged source code is on GitHub: <a href="https://github.com/okonet/lint-staged" target="_blank" rel="external">https://github.com/okonet/lint-staged</a>. If you have problems or suggestions, please open an issue or send me a PR and let me know what you think.</p>
+<p>原文 <a href="https://medium.com/@okonetchnikov/make-linting-great-again-f3890e1ad6b8" target="_blank" rel="external">https://medium.com/@okonetchnikov/make-linting-great-again-f3890e1ad6b8</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/翻译/" rel="tag">#翻译</a>
+          
+            <a href="/tags/linting/" rel="tag">#linting</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/08/23/请拿开你的初级开发者名号/" rel="next" title="请把“初级”从你的开发者名号上拿开">
+                <i class="fa fa-chevron-left"></i> 请把“初级”从你的开发者名号上拿开
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/02/20/【译】为什么说使用 `_.chain` 是个错误/" rel="prev" title="【译】为什么说使用 `_.chain` 是个错误">
+                【译】为什么说使用 `_.chain` 是个错误 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://cloud.githubusercontent.com/assets/18730194/15146790/dd39acee-16ef-11e6-8ee7-093d1ce74fce.png"
+               alt="Fszer" />
+          <p class="site-author-name" itemprop="name">Fszer</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">12</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Pre-commit-钩子"><span class="nav-number">1.</span> <span class="nav-text">Pre-commit 钩子</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#lint-staged-介绍"><span class="nav-number"></span> <span class="nav-text">lint-staged 介绍</span></a></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Fszer</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>

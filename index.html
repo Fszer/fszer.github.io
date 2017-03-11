@@ -250,6 +250,455 @@
             
               
                 
+                <a class="post-title-link" href="/2017/02/20/【译】为什么说使用 `_.chain` 是个错误/" itemprop="url">
+                  【译】为什么说使用 `_.chain` 是个错误
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-02-20T19:20:43+08:00" content="2017-02-20">
+              2017-02-20
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/翻译/" itemprop="url" rel="index">
+                    <span itemprop="name">翻译</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="为什么说使用-chain-是个错误"><a href="#为什么说使用-chain-是个错误" class="headerlink" title="为什么说使用 _.chain 是个错误"></a>为什么说使用 <code>_.chain</code> 是个错误</h2><p>将你的代码从<code>_.chain</code>的枷锁中解放出来。</p>
+<p>图片来源于Jeremy Booth; 特别要感谢Eric Baer, Brooklyn Zelenka &amp; Jason Trill 他们的无私的帮助和知识;也特别要感谢 John-David Dalton 不仅是因为 lodash 本身，还有他谦虚的指出了这篇文章的一些不准确之处以及介绍了许多有关 lodash 内部工作原理的花边知识。</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2017/02/20/【译】为什么说使用 `_.chain` 是个错误/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/01/20/让 linting 再一次伟大/" itemprop="url">
+                  【译】让 linting 再一次伟大!
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-01-20T19:20:43+08:00" content="2017-01-20">
+              2017-01-20
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/翻译/" itemprop="url" rel="index">
+                    <span itemprop="name">翻译</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>作为一个前端开发者我总是寻找一些可以使得反馈路径尽可能短的工具，而我相信 linting 会是其中一个。当然，有了 IDE 与文本编辑器的集成你一定用过它们。另一方面，还有那些云端代码质量工具，比如像是 <a href="https://codeclimate.com/">CodeClimate</a> 等一些工具，又或者是你自定义的 CI 工具，因而你大概也有用到。不过在这两者之间有一个小小的夹缝。</p>
+<p>想象以下情形：你向代码仓库提交了一个 PR， 里面包含了一些类似检查启用与一些快速提交的代码。几分钟之后，在你已经进入另一个任务状态中的时候，你突然收到一份邮件说 CI 步骤失败了，而且很有可能是因为忘记了分号！切换任务，修复它，提交，等待 CI 通过…… “我希望我可以在提交改动到代码仓库 <em>以前</em> lint 这份代码 ” - 我无数次这样想到。</p>
+<p><img src="http://p0.qhimg.com/t0199e4b94cede7a845.png" alt=""></p>
+<p>但很可惜的是，即使是在有 IDE 集成 linting 的地方，也没有能阻止我和我的同事在不同的项目中提交了带有 linting 错误的代码。在多数时候这不都是一个大问题，然而在极少数的一些情况下，这会令我在这些提交后，反过来花费数小时去寻找 bug 。明明只要我们不允许推送这些 💩 代码到代码仓库中，这些浪费时间的行为就可以被轻易的阻止！<br>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2017/01/20/让 linting 再一次伟大/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/08/23/请拿开你的初级开发者名号/" itemprop="url">
+                  请把“初级”从你的开发者名号上拿开
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-08-23T22:29:28+08:00" content="2016-08-23">
+              2016-08-23
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>我反对“初级开发者”这个头衔，因为它让我感到相当的困扰。虽然这看起来像是胡言乱语，而且也没有什么意义。但是一个来自推特的发言让我相信这仍有写出来的价值。</p>
+<blockquote>
+<p>非常反感我们把那些拥有 2年以上开发经验 （一个理论物理学士学位或者十年经验的艺术家）称之为’初级’<br>— Yehuda Katz (@wycats) <a href="https://twitter.com/wycats/status/673913834713706496">December 7, 2015</a></p>
+</blockquote>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/08/23/请拿开你的初级开发者名号/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/08/21/深层嵌套的Promise链解明/" itemprop="url">
+                  【译】深层嵌套的Promise链解明
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-08-21T23:53:02+08:00" content="2016-08-21">
+              2016-08-21
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/翻译/" itemprop="url" rel="index">
+                    <span itemprop="name">翻译</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>如果你已经写了一段时间的 JavaScript 代码，你大概会听过像是<strong>回调地狱</strong>或者是<strong>噩梦金字塔</strong> 这类的说法。在几年前 promises 被添加到 JavaScript 中的时候。我记得我阅读到大量博客文章宣称回调地狱这类问题会得到解决。不幸的是，这看法稍微太乐观了些。随着越来越多的网页的 API 变得以 promise 为基础。我们会证明即使是 promise 也不能阻止我们写出过分嵌套且难以阅读的代码。</p>
+<p>这些天我在完全基于 promise 的Service Worker 脚本中看到这件事发生了许多次。特别是在那些应当向我们展示 Service Worker 正确使用方法的博客文章跟教程当中。</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/08/21/深层嵌套的Promise链解明/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/08/05/build-your-first-thing-with-web-assembly/" itemprop="url">
                   【翻译】建立你的第一个 WebAssembly 应用
                 </a>
@@ -920,220 +1369,13 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/08/22/二叉树/" itemprop="url">
-                  二叉树
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-08-22T17:05:52+08:00" content="2015-08-22">
-              2015-08-22
-            </time>
-          </span>
-
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="二叉树"><a href="#二叉树" class="headerlink" title="二叉树"></a>二叉树</h1><h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>在计算机科学中，二叉树是每个节点最多有两个子树的树结构。<br>通常子树被称作“左子树”（left subtree）和“右子树”（right subtree）。<br>二叉树常被用于实现二叉查找树和二叉堆。<br>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/08/22/二叉树/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2015/08/20/内存池/" itemprop="url">
-                  内存池
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-08-20T23:04:41+08:00" content="2015-08-20">
-              2015-08-20
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/总结/" itemprop="url" rel="index">
-                    <span itemprop="name">总结</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="内存池原理说明"><a href="#内存池原理说明" class="headerlink" title="内存池原理说明"></a>内存池原理说明</h1><p>本文是对网上看到的几份相关文档的简单总结<br>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/08/20/内存池/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+  </nav>
+
 
 
           </div>
@@ -1172,7 +1414,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">8</span>
+              <span class="site-state-item-count">12</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1189,7 +1431,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-count">18</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -1226,7 +1468,7 @@
         <div class="copyright" >
   
   &copy; 
-  <span itemprop="copyrightYear">2016</span>
+  <span itemprop="copyrightYear">2017</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
