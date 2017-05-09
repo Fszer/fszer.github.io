@@ -1,0 +1,775 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="javascript,swipeable-cards," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="如何用原生实现一个滑动消除卡片的组件今天看到chrome github 实现的一个通过左右滑动清除子卡片的的组件。感觉有点意思，学习一下">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何实现一个滑动消除组件">
+<meta property="og:url" content="http://yoursite.com/2017/05/03/如何实现一个滑动消除组件/index.html">
+<meta property="og:site_name" content="聆听群山的怒号">
+<meta property="og:description" content="如何用原生实现一个滑动消除卡片的组件今天看到chrome github 实现的一个通过左右滑动清除子卡片的的组件。感觉有点意思，学习一下">
+<meta property="og:updated_time" content="2017-05-09T14:27:10.668Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="如何实现一个滑动消除组件">
+<meta name="twitter:description" content="如何用原生实现一个滑动消除卡片的组件今天看到chrome github 实现的一个通过左右滑动清除子卡片的的组件。感觉有点意思，学习一下">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/05/03/如何实现一个滑动消除组件/"/>
+
+
+
+
+
+  <title>如何实现一个滑动消除组件 | 聆听群山的怒号</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">聆听群山的怒号</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/03/如何实现一个滑动消除组件/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Fszer">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://cloud.githubusercontent.com/assets/18730194/15146790/dd39acee-16ef-11e6-8ee7-093d1ce74fce.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="聆听群山的怒号">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                如何实现一个滑动消除组件
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-03T22:23:00+08:00">
+                2017-05-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/javascript-学习/" itemprop="url" rel="index">
+                    <span itemprop="name">javascript 学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="如何用原生实现一个滑动消除卡片的组件"><a href="#如何用原生实现一个滑动消除卡片的组件" class="headerlink" title="如何用原生实现一个滑动消除卡片的组件"></a>如何用原生实现一个滑动消除卡片的组件</h1><p>今天看到chrome github 实现的一个通过左右滑动清除子卡片的的组件。感觉有点意思，学习一下<br><a id="more"></a><br>源地址在这里<br><a href="https://github.com/GoogleChrome/ui-element-samples/tree/gh-pages/swipeable-cards" target="_blank" rel="external">https://github.com/GoogleChrome/ui-element-samples/tree/gh-pages/swipeable-cards</a></p>
+<h2 id="需求分析"><a href="#需求分析" class="headerlink" title="需求分析"></a>需求分析</h2><p>这个组件的功能很单一</p>
+<ul>
+<li>接受一组元素，使之可以通过鼠标或是触控左右滑动元素</li>
+<li>当左右滑动到达一定程度以后则删除该列表元素</li>
+</ul>
+<p>这个组件的一个难点在于如何让元素跟随鼠标或是触控左右滑动。<br>关于这一点，我们可以将整个过程分为</p>
+<p>开始滑动-&gt;滑动中-&gt;滑动结束</p>
+<p>同时为了滑动过程的流畅，我们不在滑动中触发响应的位移动画，<br>我们可以单独抽出一个 update 函数负责函数动画的绘制，<br>而只要 requestAnimationFrame 函数循环调用在每一帧中检查是否有需要位移，有则更新利用 update 响应的位移位置到 css 动画中</p>
+<h3 id="开始滑动"><a href="#开始滑动" class="headerlink" title="开始滑动"></a>开始滑动</h3><p>这一阶段我们需要捕获 mousedown 跟 touchstart 事件，通过事件的target确定被拖动的元素<br>并记录 target 元素相关数据，比如说我们最后需要判断位移是否“过了”该触发删除的点所以需要一个开始位移的位置，<br>另一方面就是拖放过程中的位移记录<br>还有就是设置一下 css 动画相关的样式，触发位移动画的一些设置</p>
+<h3 id="滑动中"><a href="#滑动中" class="headerlink" title="滑动中"></a>滑动中</h3><p>这一阶段对应的是 mousemove 与touchmove 事件<br>这个阶段最简单，只需要不断更新位移的位置就好了，滑动的效果由 update 自己通过 requsetnimationFrame 不断去调用检查就好</p>
+<h3 id="滑动结束"><a href="#滑动结束" class="headerlink" title="滑动结束"></a>滑动结束</h3><p>这一阶段对应的是 mouseup 与touchend 事件<br>这个时候需要做的事情会多一点点，需要稍微计算一下我们在开始滑动的时候保存的位置，判断当前位置是否已经过了这个某个点，可以删除元素还是令其归位</p>
+<h3 id="复位与惯性"><a href="#复位与惯性" class="headerlink" title="复位与惯性"></a>复位与惯性</h3><p>为了是左右滑动卡片过程中更加平滑，需要为滑动卡片结束后的两个状态，做处理。</p>
+<h4 id="惯性"><a href="#惯性" class="headerlink" title="惯性"></a>惯性</h4><p>当需要移除子元素的时候，增加一个惯性的继续移动的动画效果。<br>为了实现一个惯性的效果</p>
+<p>首先，我们知道了当前位移了 screenX，这个是时候通过 screenX 的正负判断出位移的方向。<br>然后 google 的做法是增加一个 target 元素的宽的目标位移距离，然后</p>
+<p>在更新动画的时候，我们根据 targetX 以每次 (screenX-targetX)/4 的变化趋势增加 screenX 达到一个平缓增加的过程<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"> <span class="keyword">if</span> (<span class="built_in">Math</span>.abs(screenX) &gt; threshold) &#123;</div><div class="line">      <span class="comment">// 若偏移的位置已经大于边界值，则通过 screenX 判断到底是左划还是右划</span></div><div class="line">      <span class="keyword">this</span>.targetX = (screenX &gt; <span class="number">0</span>) ?</div><div class="line">           <span class="keyword">this</span>.targetBCR.width :</div><div class="line">          -<span class="keyword">this</span>.targetBCR.width;</div><div class="line">    &#125;</div><div class="line">......</div><div class="line"></div><div class="line">if (<span class="keyword">this</span>.draggingCard) &#123;</div><div class="line">    <span class="keyword">this</span>.screenX = <span class="keyword">this</span>.currentX - <span class="keyword">this</span>.startX;</div><div class="line">&#125; <span class="keyword">else</span> &#123;</div><div class="line">    <span class="comment">// 如果不在拖动中，那么就有可能是惯性移动，我们根据targetX 以每次1/4 的变化趋势增加 screenX  </span></div><div class="line">    <span class="keyword">this</span>.screenX += (<span class="keyword">this</span>.targetX - <span class="keyword">this</span>.screenX) / <span class="number">4</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h4 id="复位"><a href="#复位" class="headerlink" title="复位"></a>复位</h4><p>当未到边界的时候，增加一个归位的动画效果，这里实际上跟惯性是同样的，只不过他位移 targetX 应当是 0 </p>
+<h3 id="如何计算透明度"><a href="#如何计算透明度" class="headerlink" title="如何计算透明度"></a>如何计算透明度</h3><p>在滑动过程中，为了表现出一种简便的过程，我们可以增加一个滑动元素的透明度的改变更加直观的显示出，当前处于什么什么状态。<br>问题在于我们的滑动动画是不是一个线性的过程，因为我们为了动画效果平滑，应用了贝塞尔曲线。<br>因此，我们需要对透明度的变化做出类似的平滑变化，而不是一个线性的变化。</p>
+<p>这里的做法是，将 （位移的距离/元素的宽）^3 通过这样一个简单的三次方程来拟合贝塞尔曲线，<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> normalizedDragDistance =</div><div class="line">        (<span class="built_in">Math</span>.abs(<span class="keyword">this</span>.screenX) / <span class="keyword">this</span>.targetBCR.width);</div><div class="line"><span class="keyword">const</span> opacity = <span class="number">1</span> - <span class="built_in">Math</span>.pow(normalizedDragDistance, <span class="number">3</span>);</div><div class="line"></div><div class="line"><span class="comment">// 更新css动画样式</span></div><div class="line"><span class="keyword">this</span>.target.style.transform = <span class="string">`translateX(<span class="subst">$&#123;this.screenX&#125;</span>px)`</span>;</div><div class="line"><span class="keyword">this</span>.target.style.opacity = opacity;</div></pre></td></tr></table></figure></p>
+<h2 id="代码注释"><a href="#代码注释" class="headerlink" title="代码注释"></a>代码注释</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"card-container"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"card"</span>&gt;</span>Das Surma<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"card"</span>&gt;</span>Aerotwist<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"card"</span>&gt;</span>Kinlanimus Maximus<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"card"</span>&gt;</span>Addyoooooooooo<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"card"</span>&gt;</span>Gaunty McGaunty Gaunt<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"card"</span>&gt;</span>Jack Archibungle<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"card"</span>&gt;</span>Sam "The Dutts" Dutton<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div><div class="line">171</div><div class="line">172</div><div class="line">173</div><div class="line">174</div><div class="line">175</div><div class="line">176</div><div class="line">177</div><div class="line">178</div><div class="line">179</div><div class="line">180</div><div class="line">181</div><div class="line">182</div><div class="line">183</div><div class="line">184</div><div class="line">185</div><div class="line">186</div><div class="line">187</div><div class="line">188</div><div class="line">189</div><div class="line">190</div><div class="line">191</div><div class="line">192</div><div class="line">193</div><div class="line">194</div><div class="line">195</div><div class="line">196</div><div class="line">197</div><div class="line">198</div><div class="line">199</div><div class="line">200</div><div class="line">201</div><div class="line">202</div><div class="line">203</div><div class="line">204</div><div class="line">205</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Cards</span> </span>&#123;</div><div class="line">  <span class="keyword">constructor</span> (&#123;cards=<span class="built_in">document</span>.querySelectorAll(<span class="string">'.card'</span>)&#125;) &#123;</div><div class="line">    <span class="comment">// 需要控制为元素列表 </span></div><div class="line">    <span class="keyword">this</span>.cards = <span class="built_in">Array</span>.from(cards);</div><div class="line"></div><div class="line">    <span class="comment">// 分别对应每个阶段的事件响应函数，以及更新动画的 update 函数</span></div><div class="line">    <span class="comment">// 这里会 需要 bind 绑定是为避免析构之后，this 指向不清晰的问题</span></div><div class="line">    <span class="keyword">this</span>.onStart = <span class="keyword">this</span>.onStart.bind(<span class="keyword">this</span>);</div><div class="line">    <span class="keyword">this</span>.onMove = <span class="keyword">this</span>.onMove.bind(<span class="keyword">this</span>);</div><div class="line">    <span class="keyword">this</span>.onEnd = <span class="keyword">this</span>.onEnd.bind(<span class="keyword">this</span>);</div><div class="line">    <span class="keyword">this</span>.update = <span class="keyword">this</span>.update.bind(<span class="keyword">this</span>);</div><div class="line">    <span class="comment">// 保持 target 元素的getBoundingClientRect信息</span></div><div class="line">    <span class="keyword">this</span>.targetBCR = <span class="literal">null</span>;</div><div class="line">    <span class="comment">// 被滑动元素</span></div><div class="line">    <span class="keyword">this</span>.target = <span class="literal">null</span>;</div><div class="line">    <span class="comment">// 记录滑动开始元素所在为位置</span></div><div class="line">    <span class="keyword">this</span>.startX = <span class="number">0</span>;</div><div class="line">    <span class="comment">// 记录当前鼠标或触控滑动位移的位置</span></div><div class="line">    <span class="keyword">this</span>.currentX = <span class="number">0</span>;</div><div class="line">    <span class="comment">// startX 与 currentX 的差值</span></div><div class="line">    <span class="keyword">this</span>.screenX = <span class="number">0</span>;</div><div class="line">    <span class="comment">// 目标位置，当结束滑动的时候，判断是返回原位还是向外在位移一些</span></div><div class="line">    <span class="keyword">this</span>.targetX = <span class="number">0</span>;</div><div class="line">    <span class="comment">// 是否处于滑动中</span></div><div class="line">    <span class="keyword">this</span>.draggingCard = <span class="literal">false</span>;</div><div class="line">    <span class="comment">// 绑定事件</span></div><div class="line">    <span class="keyword">this</span>.addEventListeners();</div><div class="line">    <span class="comment">// 循环触发 update 更新动画</span></div><div class="line">    requestAnimationFrame(<span class="keyword">this</span>.update);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  addEventListeners () &#123;</div><div class="line">    <span class="comment">// 绑定每个阶段的事件</span></div><div class="line">    <span class="built_in">document</span>.addEventListener(<span class="string">'touchstart'</span>, <span class="keyword">this</span>.onStart);</div><div class="line">    <span class="built_in">document</span>.addEventListener(<span class="string">'touchmove'</span>, <span class="keyword">this</span>.onMove);</div><div class="line">    <span class="built_in">document</span>.addEventListener(<span class="string">'touchend'</span>, <span class="keyword">this</span>.onEnd);</div><div class="line"></div><div class="line">    <span class="built_in">document</span>.addEventListener(<span class="string">'mousedown'</span>, <span class="keyword">this</span>.onStart);</div><div class="line">    <span class="built_in">document</span>.addEventListener(<span class="string">'mousemove'</span>, <span class="keyword">this</span>.onMove);</div><div class="line">    <span class="built_in">document</span>.addEventListener(<span class="string">'mouseup'</span>, <span class="keyword">this</span>.onEnd);</div><div class="line">  &#125;</div><div class="line">  <span class="comment">// 开始滑动事件</span></div><div class="line">  onStart (evt) &#123;</div><div class="line">    <span class="comment">// 如果 target 不为空则意味已经有滑动中的元素，应当退出</span></div><div class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.target)</div><div class="line">      <span class="keyword">return</span>;</div><div class="line">    <span class="comment">// 判断是否是列表元素</span></div><div class="line">    <span class="keyword">if</span> (!evt.target.classList.contains(<span class="string">'card'</span>))</div><div class="line">      <span class="keyword">return</span>;</div><div class="line">    <span class="comment">// 获取 target 元素</span></div><div class="line">    <span class="keyword">this</span>.target = evt.target;</div><div class="line">    <span class="comment">// 获取 target 元素的 getBoundingClientRect 信息</span></div><div class="line">    <span class="keyword">this</span>.targetBCR = <span class="keyword">this</span>.target.getBoundingClientRect();</div><div class="line"></div><div class="line">    <span class="comment">// 记录 开始位置 startX 与当前位置 currentX ,这个时候两者都是事件的pageX或者touches[0].pageX</span></div><div class="line">    <span class="keyword">this</span>.startX = evt.pageX || evt.touches[<span class="number">0</span>].pageX;</div><div class="line">    <span class="keyword">this</span>.currentX = <span class="keyword">this</span>.startX;</div><div class="line">    <span class="comment">// 将状态标记为滑动中</span></div><div class="line">    <span class="keyword">this</span>.draggingCard = <span class="literal">true</span>;</div><div class="line">    <span class="comment">// 通过 willchange 通知浏览器我们可能会用到 transform 属性</span></div><div class="line">    <span class="keyword">this</span>.target.style.willChange = <span class="string">'transform'</span>;</div><div class="line">    <span class="comment">// 取消事件的默认行为</span></div><div class="line">    evt.preventDefault();</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  onMove (evt) &#123;</div><div class="line">    <span class="keyword">if</span> (!<span class="keyword">this</span>.target)</div><div class="line">      <span class="keyword">return</span>;</div><div class="line">    <span class="comment">// 不断更新当前的位置</span></div><div class="line">    <span class="keyword">this</span>.currentX = evt.pageX || evt.touches[<span class="number">0</span>].pageX;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  onEnd (evt) &#123;</div><div class="line">    <span class="keyword">if</span> (!<span class="keyword">this</span>.target)</div><div class="line">      <span class="keyword">return</span>;</div><div class="line">    <span class="comment">// 设置 targetX</span></div><div class="line">    <span class="keyword">this</span>.targetX = <span class="number">0</span>;</div><div class="line">    <span class="comment">// 计算出当前位置与开始位置的差</span></div><div class="line">    <span class="keyword">let</span> screenX = <span class="keyword">this</span>.currentX - <span class="keyword">this</span>.startX;</div><div class="line">    <span class="comment">// 是否删除元素的边界值</span></div><div class="line">    <span class="keyword">const</span> threshold = <span class="keyword">this</span>.targetBCR.width * <span class="number">0.35</span>;</div><div class="line">    <span class="keyword">if</span> (<span class="built_in">Math</span>.abs(screenX) &gt; threshold) &#123;</div><div class="line">      <span class="comment">// 若偏移的位置已经大于边界值，则通过 screenX 判断到底是左划还是右划</span></div><div class="line">      <span class="keyword">this</span>.targetX = (screenX &gt; <span class="number">0</span>) ?</div><div class="line">           <span class="keyword">this</span>.targetBCR.width :</div><div class="line">          -<span class="keyword">this</span>.targetBCR.width;</div><div class="line">    &#125;</div><div class="line">    <span class="comment">// 重置状态为未滑动</span></div><div class="line">    <span class="keyword">this</span>.draggingCard = <span class="literal">false</span>;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  update () &#123;</div><div class="line">    <span class="comment">// 递归调用，检查是否需要更新动画</span></div><div class="line">    requestAnimationFrame(<span class="keyword">this</span>.update);</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (!<span class="keyword">this</span>.target)</div><div class="line">      <span class="keyword">return</span>;</div><div class="line">    <span class="comment">// 如果卡片元素处于被拖拉的状态，那么需要偏移的位置就是当前事件x轴的位置到起始位置的距离</span></div><div class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.draggingCard) &#123;</div><div class="line">      <span class="keyword">this</span>.screenX = <span class="keyword">this</span>.currentX - <span class="keyword">this</span>.startX;</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">      <span class="comment">// 如果不在拖动中，那么就有可能是归位，或是再向当前方向移动多一点，表现出惯性的样子</span></div><div class="line">      <span class="keyword">this</span>.screenX += (<span class="keyword">this</span>.targetX - <span class="keyword">this</span>.screenX) / <span class="number">4</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// 对拖动的距离进行归一化处理，以求出相应的透明度，表现出淡出的效果</span></div><div class="line">    <span class="comment">// opacity = 1 - (偏移距离/元素宽度)^3</span></div><div class="line">    <span class="keyword">const</span> normalizedDragDistance =</div><div class="line">        (<span class="built_in">Math</span>.abs(<span class="keyword">this</span>.screenX) / <span class="keyword">this</span>.targetBCR.width);</div><div class="line">    <span class="keyword">const</span> opacity = <span class="number">1</span> - <span class="built_in">Math</span>.pow(normalizedDragDistance, <span class="number">3</span>);</div><div class="line"></div><div class="line">    <span class="comment">// 更新css动画样式</span></div><div class="line">    <span class="keyword">this</span>.target.style.transform = <span class="string">`translateX(<span class="subst">$&#123;this.screenX&#125;</span>px)`</span>;</div><div class="line">    <span class="keyword">this</span>.target.style.opacity = opacity;</div><div class="line"></div><div class="line">    <span class="comment">// User has finished dragging.</span></div><div class="line">    <span class="comment">// 如果还在拖动中，则到这里结束了</span></div><div class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.draggingCard)</div><div class="line">      <span class="keyword">return</span>;</div><div class="line">    </div><div class="line">    <span class="comment">// 处理拖动结束时候的状态</span></div><div class="line"></div><div class="line">    <span class="comment">// 根据透明度与，偏移距离判断是消失还是归位</span></div><div class="line">    <span class="keyword">const</span> isNearlyAtStart = (<span class="built_in">Math</span>.abs(<span class="keyword">this</span>.screenX) &lt; <span class="number">0.1</span>);</div><div class="line">    <span class="keyword">const</span> isNearlyInvisible = (opacity &lt; <span class="number">0.01</span>);</div><div class="line"></div><div class="line">    <span class="comment">// If the card is nearly gone.</span></div><div class="line">    <span class="comment">// 如果元素应当消失</span></div><div class="line">    <span class="keyword">if</span> (isNearlyInvisible) &#123;</div><div class="line"></div><div class="line">      <span class="comment">// Bail if there's no target or it's not attached to a parent anymore.</span></div><div class="line">      <span class="keyword">if</span> (!<span class="keyword">this</span>.target || !<span class="keyword">this</span>.target.parentNode)</div><div class="line">        <span class="keyword">return</span>;</div><div class="line">      </div><div class="line">      <span class="comment">// 从dom树中删除该元素</span></div><div class="line">      <span class="keyword">this</span>.target.parentNode.removeChild(<span class="keyword">this</span>.target);</div><div class="line"></div><div class="line">      <span class="comment">// 从数组中删除</span></div><div class="line">      <span class="keyword">const</span> targetIndex = <span class="keyword">this</span>.cards.indexOf(<span class="keyword">this</span>.target);</div><div class="line">      <span class="keyword">this</span>.cards.splice(targetIndex, <span class="number">1</span>);</div><div class="line"></div><div class="line">      <span class="comment">// Slide all the other cards.</span></div><div class="line">      <span class="comment">// 更新其他元素的位置</span></div><div class="line">      <span class="keyword">this</span>.animateOtherCardsIntoPosition(targetIndex);</div><div class="line"></div><div class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (isNearlyAtStart) &#123;</div><div class="line">      <span class="comment">// 如果需要归位，则直接重置 target</span></div><div class="line">      <span class="keyword">this</span>.resetTarget();</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">  <span class="comment">// 处理删除元素以后，其他元素位置变化的动画</span></div><div class="line">  animateOtherCardsIntoPosition (startIndex) &#123;</div><div class="line">    <span class="comment">// If removed card was the last one, there is nothing to animate.</span></div><div class="line">    <span class="comment">// Remove the target.</span></div><div class="line">    <span class="comment">// 如果被移除的元素是最后一个，那就不影响其他元素，直接重置 target 元素</span></div><div class="line">    <span class="keyword">if</span> (startIndex === <span class="keyword">this</span>.cards.length) &#123;</div><div class="line">      <span class="keyword">this</span>.resetTarget();</div><div class="line">      <span class="keyword">return</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="comment">// 在动画结束以后，清除样式</span></div><div class="line">    <span class="keyword">const</span> onAnimationComplete = evt =&gt; &#123;</div><div class="line">      <span class="keyword">const</span> card = evt.target;</div><div class="line">      card.removeEventListener(<span class="string">'transitionend'</span>, onAnimationComplete);</div><div class="line">      card.style.transition = <span class="string">''</span>;</div><div class="line">      card.style.transform = <span class="string">''</span>;</div><div class="line"></div><div class="line">      <span class="keyword">this</span>.resetTarget();</div><div class="line">    &#125;;</div><div class="line"></div><div class="line">    <span class="comment">// Set up all the card animations.</span></div><div class="line">    <span class="comment">// 设置被删除元素，之后的所有元素的向上偏移动画</span></div><div class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = startIndex; i &lt; <span class="keyword">this</span>.cards.length; i++) &#123;</div><div class="line">      <span class="keyword">const</span> card = <span class="keyword">this</span>.cards[i];</div><div class="line"></div><div class="line">      <span class="comment">// Move the card down then slide it up.</span></div><div class="line">      <span class="comment">// 由于此时target 元素已经被移除，真正的动画效果不是直接向上，而是先腾出原先 元素的位置，即向下移动一个元素的高加间距的距离</span></div><div class="line">      card.style.transform = <span class="string">`translateY(<span class="subst">$&#123;this.targetBCR.height + 20&#125;</span>px)`</span>;</div><div class="line">      card.addEventListener(<span class="string">'transitionend'</span>, onAnimationComplete);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// Now init them.</span></div><div class="line">    requestAnimationFrame(_ =&gt; &#123;</div><div class="line">      <span class="keyword">for</span> (<span class="keyword">let</span> i = startIndex; i &lt; <span class="keyword">this</span>.cards.length; i++) &#123;</div><div class="line">        <span class="keyword">const</span> card = <span class="keyword">this</span>.cards[i];</div><div class="line"></div><div class="line">        <span class="comment">// Move the card down then slide it up, with delay according to "distance"</span></div><div class="line">        <span class="comment">// 等到下一帧所有元素都下移以后，为卡片元素设置动画运动曲线与延时，并清空 transform ，这样接着才会产生动画向上偏移的动画</span></div><div class="line">        card.style.transition = <span class="string">`transform 150ms cubic-bezier(0,0,0.31,1) <span class="subst">$&#123;i*50&#125;</span>ms`</span>;</div><div class="line">        card.style.transform = <span class="string">''</span>;</div><div class="line">      &#125;</div><div class="line">    &#125;);</div><div class="line">  &#125;</div><div class="line">  <span class="comment">// 重置元素</span></div><div class="line">  resetTarget () &#123;</div><div class="line">    <span class="keyword">if</span> (!<span class="keyword">this</span>.target)</div><div class="line">      <span class="keyword">return</span>;</div><div class="line"></div><div class="line">    <span class="keyword">this</span>.target.style.willChange = <span class="string">'initial'</span>;</div><div class="line">    <span class="keyword">this</span>.target.style.transform = <span class="string">'none'</span>;</div><div class="line">    <span class="keyword">this</span>.target = <span class="literal">null</span>;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="built_in">window</span>.addEventListener(<span class="string">'load'</span>, () =&gt; <span class="keyword">new</span> Cards());</div></pre></td></tr></table></figure>
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/javascript/" rel="tag"># javascript</a>
+          
+            <a href="/tags/swipeable-cards/" rel="tag"># swipeable-cards</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/04/25/reduce简介/" rel="next" title="reduce 简介">
+                <i class="fa fa-chevron-left"></i> reduce 简介
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://cloud.githubusercontent.com/assets/18730194/15146790/dd39acee-16ef-11e6-8ee7-093d1ce74fce.png"
+               alt="Fszer" />
+          <p class="site-author-name" itemprop="name">Fszer</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">23</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#如何用原生实现一个滑动消除卡片的组件"><span class="nav-number">1.</span> <span class="nav-text">如何用原生实现一个滑动消除卡片的组件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#需求分析"><span class="nav-number">1.1.</span> <span class="nav-text">需求分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#开始滑动"><span class="nav-number">1.1.1.</span> <span class="nav-text">开始滑动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#滑动中"><span class="nav-number">1.1.2.</span> <span class="nav-text">滑动中</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#滑动结束"><span class="nav-number">1.1.3.</span> <span class="nav-text">滑动结束</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#复位与惯性"><span class="nav-number">1.1.4.</span> <span class="nav-text">复位与惯性</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#惯性"><span class="nav-number">1.1.4.1.</span> <span class="nav-text">惯性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#复位"><span class="nav-number">1.1.4.2.</span> <span class="nav-text">复位</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何计算透明度"><span class="nav-number">1.1.5.</span> <span class="nav-text">如何计算透明度</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码注释"><span class="nav-number">1.2.</span> <span class="nav-text">代码注释</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Fszer</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
