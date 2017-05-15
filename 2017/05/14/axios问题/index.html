@@ -74,7 +74,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="再开," />
+  <meta name="keywords" content="http,axios,302," />
 
 
 
@@ -90,18 +90,18 @@
 
 
 
-<meta name="description" content="又是我，又是一个博客，不知道这次可以支持多久？">
+<meta name="description" content="令人蛋疼的问题前些天看到一个比较有趣的包，实现了一个命令行工具。其中涉及到数据网络请求部分是用 request 实现的。其中的实现方式还是用了传统 cb ，倒不是说不好，只是我一时起兴想要用 promise 风格的实现来重写一遍。结果用 promise 实现逻辑倒不是难事，反而是其中一个我没有注意的细节害我卡带许久。于是写一篇博客记录一下">
 <meta property="og:type" content="article">
-<meta property="og:title" content="'hello_again'">
-<meta property="og:url" content="http://yoursite.com/2016/05/09/hello-again/index.html">
+<meta property="og:title" content="无知">
+<meta property="og:url" content="http://yoursite.com/2017/05/14/axios问题/index.html">
 <meta property="og:site_name" content="聆听群山的怒号">
-<meta property="og:description" content="又是我，又是一个博客，不知道这次可以支持多久？">
-<meta property="og:image" content="https://cloud.githubusercontent.com/assets/18730194/15117261/4b116106-1639-11e6-925a-26416d1a98d9.jpg">
-<meta property="og:updated_time" content="2016-05-09T15:04:45.662Z">
+<meta property="og:description" content="令人蛋疼的问题前些天看到一个比较有趣的包，实现了一个命令行工具。其中涉及到数据网络请求部分是用 request 实现的。其中的实现方式还是用了传统 cb ，倒不是说不好，只是我一时起兴想要用 promise 风格的实现来重写一遍。结果用 promise 实现逻辑倒不是难事，反而是其中一个我没有注意的细节害我卡带许久。于是写一篇博客记录一下">
+<meta property="og:image" content="https://cloud.githubusercontent.com/assets/18730194/26061582/e9ee9654-39ba-11e7-85d8-16656bd2d68d.png">
+<meta property="og:updated_time" content="2017-05-15T14:11:22.705Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="'hello_again'">
-<meta name="twitter:description" content="又是我，又是一个博客，不知道这次可以支持多久？">
-<meta name="twitter:image" content="https://cloud.githubusercontent.com/assets/18730194/15117261/4b116106-1639-11e6-925a-26416d1a98d9.jpg">
+<meta name="twitter:title" content="无知">
+<meta name="twitter:description" content="令人蛋疼的问题前些天看到一个比较有趣的包，实现了一个命令行工具。其中涉及到数据网络请求部分是用 request 实现的。其中的实现方式还是用了传统 cb ，倒不是说不好，只是我一时起兴想要用 promise 风格的实现来重写一遍。结果用 promise 实现逻辑倒不是难事，反而是其中一个我没有注意的细节害我卡带许久。于是写一篇博客记录一下">
+<meta name="twitter:image" content="https://cloud.githubusercontent.com/assets/18730194/26061582/e9ee9654-39ba-11e7-85d8-16656bd2d68d.png">
 
 
 
@@ -129,13 +129,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2016/05/09/hello-again/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/05/14/axios问题/"/>
 
 
 
 
 
-  <title>'hello_again' | 聆听群山的怒号</title>
+  <title>无知 | 聆听群山的怒号</title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -294,7 +294,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/05/09/hello-again/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/14/axios问题/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Fszer">
@@ -315,7 +315,7 @@
             
             
               
-                'hello_again'
+                无知
               
             
           </h1>
@@ -330,8 +330,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-05-09T22:45:06+08:00">
-                2016-05-09
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-14T09:58:07+08:00">
+                2017-05-14
               </time>
             
 
@@ -340,6 +340,28 @@
             
           </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/杂谈/" itemprop="url" rel="index">
+                    <span itemprop="name">杂谈</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -365,8 +387,23 @@
       
 
       
-        <p><img src="https://cloud.githubusercontent.com/assets/18730194/15117261/4b116106-1639-11e6-925a-26416d1a98d9.jpg" alt="08"></p>
-<h1 id="又是我，又是一个博客，不知道这次可以支持多久？"><a href="#又是我，又是一个博客，不知道这次可以支持多久？" class="headerlink" title="又是我，又是一个博客，不知道这次可以支持多久？"></a>又是我，又是一个博客，不知道这次可以支持多久？</h1>
+        <p><img src="https://cloud.githubusercontent.com/assets/18730194/26061582/e9ee9654-39ba-11e7-85d8-16656bd2d68d.png" alt="62885633_p0"></p>
+<h2 id="令人蛋疼的问题"><a href="#令人蛋疼的问题" class="headerlink" title="令人蛋疼的问题"></a>令人蛋疼的问题</h2><p>前些天看到一个比较有趣的包，实现了一个命令行工具。其中涉及到数据网络请求部分是用 request 实现的。<br>其中的实现方式还是用了传统 cb ，倒不是说不好，只是我一时起兴想要用 promise 风格的实现来重写一遍。<br>结果用 promise 实现逻辑倒不是难事，反而是其中一个我没有注意的细节害我卡带许久。<br>于是写一篇博客记录一下</p>
+<a id="more"></a>
+<h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>说问题以前先说说出现问题的逻辑吧。<br>那段代码简单来说就是接受一个用户信息，发起一个登录请求，请求成功后，<br>会返回一个 302 跳转逻辑，并在 header 中带上 token 信息。逻辑非常简单。</p>
+<p>为了方便使用 promise ，我选择用自带 promise 的 http 请求库 axios 替代 request，当然 request 也是有 promise 实现的。<br>不过我以为我更熟悉 axios 而已。结果问题就出在这里了。</p>
+<p>将请求逻辑用 axios 实现以后，却发现无论如果都得不到对应的 302 返回结果。自然也拿不到 token 。<br>有经验的人应该从描述中也能看到问题所在了，可惜我就没有，所以请允许我细细道来。</p>
+<h2 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h2><h3 id="请求结构不一致"><a href="#请求结构不一致" class="headerlink" title="请求结构不一致?"></a>请求结构不一致?</h3><p>一开始，我以为是请求的 header 或是请求体不对。请求体部分很快就确认了，毕竟也就只是账号密码而已。<br>于是我自然把目光放在了 header ，我首先断点观察了 返回结果中请求部分的 header ，然后发现相比之下，axios 的 header 多了 Accept ，User-Agent 字段。<br>却少了标记请求提的 content-type 字段（要求的字段是 application/x-www-form-urlencoded），以至于我在想是不是 axios 并没有以正确的 content-type 传递数据，这里就是第一个坑。</p>
+<p>axios post 请求会自动处理 content-type 却并不会显示 content-type 出来，这让我难以理解。<br>以至于我一直以为没有正确设置 content-type ，直到我通过代理抓取到了发出去的包，才确认了实际上是有 content-type 。</p>
+<p>接着我把目光放在了 多出来的两个字段，按道理 user-agent 跟 accept 应该都不会影响才对啊。<br>不过我先是将 user-agent 设置为 chrome 的 user-agent ，结果并没有卵用，同样的 accept<br>字段也是。看来不是特定的字段值有问题，那么是不是单纯多了这两个字段的问题？</p>
+<p>这里就是第二个坑，或许也不算坑，如果你单单是配置 axios 请求的 opts 的话，是没法去除这两个字段的，因为他们都是 axios 默认添加的。<br>而且添加的时机，在 transformRequest 函数执行以后，所以在 opts 中设定了 transformRequest 去修改 header 也是不行的。<br>需要额外再 axios 的拦截器中 <code>axios.interceptors.request.use</code> 添加方法去修改才行，不过在还只是可以去除 accept 而已。<br>真正要连 user-agent 也去除掉，只能改源码…… 是有点蛋疼。</p>
+<p>axios 提供了默认值，却不提供不需要这些字段的方法，感觉体贴过头了。</p>
+<p>折腾完这些，我最终解决的请求不一致的问题，结果是，并没有什么用，问题不在请求的结构的问题上。<br>好了，问题到现在也还么解决。我依然拿不到正确的返回，真是丢人了。<br>真正的问题所在是下面这一点</p>
+<h3 id="重定向"><a href="#重定向" class="headerlink" title="重定向"></a>重定向</h3><p>是的，是重定向问题……正当我百思不得其解的时候，忽然看到返回 res 里的请求体，我惊奇的发现居然是 get ？？？<br>我发出的请求不是 post 吗？</p>
+<p>我忽然意识到，302就是重定向码啊。顺着这个思路着我又从 axios 的默认配置中看到这一点。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// `maxRedirects` defines the maximum number of redirects to follow in node.js. </span></div><div class="line"> <span class="comment">// If set to 0, no redirects will be followed. </span></div><div class="line"> &#123;</div><div class="line">       maxRedirects: <span class="number">5</span>, <span class="comment">// default</span></div><div class="line"> &#125;</div></pre></td></tr></table></figure></p>
+<p>yep,就是这里，axios 在 node 端默认会自动重定向请求，所以并不是没有得到请求，而是 axios 自动就重定向了。。。。。。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>本来这个问题应该是很简单的，可惜我见识不够。愣是花了好些时间在这上面。真是MDZZ。</p>
+
       
     </div>
 
@@ -395,7 +432,11 @@
       
         <div class="post-tags">
           
-            <a href="/tags/再开/" rel="tag"># 再开</a>
+            <a href="/tags/http/" rel="tag"># http</a>
+          
+            <a href="/tags/axios/" rel="tag"># axios</a>
+          
+            <a href="/tags/302/" rel="tag"># 302</a>
           
         </div>
       
@@ -408,8 +449,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/08/22/二叉树/" rel="next" title="二叉树">
-                <i class="fa fa-chevron-left"></i> 二叉树
+              <a href="/2017/05/03/如何实现一个滑动消除组件/" rel="next" title="如何实现一个滑动消除组件">
+                <i class="fa fa-chevron-left"></i> 如何实现一个滑动消除组件
               </a>
             
           </div>
@@ -417,10 +458,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/05/14/杂谈日记/" rel="prev" title="gulp watch error (ENOSPC)">
-                gulp watch error (ENOSPC) <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -549,7 +586,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#又是我，又是一个博客，不知道这次可以支持多久？"><span class="nav-number">1.</span> <span class="nav-text">又是我，又是一个博客，不知道这次可以支持多久？</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#令人蛋疼的问题"><span class="nav-number">1.</span> <span class="nav-text">令人蛋疼的问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题"><span class="nav-number">2.</span> <span class="nav-text">问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#过程"><span class="nav-number">3.</span> <span class="nav-text">过程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#请求结构不一致"><span class="nav-number">3.1.</span> <span class="nav-text">请求结构不一致?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#重定向"><span class="nav-number">3.2.</span> <span class="nav-text">重定向</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li></ol></div>
             
 
           </div>

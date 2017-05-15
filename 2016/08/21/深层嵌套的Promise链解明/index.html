@@ -96,7 +96,7 @@
 <meta property="og:url" content="http://yoursite.com/2016/08/21/深层嵌套的Promise链解明/index.html">
 <meta property="og:site_name" content="聆听群山的怒号">
 <meta property="og:description" content="如果你已经写了一段时间的 JavaScript 代码，你大概会听过像是回调地狱或者是噩梦金字塔 这类的说法。在几年前 promises 被添加到 JavaScript 中的时候。我记得我阅读到大量博客文章宣称回调地狱这类问题会得到解决。不幸的是，这看法稍微太乐观了些。随着越来越多的网页的 API 变得以 promise 为基础。我们会证明即使是 promise 也不能阻止我们写出过分嵌套且难以阅读">
-<meta property="og:updated_time" content="2017-04-26T17:11:54.000Z">
+<meta property="og:updated_time" content="2017-05-14T16:02:39.442Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【译】深层嵌套的Promise链解明">
 <meta name="twitter:description" content="如果你已经写了一段时间的 JavaScript 代码，你大概会听过像是回调地狱或者是噩梦金字塔 这类的说法。在几年前 promises 被添加到 JavaScript 中的时候。我记得我阅读到大量博客文章宣称回调地狱这类问题会得到解决。不幸的是，这看法稍微太乐观了些。随着越来越多的网页的 API 变得以 promise 为基础。我们会证明即使是 promise 也不能阻止我们写出过分嵌套且难以阅读">
@@ -387,7 +387,6 @@
       
         <p>如果你已经写了一段时间的 JavaScript 代码，你大概会听过像是<strong>回调地狱</strong>或者是<strong>噩梦金字塔</strong> 这类的说法。在几年前 promises 被添加到 JavaScript 中的时候。我记得我阅读到大量博客文章宣称回调地狱这类问题会得到解决。不幸的是，这看法稍微太乐观了些。随着越来越多的网页的 API 变得以 promise 为基础。我们会证明即使是 promise 也不能阻止我们写出过分嵌套且难以阅读的代码。</p>
 <p>这些天我在完全基于 promise 的Service Worker 脚本中看到这件事发生了许多次。特别是在那些应当向我们展示 Service Worker 正确使用方法的博客文章跟教程当中。</p>
-<a id="more"></a>
 <p>下面的代码是一个关于如何使用 Serivce Worker 来实现一个网络优先，带缓存回调的离线支持方案的所谓的”基础”例子。<br>就是这个代码（或者是他的一个变形版本）可以在网上的多个教程中找到。</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">self.addEventListener(<span class="string">'fetch'</span>, (event) =&gt; &#123;</div><div class="line">  event.respondWith(</div><div class="line">    caches.open(<span class="string">'cache:v1'</span>).then((cache) =&gt; &#123;</div><div class="line">      <span class="keyword">return</span> fetch(event.request).then((response) =&gt; &#123;</div><div class="line">        cache.put(event.request, response.clone());</div><div class="line">        <span class="keyword">return</span> response;</div><div class="line">      &#125;).catch(() =&gt; &#123;</div><div class="line">        <span class="keyword">return</span> cache.match(event.request).then((response) =&gt; &#123;</div><div class="line">          <span class="keyword">return</span> response || Response.error();</div><div class="line">        &#125;);</div><div class="line">      &#125;);</div><div class="line">    &#125;)</div><div class="line">  );</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
 <p>嗯，我相信这个代码会在这里被称之为“基础”是经过考虑的，因为这里只有几行代码，并且涉及到概念也不算复杂，但是我要质疑的一点是，这个控制流可以说是任何别的什么，但称不上基础。除非你非常熟悉 <code>Fetch</code> 和 <code>CacheStorage</code> 这两个新API，又或是你对 promises 所有的细微之处有着坚实的理解。不然这个代码大概会让你神思好几秒来弄清楚这些代码到底做了些什么。</p>
@@ -589,7 +588,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-count">15</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -611,7 +610,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">23</span>
+                <span class="site-state-item-count">27</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
