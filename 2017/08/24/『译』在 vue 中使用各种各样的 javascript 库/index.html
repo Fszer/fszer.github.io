@@ -1,0 +1,831 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="翻译,javascript,vue," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="Use Any Javascript Library With Vue.js – Vue.js Developers – Medium
+Lodash, Moment, Axios, Async…these are useful Javascript libraries that you’ll want to utilise in many of your Vue.js apps.
+Lodash,">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【译】在 vue 中使用各种各样的 javascript 库">
+<meta property="og:url" content="http://yoursite.com/2017/08/24/『译』在 vue 中使用各种各样的 javascript 库/index.html">
+<meta property="og:site_name" content="聆听群山的怒号">
+<meta property="og:description" content="Use Any Javascript Library With Vue.js – Vue.js Developers – Medium
+Lodash, Moment, Axios, Async…these are useful Javascript libraries that you’ll want to utilise in many of your Vue.js apps.
+Lodash,">
+<meta property="og:image" content="http://p0.qhimg.com/t01f84276a74709377e.jpg">
+<meta property="og:updated_time" content="2017-08-27T15:08:30.098Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【译】在 vue 中使用各种各样的 javascript 库">
+<meta name="twitter:description" content="Use Any Javascript Library With Vue.js – Vue.js Developers – Medium
+Lodash, Moment, Axios, Async…these are useful Javascript libraries that you’ll want to utilise in many of your Vue.js apps.
+Lodash,">
+<meta name="twitter:image" content="http://p0.qhimg.com/t01f84276a74709377e.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/08/24/『译』在 vue 中使用各种各样的 javascript 库/"/>
+
+
+
+
+
+  <title>【译】在 vue 中使用各种各样的 javascript 库 | 聆听群山的怒号</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">聆听群山的怒号</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/24/『译』在 vue 中使用各种各样的 javascript 库/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Fszer">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://cloud.githubusercontent.com/assets/18730194/15146790/dd39acee-16ef-11e6-8ee7-093d1ce74fce.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="聆听群山的怒号">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                【译】在 vue 中使用各种各样的 javascript 库
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-24T19:20:43+08:00">
+                2017-08-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/翻译/" itemprop="url" rel="index">
+                    <span itemprop="name">翻译</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Use-Any-Javascript-Library-With-Vue-js-–-Vue-js-Developers-–-Medium"><a href="#Use-Any-Javascript-Library-With-Vue-js-–-Vue-js-Developers-–-Medium" class="headerlink" title="Use Any Javascript Library With Vue.js – Vue.js Developers – Medium"></a>Use Any Javascript Library With Vue.js – Vue.js Developers – Medium</h1><p><img src="http://p0.qhimg.com/t01f84276a74709377e.jpg" alt=""></p>
+<p>Lodash, Moment, Axios, Async…these are useful Javascript libraries that you’ll want to utilise in many of your Vue.js apps.</p>
+<p>Lodash, Moment, Axios, Async…这些都是非常有用的 Javascript 库，而且你会希望在你的各种 Vue.js 应用之中使用。</p>
+<p>But as your project grows you’ll be separating code into single file components and module files. You also may want to run your app in different environments to allow server rendering.</p>
+<p>但是随着你的项目的增长，你会想要将代码分离为单一的组件文件跟模块文件。同时，你可能也会想要让你的应用能运行在不同的环境下，比如可以通过服务端渲染。</p>
+<p>Unless you find an easy and robust way to include those Javascript libraries across your components and module files they’re going to be a nuisance!</p>
+<p>除非你找到一个简单且健壮的方法去引入这些 Javascript 库到你的组件文件与模块文件中，不然他们将会成为你项目中的一个累赘！</p>
+<p><em>Note: this article was originally posted</em> <a href="http://vuejsdevelopers.com/2017/04/22/vue-js-libraries-plugins/?jsdojo_id=medium_lip" target="_blank" rel="external"><em>here on the Vue.js Developers blog</em></a> <em>on 2017/04/22</em></p>
+<p>_注意:这篇文章原载于<a href="http://vuejsdevelopers.com/2017/04/22/vue-js-libraries-plugins/?jsdojo_id=medium_lip" target="_blank" rel="external">the Vue.js Developers blog</a> 2017/04/22_</p>
+<h3 id="How-to-include-a-library-in-a-Vue-js-project"><a href="#How-to-include-a-library-in-a-Vue-js-project" class="headerlink" title="How to include a library in a Vue.js project"></a>How to include a library in a Vue.js project</h3><h2 id="如何引入一个类库到你的-Vue-js-项目中"><a href="#如何引入一个类库到你的-Vue-js-项目中" class="headerlink" title="如何引入一个类库到你的 Vue.js 项目中"></a>如何引入一个类库到你的 Vue.js 项目中</h2><h3 id="Global-variable"><a href="#Global-variable" class="headerlink" title="Global variable"></a>Global variable</h3><h3 id="全局变量"><a href="#全局变量" class="headerlink" title="全局变量"></a>全局变量</h3><p>最直接添加一个类库到你的项目中的方法，是让这个类库作为一个全局变量挂载在 <code>window</code> 对象上<br>The naive way to add a library to your project is to make it a global variable by attaching it to the <code>window</code> object:</p>
+<p><strong>entry.js</strong><br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">window</span>._ = <span class="built_in">require</span>(<span class="string">'lodash'</span>);</div></pre></td></tr></table></figure></p>
+<p><strong>MyComponent.vue</strong><br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</div><div class="line">  created() &#123;</div><div class="line">    <span class="built_in">console</span>.log(_.isEmpty() ? <span class="string">'Lodash everywhere!'</span> : <span class="string">'Uh oh..'</span>);</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>关于反对 window 全局变量是一个十分悠久的话题，但是，在具体到这篇文章中，是因为这样不支持服务器渲染，当这个应用跑在服务端，<code>window</code> 对象将不复存在，因此会导致尝试访问这个原型的时候会抛出一个错误并终止它。<br>The case against window variables is a long one, but, specifically to this discussion, they don’t work with server rendering. When the app runs on the server the <code>window</code> object will be undefined and so attempting to access a property will end with an error.</p>
+<h3 id="Importing-in-every-file"><a href="#Importing-in-every-file" class="headerlink" title="Importing in every file"></a>Importing in every file</h3><h3 id="引入到每个文件中"><a href="#引入到每个文件中" class="headerlink" title="引入到每个文件中"></a>引入到每个文件中</h3><p>另一个二流方法是在每一个文件中都把类库文件引入进去。<br>Another second-rate method is to import the library into every file:</p>
+<p><strong>MyComponent.vue</strong><br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> _ <span class="keyword">from</span> <span class="string">'lodash'</span>;</div><div class="line"></div><div class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</div><div class="line">  created() &#123;</div><div class="line">    <span class="built_in">console</span>.log(_.isEmpty() ? <span class="string">'Lodash is available here!'</span> : <span class="string">'Uh oh..'</span>);</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这当然行得通，然而这并不 DRY 并且这基本上就是一种惩罚游戏：你不得不记住要在每个文件中都引入这些些类库，以及当你不再需要使用它以后也要记得移除它。<br>与此同时，如果你没有正确的设置好你的构建工具，你很有可能会在你最终构建出来的文件中会有一个类库的多个副本在其中。<br>This works, but it’s not very DRY and it’s basically just a pain: you have to remember to import it into every file, and remove it again if you stop using it in that file. And if you don’t setup your build tool correctly you may end up with multiple copies of the same library in your build.</p>
+<h3 id="A-better-way"><a href="#A-better-way" class="headerlink" title="A better way"></a>A better way</h3><h3 id="一个更好的解决方案"><a href="#一个更好的解决方案" class="headerlink" title="一个更好的解决方案"></a>一个更好的解决方案</h3><p>在 Vue 项目中使用一个 Javascript 库的最干净且最健壮的方法是将他代理为 Vue 原型对象的属性。<br>让我们来试试通过这种方式把 Moment date 和 time 库添加到我们的项目中来：<br>The cleanest and most robust way to use a Javascript library in a Vue project is to proxy it to a property of the Vue prototype object. Let’s do that to add the Moment date and time library to our project:</p>
+<p><strong>entry.js</strong><br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> moment <span class="keyword">from</span> <span class="string">'moment'</span>;</div><div class="line"><span class="built_in">Object</span>.definePrototype(Vue.prototype, <span class="string">'$moment'</span>, &#123; value: moment &#125;);</div></pre></td></tr></table></figure></p>
+<p>由于所有的组件都会从 Vue 原型对象中继承其所有方法，这让 Moment 自然而然的传递到任何或者说所有的组件当中，并且无需全局变量或者是手动引入什么东西（到组件中）。<br>只通过 <code>this.$moment</code> 就可以在任意的实例/组件中快速简单地访问到 Moment</p>
+<p>Since all components inherit their methods from the Vue prototype object this will make Moment automatically available across any and all components with no global variables or anything to manually import. It can simply be accessed in any instance/component from <code>this.$moment</code>:</p>
+<p><strong>MyNewComponent.vue</strong><br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</div><div class="line">  created() &#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">'The time is '</span> . this.$moment().format(<span class="string">"HH:mm"</span>));</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>现在，让我们花点时间来搞清楚这是为什么。<br>Let’s take the time now to understand how this works.</p>
+<h3 id="Object-defineProperty"><a href="#Object-defineProperty" class="headerlink" title="Object.defineProperty"></a>Object.defineProperty</h3><p>我们通常会这样设置一个对象属性：<br>We would normally set an object property like this:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Vue.prototype.$moment = moment;</div></pre></td></tr></table></figure>
+<p>在这个示例中你确实可以这样做，但如果用<code>Object.defineProperty</code>来定义，我们就可以同时定义属性的<a href="https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty" target="_blank" rel="external">描述符</a>。描述符允许我们设置一些底层的细节信息，例如我们的属性是否是可写的，又或者是循环中是否是可枚举的等等。</p>
+<p>You could do that here, but by using <code>Object.defineProperty</code> instead we are able to define our property with a <a href="https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty" target="_blank" rel="external">descriptor</a>. A descriptor allows us to set some low-level details such as whether or not our property is writeable and whether it shows up during enumeration in a <code>for</code> loop and more.</p>
+<p>我们通常不会对此感兴趣，因为在我们日复一日的 Javascript 时间里，其中 99% 的时间我们都不需要了解属性赋值的这一低层级细节信息。<br>不过在这里它可以给我们明显的好处：通过描述符去创建的属性默认是<em>只读的</em>。</p>
+<p>We don’t normally bother with this in our day-to-day Javascript because 99% of the time we don’t need that level of detail with a property assignment. But here it gives us a distinct advantage: properties created with a descriptor are <em>read-only</em> by default.</p>
+<p>这意味着那些一时失了智的开发者（或者就是你自己）不会有机会干出一些类似下面这个组件中那样的蠢事，进而搞坏整锅粥。<br>This means that some coffee-deprived developer (probably you) won’t be able to do something silly like this in a component and break everything:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">this</span>.$http = <span class="string">'Assign some random thing to the instance method'</span>;</div><div class="line"><span class="keyword">this</span>.$http.get(<span class="string">'/'</span>); <span class="comment">// TypeError: this.$http.get is not a function</span></div></pre></td></tr></table></figure>
+<p>相对的，我们的只读实例方法保护了我们的类库不被修改，假如你尝试去重写它，你就只会得到一个“TypeError: Cannot assign to read only property”。<br>Instead, our read-only instance method protects our library, and if you attempt to overwrite it you will get “TypeError: Cannot assign to read only property”.</p>
+<h3 id=""><a href="#" class="headerlink" title="$"></a>$</h3><p>你应该会注意到代理我们的类库到一个属性上的时候，属性名前补充了一个美元符号“$”的前缀。你也大概已经见过其他一些属性或者方法比如 <code>$refs</code>,<code>$on</code>,<code>$mount</code> 等等也都有同样的前缀。<br>You’ll notice that we proxy our library to a property name prefixed with the dollar sign “$”. You’ve probably also seen other properties and methods like <code>$refs</code>, <code>$on</code>, <code>$mount</code> etc which have this prefix too.</p>
+<p>虽然不是必须的，这个前缀加到这些属性上也是为了提醒那些失了智的开发者（不用看，还是你），这是一个公共 API 属性或者方法，欢迎使用，不像其他的实例属性可能只是给 Vue 的内部使用。</p>
+<p>While not required, the prefix is added to properties to remind coffee-deprived developers (you, again) that this is a public API property or method that you’re welcome to use, unlike other properties of the instance that are probably just for Vue’s internal use.</p>
+<p>作为一个基于原型链的语言，Javascript 没有（真正意义上的）类，因此也没有所谓的 “私有” 和 “公共” 变量或者是 “静态” 方法。<br>而这种（$ 符号）约定俗成实际上是一种柔和的提醒，我认为这是值得去遵循的。<br>Being a prototype-based language, there are no (real) classes in Javascript so it doesn’t have “private” and “public” variables or “static” methods. This convention is a mild substitute which I think is worthwhile to follow.</p>
+<h3 id="this"><a href="#this" class="headerlink" title="this"></a>this</h3><p>由于类库现在是一个实例方法，所以通过 <code>this.libraryName</code> 来使用类库不会是一件值得惊讶的事。<br>You’ll also notice that to use the library you use <code>this.libraryName</code> which is probably not a surprise since it is now an instance method.</p>
+<p>这样做的一个后果是，与使用全局变量不一样，你必须确保使用类库时处于一个正确的作用于中。<br>比如在内部回调函数中你就不能访问的到 <code>this</code> 上的类库。<br>One consequence of this, though, is that unlike a global variable you must ensure you’re in the correct scope when using your library. Inside callback methods you can’t access the <code>this</code> that your library inhabits.</p>
+<p>对此，箭头回调函数会是一个不错的解决方案，它会确保你在正确的作用域中<br>Fat arrow callbacks are a good solution to making sure you stay in the right scope:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">this</span>.$http.get(<span class="string">'/'</span>).then(res =&gt; &#123;</div><div class="line">  <span class="keyword">if</span> (res.status !== <span class="number">200</span>) &#123;</div><div class="line">    <span class="keyword">this</span>.$http.get(<span class="string">'/'</span>) <span class="comment">// etc</span></div><div class="line">    <span class="comment">// Only works in a fat arrow callback.</span></div><div class="line">  &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<h3 id="Why-not-make-it-a-plugin"><a href="#Why-not-make-it-a-plugin" class="headerlink" title="Why not make it a plugin?"></a>Why not make it a plugin?</h3><h3 id="为什么不把它作为一个插件呢？"><a href="#为什么不把它作为一个插件呢？" class="headerlink" title="为什么不把它作为一个插件呢？"></a>为什么不把它作为一个插件呢？</h3><p>如果你计划在多个 Vue 项目中使用同一个类库，又或者你想要把它分享给全世界，那么你其实可以去构建一个属于你自己的插件。<br>If you’re planning to use a library across many Vue projects, or you want to share it with the world, you can build this into your own plugin!</p>
+<p>一个插件可以把复杂的操作抽象出来，从而允许你通过如下面所展示，十分简单的方式去把你所选的类库添加到一个项目中。<br>A plugin abstracts complexity and allows you to simply do the following in a project to add your chosen library:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> MyLibraryPlugin <span class="keyword">from</span> <span class="string">'my-library-plugin'</span>;</div><div class="line">Vue.use(MyLibraryPlugin);</div></pre></td></tr></table></figure></p>
+<p>仅靠这样两行代码，我们就可以在任意的组件中使用我们的类库，就像我们使用 Vue Router，Vuex 又或者其他可以通过 <code>Vue.use</code> 使用的插件那样。<br>With these two lines we can use the library in any component just like we can with Vue Router, Vuex and other plugins that utilise <code>Vue.use</code>.</p>
+<h3 id="Writing-a-plugin"><a href="#Writing-a-plugin" class="headerlink" title="Writing a plugin"></a>Writing a plugin</h3><h3 id="写一个插件"><a href="#写一个插件" class="headerlink" title="写一个插件"></a>写一个插件</h3><p>首先，为你的插件创建一个文件。在这个例子中我将会写一个把 Axios 添加到你所有的 Vue 示例和组件的插件，因此我将文件命名为 <em>axios.js</em>。<br>Firstly, create a file for your plugin. In this example I’ll make a plugin that adds Axios to your all your Vue instances and components, so I’ll call the file <em>axios.js</em>.</p>
+<p>其中最需要搞清的事情是，插件需要暴露一个 <code>install</code> 方法，该方法中会将 Vue 的构造函数作为第一个参数。<br>The main thing to understand is that a plugin must expose an <code>install</code> method which takes the Vue constructor as the first argument:</p>
+<p><strong>axios.js</strong><br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</div><div class="line">  install: <span class="function"><span class="keyword">function</span>(<span class="params">Vue</span>) </span>&#123;</div><div class="line">    <span class="comment">// Do stuff</span></div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>现在我们可以使用我们私有的方法去把类库添加到原型对象:<br>Now we can use our previos method to add the library to the prototype object:</p>
+<p><strong>axios.js</strong><br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> axios <span class="keyword">from</span> <span class="string">'axios'</span>;</div><div class="line"></div><div class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</div><div class="line">  install: <span class="function"><span class="keyword">function</span>(<span class="params">Vue,</span>) </span>&#123;</div><div class="line">    <span class="built_in">Object</span>.defineProperty(Vue.prototype, <span class="string">'$http'</span>, &#123; value: axios &#125;);</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>对于添加类库到一个项目中作业这个目标来说，<code>use</code> 这个实例方法就是我们现在所需要知道的一切。<br>举个例子，要把 Axios 添加到项目中，我们只需要像下面那样容易操作：<br>The <code>use</code> instance method is all we now need to add our library to a project. For example, we can now add the Axios library as easily as this:</p>
+<p><strong>entry.js</strong><br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> AxiosPlugin <span class="keyword">from</span> <span class="string">'./axios.js'</span>;</div><div class="line">Vue.use(AxiosPlugin);</div><div class="line"></div><div class="line"><span class="keyword">new</span> Vue(&#123;</div><div class="line">  created() &#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.$http ? <span class="string">'Axios works!'</span> : <span class="string">'Uh oh..'</span>);</div><div class="line">  &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure></p>
+<h3 id="Bonus-plugin-optional-arguments"><a href="#Bonus-plugin-optional-arguments" class="headerlink" title="Bonus: plugin optional arguments"></a>Bonus: plugin optional arguments</h3><h3 id="砰-插件的可选参数"><a href="#砰-插件的可选参数" class="headerlink" title="砰: 插件的可选参数"></a>砰: 插件的可选参数</h3><p>你的插件的 install 方法还可以带上可选参数。一些开发者可能不会喜欢命名他们的 Axios 实例方法为 <code>$http</code> ,这是由于 Vue Resource 通常会使用这个名字,<br>那么，让我们通过可选参数来允许他们可以改用任何他们喜欢的名字吧：</p>
+<p>Your plugin install method can take optional arguments. Some devs might not like calling their Axios instance method <code>$http</code> since Vue Resource is commonly given that name, so let’s use an optional argument to allow them to change it to whatever they like:</p>
+<p><strong>axios.js</strong><br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> axios <span class="keyword">from</span> <span class="string">'axios'</span>;</div><div class="line"></div><div class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</div><div class="line">  install: <span class="function"><span class="keyword">function</span>(<span class="params">Vue, name = '$http'</span>) </span>&#123;</div><div class="line">    <span class="built_in">Object</span>.defineProperty(Vue.prototype, name, &#123; value: axios &#125;);</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><strong>entry.js</strong><br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> AxiosPlugin <span class="keyword">from</span> <span class="string">'./axios.js'</span>;</div><div class="line">Vue.use(AxiosPlugin, <span class="string">'$axios'</span>);</div><div class="line"></div><div class="line"><span class="keyword">new</span> Vue(&#123;</div><div class="line">  created() &#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.$axios ? <span class="string">'Axios works!'</span> : <span class="string">'Uh oh..'</span>);</div><div class="line">  &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure></p>
+<hr>
+<p><em>获得最新的 Vue.js 文章，教程和最棒的项目，都在这里</em> <a href="http://vuejsdevelopers.com/newsletter/?jsdojo_id=medium_lip" target="_blank" rel="external"><em>Vue.js Developers Newsletter</em></a></p>
+<ul>
+<li><p><a href="https://medium.com/tag/javascript?source=post" target="_blank" rel="external">JavaScript</a></p>
+</li>
+<li><p><a href="https://medium.com/tag/vue?source=post" target="_blank" rel="external">Vue</a></p>
+</li>
+<li><p><a href="https://medium.com/tag/vuejs?source=post" target="_blank" rel="external">Vuejs</a></p>
+</li>
+<li><p><a href="https://medium.com/tag/web-development?source=post" target="_blank" rel="external">Web Development</a></p>
+</li>
+<li><p><a href="https://medium.com/tag/front-end-development?source=post" target="_blank" rel="external">Front End Development</a></p>
+</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/翻译/" rel="tag"># 翻译</a>
+          
+            <a href="/tags/javascript/" rel="tag"># javascript</a>
+          
+            <a href="/tags/vue/" rel="tag"># vue</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/08/13/声明式弹出层的问题/" rel="next" title="声明式弹窗的弊端">
+                <i class="fa fa-chevron-left"></i> 声明式弹窗的弊端
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://cloud.githubusercontent.com/assets/18730194/15146790/dd39acee-16ef-11e6-8ee7-093d1ce74fce.png"
+               alt="Fszer" />
+          <p class="site-author-name" itemprop="name">Fszer</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">29</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Use-Any-Javascript-Library-With-Vue-js-–-Vue-js-Developers-–-Medium"><span class="nav-number">1.</span> <span class="nav-text">Use Any Javascript Library With Vue.js – Vue.js Developers – Medium</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#How-to-include-a-library-in-a-Vue-js-project"><span class="nav-number">1.0.1.</span> <span class="nav-text">How to include a library in a Vue.js project</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何引入一个类库到你的-Vue-js-项目中"><span class="nav-number">1.1.</span> <span class="nav-text">如何引入一个类库到你的 Vue.js 项目中</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Global-variable"><span class="nav-number">1.1.1.</span> <span class="nav-text">Global variable</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#全局变量"><span class="nav-number">1.1.2.</span> <span class="nav-text">全局变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Importing-in-every-file"><span class="nav-number">1.1.3.</span> <span class="nav-text">Importing in every file</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#引入到每个文件中"><span class="nav-number">1.1.4.</span> <span class="nav-text">引入到每个文件中</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#A-better-way"><span class="nav-number">1.1.5.</span> <span class="nav-text">A better way</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一个更好的解决方案"><span class="nav-number">1.1.6.</span> <span class="nav-text">一个更好的解决方案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Object-defineProperty"><span class="nav-number">1.1.7.</span> <span class="nav-text">Object.defineProperty</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#"><span class="nav-number">1.1.8.</span> <span class="nav-text">$</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#this"><span class="nav-number">1.1.9.</span> <span class="nav-text">this</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Why-not-make-it-a-plugin"><span class="nav-number">1.1.10.</span> <span class="nav-text">Why not make it a plugin?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#为什么不把它作为一个插件呢？"><span class="nav-number">1.1.11.</span> <span class="nav-text">为什么不把它作为一个插件呢？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Writing-a-plugin"><span class="nav-number">1.1.12.</span> <span class="nav-text">Writing a plugin</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#写一个插件"><span class="nav-number">1.1.13.</span> <span class="nav-text">写一个插件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Bonus-plugin-optional-arguments"><span class="nav-number">1.1.14.</span> <span class="nav-text">Bonus: plugin optional arguments</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#砰-插件的可选参数"><span class="nav-number">1.1.15.</span> <span class="nav-text">砰: 插件的可选参数</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Fszer</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

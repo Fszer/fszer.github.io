@@ -402,7 +402,7 @@
 <p>诚然，在实际中你会倾向于抽取出这个 ‘transition’ 的功能到一个独立的 React 组件。参考 React Static Boilerplate（RSB）的 Link 组件，你可以在客户端里像这样只保留链接的部分的写法 <code>&lt;Link to=”/some-page”&gt;Click&lt;/Link&gt;</code>。</p>
 <p>需要在用户离开一个页面之前显示一个确认信息？只需要像 history 模块文档里描述的那样，注册 <code>history.listenBefore(...)</code> 事件方法到你组件的 <code>cjomponentDidMount()</code> 方法即可。同样的方法也适用于在页面之间的过渡动画的控制。</p>
 <h2 id="路由"><a href="#路由" class="headerlink" title="路由"></a>路由</h2><p>你可以用详细的原生JavaScript 对象来描述整个路由列表和其中的每一个路由。没有必要在这里使用 JSX，例如：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> routes = [</div><div class="line">  &#123; path: <span class="string">'/'</span>, action: () =&gt; &lt;HomePage /&gt; &#125;,</div><div class="line">  &#123; path: '/tasks', action: () =&gt; &lt;TaskList /&gt; &#125;,</div><div class="line">  &#123; path: '/tasks/:id', action: () =&gt; &lt;TaskDetails /&gt; &#125;</div><div class="line">];</div></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> routes = [</div><div class="line">  &#123; path: <span class="string">'/'</span>, action: () =&gt; <span class="xml"><span class="tag">&lt;<span class="name">HomePage</span> /&gt;</span> &#125;,</span></div><div class="line">  &#123; path: '/tasks', action: () =&gt; <span class="tag">&lt;<span class="name">TaskList</span> /&gt;</span> &#125;,</div><div class="line">  &#123; path: '/tasks/:id', action: () =&gt; <span class="tag">&lt;<span class="name">TaskDetails</span> /&gt;</span> &#125;</div><div class="line">];</div></pre></td></tr></table></figure>
 <p><strong>话说回来，如果谁知道为什么那么多人倾向于在和 UI 渲染无关的地方也使用 JSX，请留下评论</strong></p>
 <p>你可以使用 ES2015+ async/await 语法来写你的路由方法。就像在 RR 里做的那样，没有必要在这里使用回调，举个例子：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  path: &apos;/tasks/:id(\\d+)&apos;,</div><div class="line">  async action(&#123; params &#125;) &#123;</div><div class="line">    const resp = await fetch(`/api/tasks/$&#123;params.id&#125;`);</div><div class="line">    const data = await resp.json();</div><div class="line">    return data &amp;&amp; &lt;TaskDetails &#123;...data&#125; /&gt;;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
@@ -558,7 +558,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-count">17</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -569,7 +569,7 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-count">6</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -580,7 +580,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">27</span>
+                <span class="site-state-item-count">29</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

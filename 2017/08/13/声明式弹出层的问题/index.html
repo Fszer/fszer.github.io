@@ -1,0 +1,786 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="javascript,vue,声明弹窗," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="序言虽然 vue 非常宣扬其组件封装的模式，然而因为 dom 本身的一些限制与问题， vue 的组件模式在某些时候也并不是最佳的做法。其中，前端常见的弹窗，弹出层式的组件，就是一个例子，vue 的组件模式在此时就会出现明显的问题。这次要讨论的就是声明式的弹窗存在的问题及其解决方法。
+声明式弹出层弊端弹窗与弹出层在前端项目中，弹窗是一种相当频繁的组件，自不必细说，而相似的，弹出层这个东西也十分有用。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="声明式弹窗的弊端">
+<meta property="og:url" content="http://yoursite.com/2017/08/13/声明式弹出层的问题/index.html">
+<meta property="og:site_name" content="聆听群山的怒号">
+<meta property="og:description" content="序言虽然 vue 非常宣扬其组件封装的模式，然而因为 dom 本身的一些限制与问题， vue 的组件模式在某些时候也并不是最佳的做法。其中，前端常见的弹窗，弹出层式的组件，就是一个例子，vue 的组件模式在此时就会出现明显的问题。这次要讨论的就是声明式的弹窗存在的问题及其解决方法。
+声明式弹出层弊端弹窗与弹出层在前端项目中，弹窗是一种相当频繁的组件，自不必细说，而相似的，弹出层这个东西也十分有用。">
+<meta property="og:updated_time" content="2017-08-17T15:17:24.082Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="声明式弹窗的弊端">
+<meta name="twitter:description" content="序言虽然 vue 非常宣扬其组件封装的模式，然而因为 dom 本身的一些限制与问题， vue 的组件模式在某些时候也并不是最佳的做法。其中，前端常见的弹窗，弹出层式的组件，就是一个例子，vue 的组件模式在此时就会出现明显的问题。这次要讨论的就是声明式的弹窗存在的问题及其解决方法。
+声明式弹出层弊端弹窗与弹出层在前端项目中，弹窗是一种相当频繁的组件，自不必细说，而相似的，弹出层这个东西也十分有用。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/08/13/声明式弹出层的问题/"/>
+
+
+
+
+
+  <title>声明式弹窗的弊端 | 聆听群山的怒号</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">聆听群山的怒号</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/13/声明式弹出层的问题/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Fszer">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://cloud.githubusercontent.com/assets/18730194/15146790/dd39acee-16ef-11e6-8ee7-093d1ce74fce.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="聆听群山的怒号">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                声明式弹窗的弊端
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-13T23:53:02+08:00">
+                2017-08-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/javascript/" itemprop="url" rel="index">
+                    <span itemprop="name">javascript</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="序言"><a href="#序言" class="headerlink" title="序言"></a>序言</h2><p>虽然 vue 非常宣扬其组件封装的模式，然而因为 dom 本身的一些限制与问题， vue 的组件模式在某些时候也并不是最佳的做法。<br>其中，前端常见的弹窗，弹出层式的组件，就是一个例子，vue 的组件模式在此时就会出现明显的问题。<br>这次要讨论的就是声明式的弹窗存在的问题及其解决方法。</p>
+<h2 id="声明式弹出层弊端"><a href="#声明式弹出层弊端" class="headerlink" title="声明式弹出层弊端"></a>声明式弹出层弊端</h2><h3 id="弹窗与弹出层"><a href="#弹窗与弹出层" class="headerlink" title="弹窗与弹出层"></a>弹窗与弹出层</h3><p>在前端项目中，弹窗是一种相当频繁的组件，自不必细说，而相似的，弹出层这个东西也十分有用。<br>比如选中 select 之后弹出的选择列表， 比如 tooltip ，dropdown 这样的组件多多少少都可以抽象为这样或那样的弹出层组件。</p>
+<p>之所以提到 select ，是因为最近遇到一个需求，需要统一各个浏览器的 select 下拉样式，<br>而 select 的原生下拉部分无法直接定义样式，就只能通过一个弹出层模拟下拉这样，这是促使我敲下这篇文章的原因之一。</p>
+<h3 id="vue-组件结构下的一般弹出层模式"><a href="#vue-组件结构下的一般弹出层模式" class="headerlink" title="vue 组件结构下的一般弹出层模式"></a>vue 组件结构下的一般弹出层模式</h3><p>现在我们已经解了我们需要怎么样的组件，不过还不到吐槽的时候，<br>接下来我们还得再说说 vue 组件结构下如何处理这样的组件，才能更好的展现问题的所在。</p>
+<p>让我们先忽略 modal 的具体实现，所谓的声明式组件，使用起来大概是这样的</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">button</span> @<span class="attr">click</span>=<span class="string">'open=!open'</span>&gt;</span><span class="tag">&lt;/<span class="name">button</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">modal</span> <span class="attr">v-show</span>=<span class="string">'open'</span>&gt;</span></div><div class="line">    modal-content...</div><div class="line">  <span class="tag">&lt;/<span class="name">modal</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>声明式的组件会预先就写在了模板当中，然后我们其实只需要控制 open 的状态就可以达到控制 modal 的显示/隐藏效果，<br>我们是预先<strong>声明</strong>了一个 modal 的组件，而非通过 js 动态的创建插入组件<br>这样是 vue 所倡导的一种将组件的变换映射到状态的切换以达到一个更清晰的控制模式。</p>
+<p>另一方面 对于 select 组件的实现，我们可能会想到这样子</p>
+<p>将一个 input 与 一个弹出层 <code>dropdown-list</code> 作为下拉列表放到一起，然后将各种选择事件，交互效果联系起来</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">'select'</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">v-model</span>=<span class="string">'value'</span>&gt;</span>    </div><div class="line">    <span class="tag">&lt;<span class="name">dropdown-list</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">select-item</span>&gt;</span>.....<span class="tag">&lt;/<span class="name">select-item</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">dropdown-list</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></div></pre></td></tr></table></figure>
+<h3 id="带来的问题"><a href="#带来的问题" class="headerlink" title="带来的问题"></a>带来的问题</h3><p>如果你了解一些 vue 的话，其实我上面的这两段东西都是十分普通，甚至初级的东西，<br>如果是一般的组件其实这样的使用与组合方式是没有什么问题的。 </p>
+<p>但是实际上他们还是会有不少问题的……</p>
+<h4 id="复杂dom结构下的尴尬"><a href="#复杂dom结构下的尴尬" class="headerlink" title="复杂dom结构下的尴尬"></a>复杂dom结构下的尴尬</h4><p>首先一个跟 html 本身有关，上文中的 <code>dropdown-list</code>,<br>为了更接近原生的 select， <code>dropdown-list</code> 实际上会是绝对定位的一个『弹出层』，堆叠于其他 html 之上。</p>
+<p>这在一般情况并没有什么问题，但如果我们上面定义的 select 组件使用在一个带有 overflow 为 hidden 的父组件中，</p>
+<p>并且我们的 select 组件比较靠近边缘，那么我们的绝对定位的 <code>dropdown-list</code> 就会被 overflow 为 hidden 的父组件所遮蔽。</p>
+<p>在日常的项目中，我们显然很难保证一定不会出现这种布局，不仅是我所展示的 select，那些需要绝对定位结构的组件都会遇到这个问题。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">'overflow:hidden'</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">select</span>&gt;</span><span class="tag">&lt;/<span class="name">select</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>又比如 modal 的问题，在 modal 中我们虽然会用 fixed 来相对于浏览器窗口固定，这个时候虽然不会因为 overflow hidden 而被隐藏，<br>但是依然有可能因为父组件有一些特殊的样式而产生错乱，比如<br><a href="http://www.zhangxinxu.com/wordpress/2015/05/css3-transform-affect/" target="_blank" rel="external">transform限制position:fixed的跟随效果</a></p>
+<p>总的来说，在复杂的 dom 结构中，我们可能会在一个非常深的地方使用到一些需要绝对定位的组件，这个时候我们的组件不可避免的可能会受到父组件的样式影响。</p>
+<h4 id="中间状态的处理"><a href="#中间状态的处理" class="headerlink" title="中间状态的处理"></a>中间状态的处理</h4><p>接着是关于 vue 将 modal 交互变化映射到状态的变化的讨论，比如我们 modal 如果仅仅通过一个简单的状态从而控制显隐，在复杂的 modal 中是不够的。</p>
+<p>举个例子，我们有个创建新书籍信息的弹窗表单，其中可能有时间，书名等等信息</p>
+<p>假如我们所希望的是我们每次弹窗之后，都是一个新的代填写的表单，那么仅仅之有一个控制状态显隐的变量是不够的，<br>我们其实还必须每次都清理掉已经填写过的时间，书名等信息，将那些中间状态都清理掉，这还只是最简单的一中情况，弹窗中存在的变量逻辑越多，需要处理掉的中间状态就会随之增加。<br>这样实在是不如每次都异步创建一个新的弹窗，用完即销毁更加简单直接。</p>
+<h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><h3 id="提取到-body"><a href="#提取到-body" class="headerlink" title="提取到 body"></a>提取到 body</h3><h4 id="定位问题"><a href="#定位问题" class="headerlink" title="定位问题"></a>定位问题</h4><h4 id="iview-的解决方案"><a href="#iview-的解决方案" class="headerlink" title="iview 的解决方案"></a>iview 的解决方案</h4><h3 id="transfer-dom-指令代码分析"><a href="#transfer-dom-指令代码分析" class="headerlink" title="transfer-dom 指令代码分析"></a>transfer-dom 指令代码分析</h3>
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/javascript/" rel="tag"># javascript</a>
+          
+            <a href="/tags/vue/" rel="tag"># vue</a>
+          
+            <a href="/tags/声明弹窗/" rel="tag"># 声明弹窗</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/05/14/axios问题/" rel="next" title="无知">
+                <i class="fa fa-chevron-left"></i> 无知
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/08/24/『译』在 vue 中使用各种各样的 javascript 库/" rel="prev" title="【译】在 vue 中使用各种各样的 javascript 库">
+                【译】在 vue 中使用各种各样的 javascript 库 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://cloud.githubusercontent.com/assets/18730194/15146790/dd39acee-16ef-11e6-8ee7-093d1ce74fce.png"
+               alt="Fszer" />
+          <p class="site-author-name" itemprop="name">Fszer</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">29</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#序言"><span class="nav-number">1.</span> <span class="nav-text">序言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#声明式弹出层弊端"><span class="nav-number">2.</span> <span class="nav-text">声明式弹出层弊端</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#弹窗与弹出层"><span class="nav-number">2.1.</span> <span class="nav-text">弹窗与弹出层</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#vue-组件结构下的一般弹出层模式"><span class="nav-number">2.2.</span> <span class="nav-text">vue 组件结构下的一般弹出层模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#带来的问题"><span class="nav-number">2.3.</span> <span class="nav-text">带来的问题</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#复杂dom结构下的尴尬"><span class="nav-number">2.3.1.</span> <span class="nav-text">复杂dom结构下的尴尬</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#中间状态的处理"><span class="nav-number">2.3.2.</span> <span class="nav-text">中间状态的处理</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解决方法"><span class="nav-number">3.</span> <span class="nav-text">解决方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#提取到-body"><span class="nav-number">3.1.</span> <span class="nav-text">提取到 body</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#定位问题"><span class="nav-number">3.1.1.</span> <span class="nav-text">定位问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#iview-的解决方案"><span class="nav-number">3.1.2.</span> <span class="nav-text">iview 的解决方案</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#transfer-dom-指令代码分析"><span class="nav-number">3.2.</span> <span class="nav-text">transfer-dom 指令代码分析</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Fszer</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
