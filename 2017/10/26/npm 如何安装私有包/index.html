@@ -90,16 +90,16 @@
 
 
 
-<meta name="description" content="本文的动机是，最近在公司负责了一个类似 element-ui 的 vue ui 库的开发，然后在如何合理分发类库的问题上遇到了麻烦。因为想要更加通用，那么如何简单的使用起来显然也是需要考虑的问题。最终我们决定通过匹配 npm 包管理的方式来分发使用我们的内部 ui 库。毕竟 npm install package 几乎是现实的标准了，也是前端最为熟悉的方式了，只是有一个问题。我们的内部 ui 库是">
+<meta name="description" content="最近在公司负责了一个类似 element-ui 的 vue ui 库的开发，然后在如何合理分发的问题上遇到了麻烦。因为想要用起来更加方便，那么如何简单的安装使用起来显然也是需要考虑的问题。最终我们决定通过 npm 包管理的方式来分发使用我们的内部 ui 库。毕竟 npm install package 几乎是现实的标准了，也是前端最为熟悉的方式了，不过这也引发了额外一个问题。我们的内部 ui 库是">
 <meta property="og:type" content="article">
 <meta property="og:title" content="npm 如何安装私有包">
 <meta property="og:url" content="http://yoursite.com/2017/10/26/npm 如何安装私有包/index.html">
 <meta property="og:site_name" content="聆听群山的怒号">
-<meta property="og:description" content="本文的动机是，最近在公司负责了一个类似 element-ui 的 vue ui 库的开发，然后在如何合理分发类库的问题上遇到了麻烦。因为想要更加通用，那么如何简单的使用起来显然也是需要考虑的问题。最终我们决定通过匹配 npm 包管理的方式来分发使用我们的内部 ui 库。毕竟 npm install package 几乎是现实的标准了，也是前端最为熟悉的方式了，只是有一个问题。我们的内部 ui 库是">
-<meta property="og:updated_time" content="2017-10-26T14:54:41.936Z">
+<meta property="og:description" content="最近在公司负责了一个类似 element-ui 的 vue ui 库的开发，然后在如何合理分发的问题上遇到了麻烦。因为想要用起来更加方便，那么如何简单的安装使用起来显然也是需要考虑的问题。最终我们决定通过 npm 包管理的方式来分发使用我们的内部 ui 库。毕竟 npm install package 几乎是现实的标准了，也是前端最为熟悉的方式了，不过这也引发了额外一个问题。我们的内部 ui 库是">
+<meta property="og:updated_time" content="2017-10-26T14:57:48.788Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="npm 如何安装私有包">
-<meta name="twitter:description" content="本文的动机是，最近在公司负责了一个类似 element-ui 的 vue ui 库的开发，然后在如何合理分发类库的问题上遇到了麻烦。因为想要更加通用，那么如何简单的使用起来显然也是需要考虑的问题。最终我们决定通过匹配 npm 包管理的方式来分发使用我们的内部 ui 库。毕竟 npm install package 几乎是现实的标准了，也是前端最为熟悉的方式了，只是有一个问题。我们的内部 ui 库是">
+<meta name="twitter:description" content="最近在公司负责了一个类似 element-ui 的 vue ui 库的开发，然后在如何合理分发的问题上遇到了麻烦。因为想要用起来更加方便，那么如何简单的安装使用起来显然也是需要考虑的问题。最终我们决定通过 npm 包管理的方式来分发使用我们的内部 ui 库。毕竟 npm install package 几乎是现实的标准了，也是前端最为熟悉的方式了，不过这也引发了额外一个问题。我们的内部 ui 库是">
 
 
 
@@ -385,7 +385,7 @@
       
 
       
-        <p>本文的动机是，最近在公司负责了一个类似 element-ui 的 vue ui 库的开发，然后在如何合理分发类库的问题上遇到了麻烦。<br>因为想要更加通用，那么如何简单的使用起来显然也是需要考虑的问题。<br>最终我们决定通过匹配 npm 包管理的方式来分发使用我们的内部 ui 库。<br>毕竟 npm install package 几乎是现实的标准了，也是前端最为熟悉的方式了，只是有一个问题。<br>我们的内部 ui 库是放在公司内部的私有 gitlab 仓库当中，也并没有发包到 npm 上，自然还是需要格外做一些工作。</p>
+        <p>最近在公司负责了一个类似 element-ui 的 vue ui 库的开发，然后在如何合理分发的问题上遇到了麻烦。<br>因为想要用起来更加方便，那么如何简单的安装使用起来显然也是需要考虑的问题。<br>最终我们决定通过 npm 包管理的方式来分发使用我们的内部 ui 库。<br>毕竟 npm install package 几乎是现实的标准了，也是前端最为熟悉的方式了，不过这也引发了额外一个问题。<br>我们的内部 ui 库是放在公司内部的私有 gitlab 仓库当中，也并没有发包到 npm 上，自然还是需要格外做一些工作。</p>
 <a id="more"></a>
 <h2 id="npm-常见安装包的方式"><a href="#npm-常见安装包的方式" class="headerlink" title="npm 常见安装包的方式"></a>npm 常见安装包的方式</h2><p>先让我们回顾一下 npm 的安装方式。<br>根据官网，撇开额外的 common options， npm install 可以处理的方式有如下 10 种，让我们来复习一下</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">// 不带任何参数，默认搜索安装当前目录下的package.json 中记录的包</div><div class="line">npm install (with no args, <span class="keyword">in</span> package dir)</div><div class="line">// 根据 npm 服务器上记录的包名安装，这也是最常见的安装单个包的方式了</div><div class="line">npm install [&lt;@scope&gt;/]&lt;name&gt;</div><div class="line"></div><div class="line">// 类似的，可以通过包名 name后加 @ 带上 `tag` `version`` version range` 等相关信息来更加明确的指定需要安装包的版本</div><div class="line">// 另外也可以在包名前带上命名空间来区分不同组织或者个人名下的相同名字的包。</div><div class="line">// 比如 lodash/has 跟 someone/has 包名都是 has，但是从属于不同的命名空间。</div><div class="line">// 不过上传包裹带上命名空间是付费玩家的特权，这又是另一个话题，就不过渡展开了。</div><div class="line">npm install [&lt;@scope&gt;/]&lt;name&gt;@&lt;tag&gt;</div><div class="line">npm install [&lt;@scope&gt;/]&lt;name&gt;@&lt;version&gt;</div><div class="line">npm install [&lt;@scope&gt;/]&lt;name&gt;@&lt;version range&gt;</div><div class="line"></div><div class="line">// npm 也支持直接通过 git 仓库地址安装 git-host 默认当然是 github ，因此其实也可以忽略，只要 &lt;git-user&gt;/&lt;repo-name&gt;</div><div class="line">// 比如去年如果你要使用 gulp v4 的话你实际上需要 npm gulpjs/gulp.git<span class="comment">#4.0 的方式来安装</span></div><div class="line">// 这里实际上还有非常的多的可配置写法，来指向不同 git仓库比如gitlab，github等各种不同的分支，具体可以参照npm官网啦 </div><div class="line">npm install &lt;git-host&gt;:&lt;git-user&gt;/&lt;repo-name&gt;</div><div class="line">// 又或者直接通过 git 仓库的 url 访问到对应的 git 仓库</div><div class="line">npm install &lt;git repo url&gt;</div><div class="line"></div><div class="line">// 接下来则是通过直接给出包裹的 tar压缩包本地或远程地址来，安装一个经过压缩的 npm 包 </div><div class="line">npm install &lt;tarball file&gt;</div><div class="line">npm install &lt;tarball url&gt;</div><div class="line">// 又或者最为直接的，传入一个文件夹路径，来安装一个 npm 包</div><div class="line">npm install &lt;folder&gt;</div></pre></td></tr></table></figure>
