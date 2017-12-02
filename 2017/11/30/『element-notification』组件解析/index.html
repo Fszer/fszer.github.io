@@ -1,0 +1,791 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="javascript,vue,element.ui," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="element 的 notification 消息组件解析题图无关
+这是承继上一篇——不知道哪一篇提到我在公司内部写一套 ui 控件的下一篇。因为最近也需要实现一个类似 element 的 notification 消息组件。因此便直接研究参考了 element 的实现源码，相对简单，于是写一下记下来。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="『element-notification』组件解析">
+<meta property="og:url" content="http://yoursite.com/2017/11/30/『element-notification』组件解析/index.html">
+<meta property="og:site_name" content="聆听群山的怒号">
+<meta property="og:description" content="element 的 notification 消息组件解析题图无关
+这是承继上一篇——不知道哪一篇提到我在公司内部写一套 ui 控件的下一篇。因为最近也需要实现一个类似 element 的 notification 消息组件。因此便直接研究参考了 element 的实现源码，相对简单，于是写一下记下来。">
+<meta property="og:image" content="https://s1.ax1x.com/2017/12/03/5Kq81.png">
+<meta property="og:updated_time" content="2017-12-02T16:22:20.282Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="『element-notification』组件解析">
+<meta name="twitter:description" content="element 的 notification 消息组件解析题图无关
+这是承继上一篇——不知道哪一篇提到我在公司内部写一套 ui 控件的下一篇。因为最近也需要实现一个类似 element 的 notification 消息组件。因此便直接研究参考了 element 的实现源码，相对简单，于是写一下记下来。">
+<meta name="twitter:image" content="https://s1.ax1x.com/2017/12/03/5Kq81.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/11/30/『element-notification』组件解析/"/>
+
+
+
+
+
+  <title>『element-notification』组件解析 | 聆听群山的怒号</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">聆听群山的怒号</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/30/『element-notification』组件解析/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Fszer">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://cloud.githubusercontent.com/assets/18730194/15146790/dd39acee-16ef-11e6-8ee7-093d1ce74fce.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="聆听群山的怒号">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                『element-notification』组件解析
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-30T00:36:39+08:00">
+                2017-11-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习/" itemprop="url" rel="index">
+                    <span itemprop="name">学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="element-的-notification-消息组件解析"><a href="#element-的-notification-消息组件解析" class="headerlink" title="element 的 notification 消息组件解析"></a>element 的 notification 消息组件解析</h1><p><a href="https://imgchr.com/i/5Kq81" target="_blank" rel="external"><img src="https://s1.ax1x.com/2017/12/03/5Kq81.png" alt="5Kq81.png"></a><br>题图无关</p>
+<p>这是承继上一篇——不知道哪一篇提到我在公司内部写一套 ui 控件的下一篇。因为最近也需要实现一个类似 element 的 notification 消息组件。<br>因此便直接研究参考了 element 的实现源码，相对简单，于是写一下记下来。</p>
+<a id="more"></a>
+<h2 id="基本实现原理"><a href="#基本实现原理" class="headerlink" title="基本实现原理"></a>基本实现原理</h2><p>总体来说这个组件还是比较简单的。我对比了一下 iview 跟 element 的实现，个人感觉 element<br>的更好。</p>
+<h3 id="组件结构"><a href="#组件结构" class="headerlink" title="组件结构"></a>组件结构</h3><p>先来看看这个组件的目录结构。</p>
+<p>notification<br>├── index.js<br>├── src<br>|   ├── main.js<br>|   └── main.vue</p>
+<p>除开统一的暴露文件 index.js, 主要的就是 <code>main.js</code> 和 <code>main.vue</code> (明明也就三个文件……</p>
+<ul>
+<li>main.vue 消息组件的主体，控制消息组件的具体结构样式与组件逻辑</li>
+<li>main.js 基于上面的组件主体，构造命令式的新增/关闭消息组件逻辑，以及通过一个数组，记录所有的消息组件实例，以计算控制消息组件的具体定位</li>
+</ul>
+<h3 id="关键点解析"><a href="#关键点解析" class="headerlink" title="关键点解析"></a>关键点解析</h3><p>根据组件的目录结构，我们已经可以看出整个组件逻辑了。消息组件本身的结构没什么好说，<br>主要有意思的地方是 main.js</p>
+<h4 id="构造命令式调用"><a href="#构造命令式调用" class="headerlink" title="构造命令式调用"></a>构造命令式调用</h4><p>首先是为了构造命令式的调用方式， 在 main.js 中通过 <code>vue.extend</code> 以 main.vue 参数生成一个构造函数 <code>NotificationConstructor</code><br>这样，就可以不通过 vue 组件的声明式调用，而通过命令式调用 <code>NotificationConstructor</code>创建一个新的消息组件实例 。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> Main <span class="keyword">from</span> <span class="string">'./main.vue'</span></div><div class="line"></div><div class="line"><span class="keyword">const</span> NotificationConstructor = Vue.extend(Main)  <span class="comment">// 利用 Vue.extend 构造一个消息组件构造函数</span></div><div class="line"></div><div class="line"><span class="keyword">let</span> instance          <span class="comment">// 消息组件的实例</span></div><div class="line"><span class="keyword">let</span> seed = <span class="number">1</span>          <span class="comment">// id 标识种子</span></div><div class="line"></div><div class="line"><span class="keyword">const</span> Notification = <span class="function"><span class="keyword">function</span> (<span class="params">options = &#123;&#125;</span>) </span>&#123;</div><div class="line"> </div><div class="line">  <span class="comment">// ...</span></div><div class="line">  <span class="comment">// 根据传入的 options 配置示例数据</span></div><div class="line">  <span class="comment">// 构建一个新的消息组件实例</span></div><div class="line">  instance = <span class="keyword">new</span> NotificationConstructor(&#123;</div><div class="line">    data: options</div><div class="line">  &#125;)</div><div class="line">  <span class="comment">// ...</span></div><div class="line"></div><div class="line">  instance.vm = instance.$mount()</div><div class="line">  <span class="built_in">document</span>.body.appendChild(instance.vm.$el)</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>基于此就能构造出统一的新建/删除消息实例方法。这里不再赘述，可以看下面的代码解析部分的详解。</p>
+<h4 id="定位计算"><a href="#定位计算" class="headerlink" title="定位计算"></a>定位计算</h4><p>接着是定位计算，因为消息组件可能同时存在多个实例，因此需要计算每一实例的具体定位，使之处于正确的位置。<br>关于这里有两个要求</p>
+<ul>
+<li>消息组件有左上左下/右上右下四种定位类型，根据需要灵活配置</li>
+<li>具有同样的定位的消息组件实例并不孤立，应该根据先后顺序排列展示</li>
+</ul>
+<p>每个消息组件实例之间会相互影响的，所以就需要一个数组存放所有的消息组件实例，以方便进行计算。<br>当然你也可以对四种定位都分别以一个数组存储处理，不过本身类别不多，单独开4个数组操作起来反而更加麻烦。</p>
+<p>虽说要计算定位，实际上四种定位类型，所需要计算的都是 y 轴上的变化再加上区分是从 top 还是 bottom 开始而已，而且 top/bottom 可以根据定位类型推导出来，<br>所以只要计算 y 轴上的定位偏移值的变化就好了。</p>
+<p>因此有两个地方的变化需要计算。</p>
+<p>一个是新增实例的时候，需要过滤出所有的相同的定位类型的实例，然后累加已有的实例的实际高度与实例之间的间隔，就可确定新实例的定位偏移值，<br>相同定位类型的实例就可以按顺序排列展示出来了。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 每个相同 position 的实例相距 16px</span></div><div class="line">  <span class="keyword">let</span> verticalOffset = instances</div><div class="line">    .filter(item =&gt; item.position === position)</div><div class="line">    .reduce((accOffset, &#123; $el &#125;) =&gt; accOffset + $el.offsetHeight + <span class="number">16</span>, options.offset || <span class="number">0</span>)</div><div class="line"></div><div class="line">  verticalOffset += <span class="number">16</span></div><div class="line">  instance.verticalOffset = verticalOffset</div></pre></td></tr></table></figure>
+<p>另一个自然是删除实例的时候，这个时候与新增始不同的是，该实例之后的所有相同定位类型的实例的定位偏移值,都需要减去该实例的实际高度与间隔，</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 获取被关闭实例的定位类型 position，与偏移类型 verticalProperty</span></div><div class="line"> <span class="keyword">const</span> &#123; position, verticalProperty &#125; = closeInstance</div><div class="line"> <span class="comment">// 获得被关闭实例的实际高度</span></div><div class="line"> <span class="keyword">const</span> removedHeight = closeInstance.dom.offsetHeight</div><div class="line"></div><div class="line"> <span class="comment">// 从被关闭的实例索引位置开始，遍历相同定位类型的实例，重新计算其定位偏移值</span></div><div class="line"> <span class="keyword">for</span> (<span class="keyword">let</span> i = index; i &lt; len - <span class="number">1</span>; i++) &#123;</div><div class="line">   <span class="keyword">if</span> (instances[i].position === position) &#123;</div><div class="line">     instances[i].dom.style[verticalProperty] =</div><div class="line">       <span class="built_in">parseInt</span>(instances[i].dom.style[verticalProperty], <span class="number">10</span>) - removedHeight - <span class="number">16</span> + <span class="string">'px'</span></div><div class="line">   &#125;</div><div class="line"> &#125;</div></pre></td></tr></table></figure>
+<p>其他的都是一些小东西，看源码解析就好=。=</p>
+<h2 id="源码解析"><a href="#源码解析" class="headerlink" title="源码解析"></a>源码解析</h2><p>main.js</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> Vue <span class="keyword">from</span> <span class="string">'vue'</span></div><div class="line"><span class="keyword">import</span> Main <span class="keyword">from</span> <span class="string">'./main.vue'</span></div><div class="line"></div><div class="line"><span class="keyword">const</span> hasOwnProperty = <span class="built_in">Object</span>.prototype.hasOwnProperty</div><div class="line"><span class="keyword">const</span> hasOwn = (obj, key) =&gt; hasOwnProperty.call(obj, key)</div><div class="line"></div><div class="line"><span class="keyword">const</span> isVNode = (node) =&gt; <span class="keyword">typeof</span> node === <span class="string">'object'</span> &amp;&amp; hasOwn(node, <span class="string">'componentOptions'</span>)</div><div class="line"><span class="keyword">const</span> NotificationConstructor = Vue.extend(Main)  <span class="comment">// 利用 Vue.extend 构造一个消息组件构造函数</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">let</span> instance          <span class="comment">// 消息组件的实例</span></div><div class="line"><span class="keyword">const</span> instances = []  <span class="comment">// 消息组件实例队列</span></div><div class="line"><span class="keyword">let</span> seed = <span class="number">1</span>          <span class="comment">// id 标识种子</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">const</span> Notification = <span class="function"><span class="keyword">function</span> (<span class="params">options = &#123;&#125;</span>) </span>&#123;</div><div class="line">  <span class="keyword">const</span> &#123; onClose: userOnClose, position = <span class="string">'top-right'</span> &#125; = options </div><div class="line">  <span class="keyword">const</span> id = <span class="string">`notification_<span class="subst">$&#123;seed++&#125;</span>`</span>  <span class="comment">// 构造标识 id</span></div><div class="line"></div><div class="line">  <span class="comment">// 将用户的 close 回调传入到统一的关闭函数中进行处理</span></div><div class="line">  options.onClose = () =&gt; Notification.close(id, userOnClose)</div><div class="line"></div><div class="line">  <span class="comment">// 构建一个新的消息组件实例</span></div><div class="line">  instance = <span class="keyword">new</span> NotificationConstructor(&#123;</div><div class="line">    data: options</div><div class="line">  &#125;)</div><div class="line">  <span class="comment">// 判断 message 是否是虚拟 dom 节点，如果是则传入到组件的默认插槽中</span></div><div class="line">  <span class="keyword">if</span> (isVNode(options.message)) &#123;</div><div class="line">    instance.$slots.default = [options.message]</div><div class="line">    options.message = <span class="string">''</span></div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="comment">// 配置实例的各种信息,并初始化插入到 body 中</span></div><div class="line">  instance.id = id</div><div class="line">  instance.vm = instance.$mount()</div><div class="line">  <span class="built_in">document</span>.body.appendChild(instance.vm.$el)</div><div class="line">  instance.vm.visible = <span class="literal">true</span></div><div class="line">  instance.dom = instance.vm.$el</div><div class="line">  instance.dom.style.zIndex = <span class="number">99</span></div><div class="line"></div><div class="line">  <span class="comment">// 筛选出实例数组中 position 一致的实例，并遍历求和计算出新的消息组件实例的具体偏移值。</span></div><div class="line">  <span class="comment">// options.offset 可传入一个自定义的偏移值，默认是 0</span></div><div class="line">  <span class="comment">// 每个相同 position 的实例相距 16px</span></div><div class="line">  <span class="keyword">let</span> verticalOffset = instances</div><div class="line">    .filter(item =&gt; item.position === position)</div><div class="line">    .reduce((accOffset, &#123; $el &#125;) =&gt; accOffset + $el.offsetHeight + <span class="number">16</span>, options.offset || <span class="number">0</span>)</div><div class="line">  verticalOffset += <span class="number">16</span></div><div class="line">  instance.verticalOffset = verticalOffset</div><div class="line">  </div><div class="line">  <span class="comment">// 添加到实例中</span></div><div class="line">  instances.push(instance)</div><div class="line"></div><div class="line">  <span class="comment">// 返回 vue 实例</span></div><div class="line">  <span class="keyword">return</span> instance.vm</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="comment">// 遍历生成多个特定 type 的消息组件的快捷调用函数</span></div><div class="line">[<span class="string">'success'</span>, <span class="string">'warning'</span>, <span class="string">'info'</span>, <span class="string">'error'</span>]</div><div class="line">  .forEach(type =&gt; Notification[type] = options =&gt; &#123;</div><div class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> options === <span class="string">'string'</span> || isVNode(options)) &#123;</div><div class="line">      options = &#123;</div><div class="line">        message: options</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">    options.type = type</div><div class="line">    <span class="keyword">return</span> Notification(options)</div><div class="line">  &#125;)</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * 消息组件实例的统一关闭函数</div><div class="line"> * @param &#123;String&#125; id 消息组件的标识 id</div><div class="line"> * @param &#123;Function|null&#125; userOnClose 用户自定义的关闭回调方法</div><div class="line"> */</div><div class="line">Notification.close = <span class="function"><span class="keyword">function</span> (<span class="params">id, userOnClose</span>) </span>&#123;</div><div class="line">  <span class="keyword">let</span> index = <span class="number">-1</span></div><div class="line">  <span class="keyword">const</span> len = instances.length</div><div class="line"></div><div class="line">  <span class="comment">// 过滤出需要关闭的实例，并记录索引值</span></div><div class="line">  <span class="keyword">const</span> closeInstance = instances.filter((item, i) =&gt; &#123;</div><div class="line">    <span class="keyword">if</span> (item.id === id) &#123;</div><div class="line">      index = i</div><div class="line">      <span class="keyword">return</span> <span class="literal">true</span></div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="literal">false</span></div><div class="line">  &#125;)[<span class="number">0</span>]</div><div class="line"></div><div class="line">  <span class="comment">// 过滤实例不存在的情况</span></div><div class="line">  <span class="keyword">if</span> (!closeInstance) <span class="keyword">return</span></div><div class="line"></div><div class="line">  <span class="comment">// 判断用户是否有传入正确 userOnClose ，有则调用该函数</span></div><div class="line">  <span class="keyword">if</span> (<span class="keyword">typeof</span> userOnClose === <span class="string">'function'</span>) &#123;</div><div class="line">    userOnClose(closeInstance)</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="comment">// 从实例数组中删除对应的实例</span></div><div class="line">  instances.splice(index, <span class="number">1</span>)</div><div class="line"></div><div class="line">  <span class="comment">// 过滤实例数组只剩一个或者没有实例的情况</span></div><div class="line">  <span class="keyword">if</span> (len &lt;= <span class="number">1</span>) <span class="keyword">return</span></div><div class="line"></div><div class="line">  <span class="comment">// 获取被关闭实例的定位类型 position，与偏移类型 verticalProperty</span></div><div class="line">  <span class="keyword">const</span> &#123; position, verticalProperty &#125; = closeInstance</div><div class="line">  <span class="comment">// 获得被关闭实例的实际高度</span></div><div class="line">  <span class="keyword">const</span> removedHeight = closeInstance.dom.offsetHeight</div><div class="line"></div><div class="line">  <span class="comment">// 从被关闭的实例索引位置开始，遍历相同定位类型的实例，重新计算其定位偏移值</span></div><div class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> i = index; i &lt; len - <span class="number">1</span>; i++) &#123;</div><div class="line">    <span class="keyword">if</span> (instances[i].position === position) &#123;</div><div class="line">      instances[i].dom.style[verticalProperty] =</div><div class="line">        <span class="built_in">parseInt</span>(instances[i].dom.style[verticalProperty], <span class="number">10</span>) - removedHeight - <span class="number">16</span> + <span class="string">'px'</span></div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"><span class="keyword">export</span> <span class="keyword">default</span> Notification</div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/javascript/" rel="tag"># javascript</a>
+          
+            <a href="/tags/vue/" rel="tag"># vue</a>
+          
+            <a href="/tags/element-ui/" rel="tag"># element.ui</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/10/26/npm 如何安装私有包/" rel="next" title="npm 如何安装私有包">
+                <i class="fa fa-chevron-left"></i> npm 如何安装私有包
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://cloud.githubusercontent.com/assets/18730194/15146790/dd39acee-16ef-11e6-8ee7-093d1ce74fce.png"
+               alt="Fszer" />
+          <p class="site-author-name" itemprop="name">Fszer</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">32</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#element-的-notification-消息组件解析"><span class="nav-number">1.</span> <span class="nav-text">element 的 notification 消息组件解析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本实现原理"><span class="nav-number">1.1.</span> <span class="nav-text">基本实现原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#组件结构"><span class="nav-number">1.1.1.</span> <span class="nav-text">组件结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关键点解析"><span class="nav-number">1.1.2.</span> <span class="nav-text">关键点解析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#构造命令式调用"><span class="nav-number">1.1.2.1.</span> <span class="nav-text">构造命令式调用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#定位计算"><span class="nav-number">1.1.2.2.</span> <span class="nav-text">定位计算</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#源码解析"><span class="nav-number">1.2.</span> <span class="nav-text">源码解析</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Fszer</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
