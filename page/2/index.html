@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 
 
 
@@ -10,6 +10,10 @@
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
 
 
 
@@ -33,36 +37,11 @@
 
 
 
+
   
   
   <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
 
-
-
-
-  
-  
-  
-  
-
-  
-    
-    
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-    
-    
-    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
-  
 
 
 
@@ -71,7 +50,22 @@
 
 <link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
 
 
   <meta name="keywords" content="Hexo, NexT" />
@@ -79,11 +73,6 @@
 
 
 
-
-
-
-
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
 
 
 
@@ -104,9 +93,11 @@
   var CONFIG = {
     root: '/',
     scheme: 'Mist',
-    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
     fancybox: true,
-    motion: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
     duoshuo: {
       userId: '0',
       author: '博主'
@@ -130,10 +121,6 @@
 
 
   <title>聆听群山的怒号</title>
-</head>
-
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
-
   
 
 
@@ -143,11 +130,9 @@
 
 
 
+</head>
 
-
-
-
-
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
   
@@ -155,8 +140,7 @@
   
 
   <div class="container sidebar-position-left 
-   page-home 
- ">
+  page-home">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -202,18 +186,8 @@
         </li>
       
         
-        <li class="menu-item menu-item-categories">
-          <a href="/categories" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
-            
-            分类
-          </a>
-        </li>
-      
-        
         <li class="menu-item menu-item-about">
-          <a href="/about" rel="section">
+          <a href="/about/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
             
@@ -222,22 +196,32 @@
         </li>
       
         
-        <li class="menu-item menu-item-archives">
-          <a href="/archives" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
-            
-            归档
-          </a>
-        </li>
-      
-        
         <li class="menu-item menu-item-tags">
-          <a href="/tags" rel="section">
+          <a href="/tags/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
             
             标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
           </a>
         </li>
       
@@ -248,16 +232,6 @@
               <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
             
             站点地图
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-commonweal">
-          <a href="/404.html" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
-            
-            公益404
           </a>
         </li>
       
@@ -289,7 +263,227 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/08/21/深层嵌套的Promise链解明/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Fszer">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://cloud.githubusercontent.com/assets/18730194/15146790/dd39acee-16ef-11e6-8ee7-093d1ce74fce.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="聆听群山的怒号">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/08/21/深层嵌套的Promise链解明/" itemprop="url">【译】深层嵌套的Promise链解明</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-08-21T23:53:02+08:00">
+                2016-08-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/翻译/" itemprop="url" rel="index">
+                    <span itemprop="name">翻译</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>如果你已经写了一段时间的 JavaScript 代码，你大概会听过像是<strong>回调地狱</strong>或者是<strong>噩梦金字塔</strong> 这类的说法。在几年前 promises 被添加到 JavaScript 中的时候。我记得我阅读到大量博客文章宣称回调地狱这类问题会得到解决。不幸的是，这看法稍微太乐观了些。随着越来越多的网页的 API 变得以 promise 为基础。我们会证明即使是 promise 也不能阻止我们写出过分嵌套且难以阅读的代码。</p>
+<p>这些天我在完全基于 promise 的Service Worker 脚本中看到这件事发生了许多次。特别是在那些应当向我们展示 Service Worker 正确使用方法的博客文章跟教程当中。</p>
+<p>下面的代码是一个关于如何使用 Serivce Worker 来实现一个网络优先，带缓存回调的离线支持方案的所谓的”基础”例子。<br>就是这个代码（或者是他的一个变形版本）可以在网上的多个教程中找到。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">self.addEventListener(<span class="string">'fetch'</span>, (event) =&gt; &#123;</div><div class="line">  event.respondWith(</div><div class="line">    caches.open(<span class="string">'cache:v1'</span>).then((cache) =&gt; &#123;</div><div class="line">      <span class="keyword">return</span> fetch(event.request).then((response) =&gt; &#123;</div><div class="line">        cache.put(event.request, response.clone());</div><div class="line">        <span class="keyword">return</span> response;</div><div class="line">      &#125;).catch(() =&gt; &#123;</div><div class="line">        <span class="keyword">return</span> cache.match(event.request).then((response) =&gt; &#123;</div><div class="line">          <span class="keyword">return</span> response || Response.error();</div><div class="line">        &#125;);</div><div class="line">      &#125;);</div><div class="line">    &#125;)</div><div class="line">  );</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>嗯，我相信这个代码会在这里被称之为“基础”是经过考虑的，因为这里只有几行代码，并且涉及到概念也不算复杂，但是我要质疑的一点是，这个控制流可以说是任何别的什么，但称不上基础。除非你非常熟悉 <code>Fetch</code> 和 <code>CacheStorage</code> 这两个新API，又或是你对 promises 所有的细微之处有着坚实的理解。不然这个代码大概会让你神思好几秒来弄清楚这些代码到底做了些什么。</p>
+<p>从个人经验来说，我在一个星期以前开始第一次捣鼓 Service Worker ：我想要添加一个基础的缓存和离线的分析到这个网站（指的是原作者的blog吧）。但是在我完成我最初的实现之后，我还挺不满意我写的代码的。它并不清晰，也不足以自我说明的的，同时，它看起来相对于我尝试要解决的这个简单问题来说，太过复杂了。</p>
+<p>在我花了几个小时去重构代码并认真研究那些新的 API 之后，我得出了一些方案来改善我的代码的可阅读性，因此我想分享出来。这些方案可以归类到一般的软件开发建议，以及最好的实践方案是借力于新的javaScript 语言特性，比如说像是 Async 函数。</p>
+<p>注意：我这里不是要指责那些写了 Service Worker 教程的人。我从那些教程中学到了非常多的东西，我认为那些是无法去衡量价值的。而我同样理解在写博客文章的时候，一个简洁的例子的必要性。</p>
+<p>这篇文章主要目的是促使那些教程的读者们，去确保他们自己的实现方案有着可读性以及可维护的。从而拒绝那些没有经过全盘理解的，只是简单地从例子模板当中复制粘贴的行为。</p>
+<h2 id="这段代码做了什么？"><a href="#这段代码做了什么？" class="headerlink" title="这段代码做了什么？"></a>这段代码做了什么？</h2><p>在我开始谈论如何优化这段代码之前，我想要确保每个人都非常明白地理解了这段代码做了什么。</p>
+<p>当添加了一个 <code>fetch</code> 来监听一个 Service Worker 事件的时候，你通常会调用 <code>event.respondWith</code> 并传递一个 promise 来处理一个 <code>Response</code> 对象。但是当你传递一个类似于上面的例子中的 promise 链（带有多级嵌套的<code>then</code> 与<code>catch</code> 调用），其中那些可能发生的 resolution 中的关键就变得相当难以被发现。</p>
+<p>这里用最简洁的文字，给出了一个对于上面的代码例子中的，<code>fetch</code> 事件处理方法内部到底发生了什么，一步步渐进式的解释：</p>
+<ol>
+<li><code>event</code> 对象调用了 <code>respoondWith()</code> 然后传入了一个最终会处理到一个 <code>Response</code> 对象的 promise 链</li>
+<li>这个 promise 链开始于打开 <code>cache:v1</code> 这个缓存调用。</li>
+<li>一旦这个缓存被打开， 它会让一个 <code>fetch()</code> 去向网络请求由 <code>event.request</code> 指定的请求对象。</li>
+<li>如果 <code>fetch()</code> 请求成功：<br> a. 它会将这个网络请求的响应复制一份，放到这个缓存中。<br> b. 它会返回这个响应作为 promise 的 resolves</li>
+<li>如果 <code>fetch()</code> 请求失败：<br> a. 它会尝试从这个缓存中寻找一个匹配的请求。<br> b. 如果这个匹配找得到<pre><code>i. 它会返回这个缓存响应作为 promise 的 resolves
+</code></pre> c. 如果这个匹配找不到<pre><code>i. 它会将一个通用的 `Responese.error()` 对象作为 promise 的 resolves
+</code></pre>我上面提到的<code>responWith()</code> 会得到一个最终 resolves 到一个 <code>Response</code> 对象的 promise。在上面的逻辑之外， resolution 可能发生在三个不同的地方 <code>4.b</code>, <code>5.b.i</code>和 <code>5.c.i</code> 。</li>
+</ol>
+<h2 id="这个代码该如何被优化"><a href="#这个代码该如何被优化" class="headerlink" title="这个代码该如何被优化"></a>这个代码该如何被优化</h2><p>接下来的每一章都会介绍一个技巧或者一个原理来帮助你的代码变得更加可读的，并最终让你（或者别的人）在将来干活的时候更加容易。这些技巧会从简单的开始，然后逐渐变得越来越复杂。</p>
+<h3 id="给变量一个更有描述性名称"><a href="#给变量一个更有描述性名称" class="headerlink" title="给变量一个更有描述性名称"></a>给变量一个更有描述性名称</h3><p>当你在写着 Service Worker 代码的时候，你会发现你在处理相当多的 <code>Requset</code> 和 <code>Response</code> 对象，必须说，在你代码中所有出现这些对象的地方，都只用上面的名称去命名这个做法可能会相当诱人的。并且如果每一个 <code>Request</code> 或者 <code>Response</code> 对象只出现在他们独自的不同的作用域当中的话。我们并没有一个技术上的理由，要去改变他们的命名。</p>
+<p>然而，在我们这个Service Worker <code>fetch</code> 例子的案例当中，这里存在着不同的逻辑分支，这些的分支可能会导致两个完全不同类型的响应：一个网络的响应或者是一个缓存的响应。</p>
+<p>要告诉阅读代码的人哪个条件会导致哪个结果在，最简单的方法是给每一个 <code>Response</code> 对象一个指明其条件的名字：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">self.addEventListener(<span class="string">'fetch'</span>, (event) =&gt; &#123;</div><div class="line">  event.respondWith(</div><div class="line">    caches.open(<span class="string">'cache:v1'</span>).then((cache) =&gt; &#123;</div><div class="line">      <span class="keyword">return</span> fetch(event.request).then((networkResponse) =&gt; &#123;</div><div class="line">        cache.put(event.request, networkResponse.clone());</div><div class="line">        <span class="keyword">return</span> networkResponse;</div><div class="line">      &#125;).catch(() =&gt; &#123;</div><div class="line">        <span class="keyword">return</span> cache.match(event.request).then((cacheResponse) =&gt; &#123;</div><div class="line">          <span class="keyword">return</span> cacheResponse || Response.error();</div><div class="line">        &#125;);</div><div class="line">      &#125;);</div><div class="line">    &#125;)</div><div class="line">  );</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<h3 id="避免代码看起来就像一个错误"><a href="#避免代码看起来就像一个错误" class="headerlink" title="避免代码看起来就像一个错误"></a>避免代码看起来就像一个错误</h3><p>如果你看到我们原始例子中的代码的最后五行，这就是你会看到的。请注意，在中间的那一行行末是没有分号的。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">          // ...</div><div class="line">        &#125;);</div><div class="line">      &#125;);</div><div class="line">    &#125;)</div><div class="line">  );</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<p>当我第一次看到这里，我以为这只是一个忘了写分号的失误，但是我错了。</p>
+<p>事实上，这个表达式开始于<code>caches.open()</code> 并且这里被分离成自己一行还加上缩进——想必是为了避免在一行里面塞进太多的逻辑。</p>
+<p>虽然我是支持那种去分割这段代码为更多可管理的小块的冲动。但如果用这种方法来做，只会使得它看起来像是一个错误（这个分号实在是令人困惑）</p>
+<p>如果你有一个非常长/非常复杂的的表达式，让你感觉到需要从视觉上分离它，为什么不<em>实际</em>上去分离它呢：<br>将这个表达式移到别的地方，并把这个表达式的结果分配给一个变量。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">self.addEventListener(<span class="string">'fetch'</span>, (event) =&gt; &#123;</div><div class="line">  <span class="keyword">const</span> networkOrCacheResponse = caches.open(<span class="string">'cache:v1'</span>).then((cache) =&gt; &#123;</div><div class="line">    <span class="keyword">return</span> fetch(event.request).then((networkResponse) =&gt; &#123;</div><div class="line">      cache.put(event.request, networkResponse.clone());</div><div class="line">      <span class="keyword">return</span> networkResponse;</div><div class="line">    &#125;).catch(() =&gt; &#123;</div><div class="line">      <span class="keyword">return</span> cache.match(event.request).then((cacheResponse) =&gt; &#123;</div><div class="line">        <span class="keyword">return</span> cacheResponse || Response.error();</div><div class="line">      &#125;);</div><div class="line">    &#125;);</div><div class="line">  &#125;);</div><div class="line"></div><div class="line">  event.respondWith(networkOrCacheResponse);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<h3 id="抽象逻辑单位为单个功能的函数"><a href="#抽象逻辑单位为单个功能的函数" class="headerlink" title="抽象逻辑单位为单个功能的函数"></a>抽象逻辑单位为单个功能的函数</h3><p>将一个复杂的表达式的结果赋值给一个变量，再把它传递给别的方法是非常有利于提高可读性的。但是我们还可以做的更好。</p>
+<p>就拿上面的示例代码来说，<code>networkOrCacheResponse</code> 对象只能在这个特定的 <code>fetch</code> 方法当中使用。如果你想要在别的地方使用 <em>网络优先带有缓存回调</em> 的方法，你会需要去重写这段逻辑。</p>
+<p>为了解决这个问题，我们可以写一个工具函数来接收一个 <code>Reauest</code>对象，并返回一个会选择请求网络或者缓存响应来处理这request的 promise。这个函数看起来可能会是这样的：</p>
+ <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"> <span class="keyword">const</span> getNetworkOrCacheResponse = (request) =&gt; &#123;</div><div class="line">  <span class="keyword">return</span> caches.open(<span class="string">'cache:v1'</span>).then((cache) =&gt; &#123;</div><div class="line">    <span class="keyword">return</span> fetch(request).then((networkResponse) =&gt; &#123;</div><div class="line">      cache.put(request, networkResponse.clone());</div><div class="line">      <span class="keyword">return</span> networkResponse;</div><div class="line">    &#125;).catch(() =&gt; &#123;</div><div class="line">      <span class="keyword">return</span> cache.match(request).then((cacheResponse) =&gt; &#123;</div><div class="line">        <span class="keyword">return</span> cacheResponse || Response.error();</div><div class="line">      &#125;);</div><div class="line">    &#125;);</div><div class="line">  &#125;);</div><div class="line">&#125;;</div><div class="line"></div><div class="line">self.addEventListener(<span class="string">'fetch'</span>, (event) =&gt; &#123;</div><div class="line">  event.respondWith(getNetworkOrCacheResponse(event.request));</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>现在这个方法变得可读多了，但是它依然有些复杂。</p>
+<p>你会注意到这里有相当多个层级的 promise 嵌套。当你在某个地方看到非常多的嵌套在一个函数中的时候，这通常意味着这个函数做了太多工作了。换句话说，它的责任太重了。</p>
+<p><code>getNeetworkOrCacheResponse</code> 这个函数包含了两个关注点非常分离的逻辑：</p>
+<ul>
+<li>发出一个网络请求</li>
+<li>与缓存互动</li>
+</ul>
+<p>为了改善这个函数的可阅读性，我们可以抽象出与缓存相关的逻辑，分离到单独一个函数中：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> addToCache = (request, networkResponse) =&gt; &#123;</div><div class="line">  <span class="keyword">return</span> caches.open(<span class="string">'cache:v1'</span>)</div><div class="line">    .then((cache) =&gt; cache.put(request, networkResponse.clone()));</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">const</span> getCacheResponse = (request) =&gt; &#123;</div><div class="line">  <span class="keyword">return</span> caches.open(<span class="string">'cache:v1'</span>).then((cache) =&gt; &#123;</div><div class="line">    <span class="keyword">return</span> cache.match(request);</div><div class="line">  &#125;);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">const</span> getNetworkOrCacheResponse = (request) =&gt; &#123;</div><div class="line">  <span class="keyword">return</span> fetch(request).then((networkResponse) =&gt; &#123;</div><div class="line">    addToCache(request, networkResponse);</div><div class="line">    <span class="keyword">return</span> networkResponse;</div><div class="line">  &#125;).catch(() =&gt; &#123;</div><div class="line">    <span class="keyword">return</span> getCacheResponse(request)</div><div class="line">      .then((cacheResponse) =&gt; cacheResponse || Response.error());</div><div class="line">  &#125;);</div><div class="line">&#125;;</div><div class="line"></div><div class="line">self.addEventListener(<span class="string">'fetch'</span>, (event) =&gt; &#123;</div><div class="line">  event.respondWith(getNetworkOrCacheResponse(event.request));</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>如果你比较过这个新的逻辑和一开始的方法。你会注意到一个非常重要的不同。在原始的代码中。第一件发生的事情是调用<code>caches.open()</code>,同时它的调用只会发生一次。在新的代码中，在每一次这个工具函数与缓存打交道的时候都会调用<code>caches.open()</code> 。</p>
+<p>第一眼看到它，可能会让人觉得这个抽象最终是做了多于的事。而实际上这是对原始代码的一种优化。这一点在我开始分离代码之后才发现到。</p>
+<p>试想一下在 Service Worker 成功请求到一个网络响应的情况。这是最常见的情形，因此我们应当优化它（即尽可能快的得到响应给用户）。在原始的代码中。第一步逻辑是打开一个缓存，然后只在缓存开着的时候才会去请求网络响应。</p>
+<p>这绝对不是必要的。当我们真的需要在网络响应的情形中去写一个缓存事件的时候，写入的过程并不需要阻塞给用户的响应。这两件事可以简单的并行化。</p>
+<p>如果你好奇为什么将函数写成单责任的函数，是如此重要的事情。这里有两条基础的理由：</p>
+<ul>
+<li>这样函数会更加可重用（一个函数所负的责任越多，它就越是一个针对特定使用场景的具体方法）</li>
+<li>这样的函数更加容易被测试。（只做各自的一件事打的N个方法，可以被N个测试所测试。相比之下，一个函数做了N件事情通常会需要去测试 N！种可能输出）</li>
+</ul>
+<h3 id="使用-Async-函数来去除完全嵌套"><a href="#使用-Async-函数来去除完全嵌套" class="headerlink" title="使用 Async 函数来去除完全嵌套"></a>使用 Async 函数来去除完全嵌套</h3><p>或许改善复杂的 promise 代码的最好途径就是使用 async 函数，一个新的 javascript 特性，被用于让异步逻辑读起来更像同步代码。</p>
+<p>Async 函数需要通过新的 <code>async</code> 关键字来声明,为了替代立即返回的值，他们会返回一个 最终会 reslove 到这个函数的返回值的 promise 对象。</p>
+<p>在一个 async 函数的内部，你通常会找到一个或多个 <code>await</code> 关键字。<code>await</code> 关键字会提前设置置一个 promise （或者是一个解析为 promise的表达式），当解析器解析到这个<code>await</code>关键字，它就会停止执行这个函数，直到这个 promise 被处理掉。一旦这个promise 被处理掉，这个等待已久的表达式就会返回那个promise 处理的结果。</p>
+<p>说明得更加清楚，试想想上面一个章节定义的<code>getNetworkOrCacheResponse()</code> 。如果它是一个 async 函数的话，就是他该有的样子：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> getNetworkOrCacheResponse = <span class="keyword">async</span> (request) =&gt; &#123;</div><div class="line">  <span class="keyword">try</span> &#123;</div><div class="line">    <span class="keyword">const</span> networkResponse = <span class="keyword">await</span> fetch(request);</div><div class="line">    addToCache(request, networkResponse);</div><div class="line">    <span class="keyword">return</span> networkResponse;</div><div class="line">  &#125; <span class="keyword">catch</span> (err) &#123;</div><div class="line">    <span class="keyword">const</span> cacheResponse = <span class="keyword">await</span> getCacheResponse(request);</div><div class="line">    <span class="keyword">return</span> cacheResponse || Response.error();</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>在这个函数的 <code>async</code>版本中，有这样一些需要注意的重要事情。</p>
+<ul>
+<li>你可以在 <code>try/catch</code> 作用域中使用 <code>.then()/.catch()</code> 链，并且这里处理错误异常的方法就像在普通的一个<code>try/catch</code>块中那样。</li>
+<li>由于<code>await</code>停止了执行并等待一个 promise的返回，那些原本多重层级的嵌套现在可以像是顺序执行那样响应了，最上面哪一行定义了这个表达式（没有用到嵌套）。</li>
+<li>由于 一个 <code>async</code> 函数是一个去 resolve 它要返回的值的语法糖，这使得当一个promise 响应发生的时候变得更加清晰。如果是用嵌套的promise 链，它的响应可能会更加模糊些。</li>
+</ul>
+<p>这个优化相当之有意义！他们让你的代码更加易于阅读和书写。</p>
+<h3 id="立即使用-async-函数"><a href="#立即使用-async-函数" class="headerlink" title="立即使用 async 函数"></a>立即使用 async 函数</h3><p>Async 函数已经出现了一段时间了，你可以通过 Babel 去编译 Async 为 ES5代码。然而，为了使用编译过的代码，你也需要引入 <code>babel-plyfill</code> 库（其中的带有 Facebook的环境运行时）。</p>
+<p>这对一些项目来说这是可能不太能被接受的，被添加的polyfill的代码大小对于一个50行的 Service Worker 脚本来说是不可接受的高（在我的测试中它添加了将近60k）</p>
+<p>幸运的是，当它使用于 Service Worker 脚本的时候，这里还有别的方法。</p>
+<p>所有的浏览器都支持 Service Worker 的同时也会支持到 es2015 的特性（特别是他们会支持 generators），你可以避免添加运行时并且只用单个Babel 转化器：<code>async-to-generator</code> 来编译你的代码。</p>
+<p>在我这个站点的 Service Worker 脚本中，使用<code>async-to-generator</code> 转化器仅仅只添加额外的258 字节，并且由于我已经使用了 browserify去加载依赖，我可以无脑地使用 async 函数！</p>
+<h2 id="都用起来"><a href="#都用起来" class="headerlink" title="都用起来"></a>都用起来</h2><p>有了这里提到的那么多的优化方法，比较一下原始的代码和重构后的代码吧</p>
+<p>原来的代码：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">self.addEventListener(<span class="string">'fetch'</span>, (event) =&gt; &#123;</div><div class="line">  event.respondWith(</div><div class="line">    caches.open(<span class="string">'cache:v1'</span>).then((cache) =&gt; &#123;</div><div class="line">      <span class="keyword">return</span> fetch(event.request).then((response) =&gt; &#123;</div><div class="line">        cache.put(event.request, response.clone());</div><div class="line">        <span class="keyword">return</span> response;</div><div class="line">      &#125;).catch(() =&gt; &#123;</div><div class="line">        <span class="keyword">return</span> cache.match(event.request).then((response) =&gt; &#123;</div><div class="line">          <span class="keyword">return</span> response || Response.error();</div><div class="line">        &#125;);</div><div class="line">      &#125;);</div><div class="line">    &#125;)</div><div class="line">  );</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<p>重构以后：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> addToCache = <span class="keyword">async</span> (request, networkResponse) =&gt; &#123;</div><div class="line">  <span class="keyword">const</span> cache = <span class="keyword">await</span> caches.open(<span class="string">'cache:v1'</span>);</div><div class="line">  cache.put(request, networkResponse.clone());</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">const</span> getCacheResponse = <span class="keyword">async</span> (request) =&gt; &#123;</div><div class="line">  <span class="keyword">const</span> cache = <span class="keyword">await</span> caches.open(<span class="string">'cache:v1'</span>);</div><div class="line">  <span class="keyword">const</span> cachedResponse = <span class="keyword">await</span> cache.match(request);</div><div class="line">  <span class="keyword">return</span> cachedResponse;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">const</span> getNetworkOrCacheResponse = <span class="keyword">async</span> (request) =&gt; &#123;</div><div class="line">  <span class="keyword">try</span> &#123;</div><div class="line">    <span class="keyword">const</span> networkResponse = <span class="keyword">await</span> fetch(request);</div><div class="line">    addToCache(request, networkResponse);</div><div class="line">    <span class="keyword">return</span> networkResponse;</div><div class="line">  &#125; <span class="keyword">catch</span> (err) &#123;</div><div class="line">    <span class="keyword">const</span> cacheResponse = <span class="keyword">await</span> getCacheResponse(request);</div><div class="line">    <span class="keyword">return</span> cacheResponse || Response.error();</div><div class="line">  &#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">self.addEventListener(<span class="string">'fetch'</span>, (event) =&gt; &#123;</div><div class="line">  event.respondWith(getNetworkOrCacheResponse(event.request));</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<p>虽然重构的版本更加长还包含了更多的代码，但是它毫无疑问更易于阅读和理解，这意味着这段代码在将来更新起来更加容易。这也更加模块化，从而更易于被测试和到其他地方复用。</p>
+<p>这篇文章介绍了几个概念和方法去帮助你重构复杂的，基于promise的代码为独立可复用的部分。希望这些被介绍到的技术是会有用的。至少，我希望我能促使你去努力让你的代码尽可能地具有可读性和可维护性。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/08/05/build-your-first-thing-with-web-assembly/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -308,16 +502,8 @@
         
         
           <h1 class="post-title" itemprop="name headline">
-            
-            
-              
                 
-                <a class="post-title-link" href="/2016/08/05/build-your-first-thing-with-web-assembly/" itemprop="url">
-                  【翻译】建立你的第一个 WebAssembly 应用
-                </a>
-              
-            
-          </h1>
+                <a class="post-title-link" href="/2016/08/05/build-your-first-thing-with-web-assembly/" itemprop="url">【翻译】建立你的第一个 WebAssembly 应用</a></h1>
         
 
         <div class="post-meta">
@@ -380,6 +566,9 @@
       </header>
     
 
+    
+    
+    
     <div class="post-body" itemprop="articleBody">
 
       
@@ -400,18 +589,15 @@
         
       
     </div>
+    
+    
+    
 
-    <div>
-      
-    </div>
+    
 
-    <div>
-      
-    </div>
+    
 
-    <div>
-      
-    </div>
+    
 
     <footer class="post-footer">
       
@@ -425,6 +611,10 @@
         <div class="post-eof"></div>
       
     </footer>
+  </div>
+  
+  
+  
   </article>
 
 
@@ -437,7 +627,11 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/07/14/你可能并不需要React-router/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -456,16 +650,8 @@
         
         
           <h1 class="post-title" itemprop="name headline">
-            
-            
-              
                 
-                <a class="post-title-link" href="/2016/07/14/你可能并不需要React-router/" itemprop="url">
-                  你可能并不需要React router
-                </a>
-              
-            
-          </h1>
+                <a class="post-title-link" href="/2016/07/14/你可能并不需要React-router/" itemprop="url">你可能并不需要React router</a></h1>
         
 
         <div class="post-meta">
@@ -528,6 +714,9 @@
       </header>
     
 
+    
+    
+    
     <div class="post-body" itemprop="articleBody">
 
       
@@ -548,18 +737,15 @@
         
       
     </div>
+    
+    
+    
 
-    <div>
-      
-    </div>
+    
 
-    <div>
-      
-    </div>
+    
 
-    <div>
-      
-    </div>
+    
 
     <footer class="post-footer">
       
@@ -573,6 +759,10 @@
         <div class="post-eof"></div>
       
     </footer>
+  </div>
+  
+  
+  
   </article>
 
 
@@ -585,7 +775,11 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/06/05/flexbox 要闻 /">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -604,16 +798,8 @@
         
         
           <h1 class="post-title" itemprop="name headline">
-            
-            
-              
                 
-                <a class="post-title-link" href="/2016/06/05/flexbox 要闻 /" itemprop="url">
-                  要闻：flexbox
-                </a>
-              
-            
-          </h1>
+                <a class="post-title-link" href="/2016/06/05/flexbox 要闻 /" itemprop="url">要闻：flexbox</a></h1>
         
 
         <div class="post-meta">
@@ -676,6 +862,9 @@
       </header>
     
 
+    
+    
+    
     <div class="post-body" itemprop="articleBody">
 
       
@@ -695,18 +884,15 @@
         
       
     </div>
+    
+    
+    
 
-    <div>
-      
-    </div>
+    
 
-    <div>
-      
-    </div>
+    
 
-    <div>
-      
-    </div>
+    
 
     <footer class="post-footer">
       
@@ -720,6 +906,10 @@
         <div class="post-eof"></div>
       
     </footer>
+  </div>
+  
+  
+  
   </article>
 
 
@@ -732,7 +922,11 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/05/20/【译】vuex基础：指引与解析/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -751,16 +945,8 @@
         
         
           <h1 class="post-title" itemprop="name headline">
-            
-            
-              
                 
-                <a class="post-title-link" href="/2016/05/20/【译】vuex基础：指引与解析/" itemprop="url">
-                  【译】vuex基础：指引与解析
-                </a>
-              
-            
-          </h1>
+                <a class="post-title-link" href="/2016/05/20/【译】vuex基础：指引与解析/" itemprop="url">【译】vuex基础：指引与解析</a></h1>
         
 
         <div class="post-meta">
@@ -823,6 +1009,9 @@
       </header>
     
 
+    
+    
+    
     <div class="post-body" itemprop="articleBody">
 
       
@@ -845,18 +1034,15 @@
         
       
     </div>
+    
+    
+    
 
-    <div>
-      
-    </div>
+    
 
-    <div>
-      
-    </div>
+    
 
-    <div>
-      
-    </div>
+    
 
     <footer class="post-footer">
       
@@ -870,6 +1056,10 @@
         <div class="post-eof"></div>
       
     </footer>
+  </div>
+  
+  
+  
   </article>
 
 
@@ -882,7 +1072,11 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/05/14/杂谈日记/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -901,16 +1095,8 @@
         
         
           <h1 class="post-title" itemprop="name headline">
-            
-            
-              
                 
-                <a class="post-title-link" href="/2016/05/14/杂谈日记/" itemprop="url">
-                  gulp watch error (ENOSPC)
-                </a>
-              
-            
-          </h1>
+                <a class="post-title-link" href="/2016/05/14/杂谈日记/" itemprop="url">gulp watch error (ENOSPC)</a></h1>
         
 
         <div class="post-meta">
@@ -973,6 +1159,9 @@
       </header>
     
 
+    
+    
+    
     <div class="post-body" itemprop="articleBody">
 
       
@@ -1002,18 +1191,15 @@
         
       
     </div>
+    
+    
+    
 
-    <div>
-      
-    </div>
+    
 
-    <div>
-      
-    </div>
+    
 
-    <div>
-      
-    </div>
+    
 
     <footer class="post-footer">
       
@@ -1027,6 +1213,10 @@
         <div class="post-eof"></div>
       
     </footer>
+  </div>
+  
+  
+  
   </article>
 
 
@@ -1039,7 +1229,11 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/05/09/hello-again/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1058,16 +1252,8 @@
         
         
           <h1 class="post-title" itemprop="name headline">
-            
-            
-              
                 
-                <a class="post-title-link" href="/2016/05/09/hello-again/" itemprop="url">
-                  'hello_again'
-                </a>
-              
-            
-          </h1>
+                <a class="post-title-link" href="/2016/05/09/hello-again/" itemprop="url">'hello_again'</a></h1>
         
 
         <div class="post-meta">
@@ -1108,6 +1294,9 @@
       </header>
     
 
+    
+    
+    
     <div class="post-body" itemprop="articleBody">
 
       
@@ -1122,18 +1311,15 @@
         
       
     </div>
+    
+    
+    
 
-    <div>
-      
-    </div>
+    
 
-    <div>
-      
-    </div>
+    
 
-    <div>
-      
-    </div>
+    
 
     <footer class="post-footer">
       
@@ -1147,6 +1333,10 @@
         <div class="post-eof"></div>
       
     </footer>
+  </div>
+  
+  
+  
   </article>
 
 
@@ -1159,7 +1349,11 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2015/08/22/二叉树/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1178,16 +1372,8 @@
         
         
           <h1 class="post-title" itemprop="name headline">
-            
-            
-              
                 
-                <a class="post-title-link" href="/2015/08/22/二叉树/" itemprop="url">
-                  二叉树
-                </a>
-              
-            
-          </h1>
+                <a class="post-title-link" href="/2015/08/22/二叉树/" itemprop="url">二叉树</a></h1>
         
 
         <div class="post-meta">
@@ -1228,6 +1414,9 @@
       </header>
     
 
+    
+    
+    
     <div class="post-body" itemprop="articleBody">
 
       
@@ -1246,18 +1435,15 @@
         
       
     </div>
+    
+    
+    
 
-    <div>
-      
-    </div>
+    
 
-    <div>
-      
-    </div>
+    
 
-    <div>
-      
-    </div>
+    
 
     <footer class="post-footer">
       
@@ -1271,6 +1457,10 @@
         <div class="post-eof"></div>
       
     </footer>
+  </div>
+  
+  
+  
   </article>
 
 
@@ -1283,7 +1473,11 @@
   
   
 
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2015/08/20/内存池/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1302,16 +1496,8 @@
         
         
           <h1 class="post-title" itemprop="name headline">
-            
-            
-              
                 
-                <a class="post-title-link" href="/2015/08/20/内存池/" itemprop="url">
-                  内存池
-                </a>
-              
-            
-          </h1>
+                <a class="post-title-link" href="/2015/08/20/内存池/" itemprop="url">内存池</a></h1>
         
 
         <div class="post-meta">
@@ -1374,6 +1560,9 @@
       </header>
     
 
+    
+    
+    
     <div class="post-body" itemprop="articleBody">
 
       
@@ -1392,18 +1581,15 @@
         
       
     </div>
+    
+    
+    
 
-    <div>
-      
-    </div>
+    
 
-    <div>
-      
-    </div>
+    
 
-    <div>
-      
-    </div>
+    
 
     <footer class="post-footer">
       
@@ -1417,6 +1603,10 @@
         <div class="post-eof"></div>
       
     </footer>
+  </div>
+  
+  
+  
   </article>
 
 
@@ -1449,72 +1639,77 @@
   </div>
 
   <aside id="sidebar" class="sidebar">
+    
     <div class="sidebar-inner">
 
       
 
       
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="https://cloud.githubusercontent.com/assets/18730194/15146790/dd39acee-16ef-11e6-8ee7-093d1ce74fce.png"
-               alt="Fszer" />
-          <p class="site-author-name" itemprop="name">Fszer</p>
-           
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://cloud.githubusercontent.com/assets/18730194/15146790/dd39acee-16ef-11e6-8ee7-093d1ce74fce.png"
+                alt="Fszer" />
+            
+              <p class="site-author-name" itemprop="name">Fszer</p>
               <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">35</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
           
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
         </div>
-        <nav class="site-state motion-element">
-
-          
-            <div class="site-state-item site-state-posts">
-              <a href="/archives">
-                <span class="site-state-item-count">18</span>
-                <span class="site-state-item-name">日志</span>
-              </a>
-            </div>
-          
-
-          
-            
-            
-            <div class="site-state-item site-state-categories">
-              <a href="/categories/index.html">
-                <span class="site-state-item-count">7</span>
-                <span class="site-state-item-name">分类</span>
-              </a>
-            </div>
-          
-
-          
-            
-            
-            <div class="site-state-item site-state-tags">
-              <a href="/tags/index.html">
-                <span class="site-state-item-count">32</span>
-                <span class="site-state-item-name">标签</span>
-              </a>
-            </div>
-          
-
-        </nav>
-
-        
-
-        <div class="links-of-author motion-element">
-          
-        </div>
-
-        
-        
-
-        
-        
-
-        
-
-
       </section>
 
       
@@ -1531,30 +1726,36 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
-  
-  &copy; 
-  <span itemprop="copyrightYear">2017</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">Fszer</span>
+
+  
 </div>
 
 
-<div class="powered-by">
-  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
-</div>
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
 
-<div class="theme-info">
-  主题 -
-  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT.Mist
-  </a>
-</div>
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.3</div>
+
+
 
 
         
+
+
+
+
+
+
 
         
       </div>
@@ -1565,6 +1766,8 @@
         <i class="fa fa-arrow-up"></i>
         
       </div>
+    
+
     
 
   </div>
@@ -1588,12 +1791,6 @@
   
 
 
-  
-
-
-
-
-
 
 
 
@@ -1601,45 +1798,71 @@
 
 
   
-  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-
-  
-  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-
-  
-  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-
-  
-  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
-
-
   
 
 
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
 
 
 
   
   
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
 
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/canvas_sphere.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
   
 
   
 
+  
 
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
 
 
 
@@ -1669,14 +1892,8 @@
 
 
 
-  
 
 
-
-
-
-
-  
 
 
 
@@ -1684,6 +1901,17 @@
 
   
 
+
+
+
+
+  
+
+  
+
+  
+
+  
   
 
   
