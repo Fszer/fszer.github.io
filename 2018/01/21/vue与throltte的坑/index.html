@@ -85,10 +85,12 @@
 <meta property="og:url" content="http://yoursite.com/2018/01/21/vue与throltte的坑/index.html">
 <meta property="og:site_name" content="聆听群山的怒号">
 <meta property="og:description" content="vue 与 throttle 的坑Lodash 一直是我十分喜欢的一个工具库，其中 throttle 节流函数适用于控制类似 scroll 事件回调这种极其频繁场景上。可惜的是在配合 vue 使用上变得不那么好用，让我觉得非常可惜，当然预先说一句，这实际上不是 throttle ，Lodash 设计的问题，更多的是 vue 的问题。">
+<meta property="og:image" content="https://s1.ax1x.com/2018/01/24/p7ZAtx.md.jpg">
 <meta property="og:updated_time" content="2018-01-24T15:39:18.620Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="vue 与 throttle 的坑">
 <meta name="twitter:description" content="vue 与 throttle 的坑Lodash 一直是我十分喜欢的一个工具库，其中 throttle 节流函数适用于控制类似 scroll 事件回调这种极其频繁场景上。可惜的是在配合 vue 使用上变得不那么好用，让我觉得非常可惜，当然预先说一句，这实际上不是 throttle ，Lodash 设计的问题，更多的是 vue 的问题。">
+<meta name="twitter:image" content="https://s1.ax1x.com/2018/01/24/p7ZAtx.md.jpg">
 
 
 
@@ -371,6 +373,7 @@
 
       
         <h1 id="vue-与-throttle-的坑"><a href="#vue-与-throttle-的坑" class="headerlink" title="vue 与 throttle 的坑"></a>vue 与 throttle 的坑</h1><p><a href="https://lodash.com/" target="_blank" rel="external">Lodash</a> 一直是我十分喜欢的一个工具库，其中 <a href="https://lodash.com/docs/4.17.4#throttle" target="_blank" rel="external">throttle</a> 节流函数适用于控制类似 scroll 事件回调这种极其频繁场景上。可惜的是在配合 vue 使用上变得不那么好用，让我觉得非常可惜，当然预先说一句，这实际上不是 throttle ，Lodash 设计的问题，更多的是 vue 的问题。</p>
+<p><a href="https://imgchr.com/i/p7ZAtx" target="_blank" rel="external"><img src="https://s1.ax1x.com/2018/01/24/p7ZAtx.md.jpg" alt="p7ZAtx.md.jpg"></a></p>
 <a id="more"></a>
 <h2 id="问题一-绑定不便"><a href="#问题一-绑定不便" class="headerlink" title="问题一 绑定不便"></a>问题一 绑定不便</h2><p>事实上不只是 throttle ，相当一类工具类函数，特指 Lodash 中那一类接受一个函数返回一个新的函数的函数，会遇到无法直接绑定到 component 的 methods 上，首先是无法使用对象方法的简写语法，即</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</div><div class="line">  methods:&#123;</div><div class="line">    methods1()&#123;</div><div class="line">      <span class="comment">// this.something</span></div><div class="line">    &#125;</div><div class="line">    <span class="comment">// 想啥呢？</span></div><div class="line">    throttle(()=&gt;&#123;</div><div class="line">    </div><div class="line">    &#125;),</div><div class="line">    methods2:throttle(()=&gt;&#123;</div><div class="line">      <span class="comment">// 没有 this </span></div><div class="line">  	&#125;)</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
