@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="vue,JavaScript,throttle," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="vue 与 throttle 的坑Lodash 一直是我十分喜欢的一个工具库，其中 throttle 节流函数适用于控制类似 scroll 事件回调这种极其频繁场景上。可惜的是在配合 vue 使用上变得不那么好用，让我觉得非常可惜，当然预先说一句，这实际上不是 throttle ，Lodash 设计的问题，更多的是 vue 的问题。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vue 与 throttle 的坑">
+<meta property="og:url" content="http://yoursite.com/2018/01/21/vue与throltte的坑/index.html">
+<meta property="og:site_name" content="聆听群山的怒号">
+<meta property="og:description" content="vue 与 throttle 的坑Lodash 一直是我十分喜欢的一个工具库，其中 throttle 节流函数适用于控制类似 scroll 事件回调这种极其频繁场景上。可惜的是在配合 vue 使用上变得不那么好用，让我觉得非常可惜，当然预先说一句，这实际上不是 throttle ，Lodash 设计的问题，更多的是 vue 的问题。">
+<meta property="og:updated_time" content="2018-01-24T15:39:18.620Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="vue 与 throttle 的坑">
+<meta name="twitter:description" content="vue 与 throttle 的坑Lodash 一直是我十分喜欢的一个工具库，其中 throttle 节流函数适用于控制类似 scroll 事件回调这种极其频繁场景上。可惜的是在配合 vue 使用上变得不那么好用，让我觉得非常可惜，当然预先说一句，这实际上不是 throttle ，Lodash 设计的问题，更多的是 vue 的问题。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/01/21/vue与throltte的坑/"/>
+
+
+
+
+
+  <title>vue 与 throttle 的坑 | 聆听群山的怒号</title>
+  
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-111538804-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-111538804-1');
+</script>
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">聆听群山的怒号</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/21/vue与throltte的坑/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Fszer">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://cloud.githubusercontent.com/assets/18730194/15146790/dd39acee-16ef-11e6-8ee7-093d1ce74fce.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="聆听群山的怒号">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">vue 与 throttle 的坑</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-21T23:07:15+08:00">
+                2018-01-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习/" itemprop="url" rel="index">
+                    <span itemprop="name">学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="vue-与-throttle-的坑"><a href="#vue-与-throttle-的坑" class="headerlink" title="vue 与 throttle 的坑"></a>vue 与 throttle 的坑</h1><p><a href="https://lodash.com/" target="_blank" rel="external">Lodash</a> 一直是我十分喜欢的一个工具库，其中 <a href="https://lodash.com/docs/4.17.4#throttle" target="_blank" rel="external">throttle</a> 节流函数适用于控制类似 scroll 事件回调这种极其频繁场景上。可惜的是在配合 vue 使用上变得不那么好用，让我觉得非常可惜，当然预先说一句，这实际上不是 throttle ，Lodash 设计的问题，更多的是 vue 的问题。</p>
+<a id="more"></a>
+<h2 id="问题一-绑定不便"><a href="#问题一-绑定不便" class="headerlink" title="问题一 绑定不便"></a>问题一 绑定不便</h2><p>事实上不只是 throttle ，相当一类工具类函数，特指 Lodash 中那一类接受一个函数返回一个新的函数的函数，会遇到无法直接绑定到 component 的 methods 上，首先是无法使用对象方法的简写语法，即</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</div><div class="line">  methods:&#123;</div><div class="line">    methods1()&#123;</div><div class="line">      <span class="comment">// this.something</span></div><div class="line">    &#125;</div><div class="line">    <span class="comment">// 想啥呢？</span></div><div class="line">    throttle(()=&gt;&#123;</div><div class="line">    </div><div class="line">    &#125;),</div><div class="line">    methods2:throttle(()=&gt;&#123;</div><div class="line">      <span class="comment">// 没有 this </span></div><div class="line">  	&#125;)</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这样的方法，读取到 vue 挂载 component 的时候为 methods 中的方法绑定的 this，</p>
+<h3 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h3><p>这个问题好解决，本身 methods 用对象方法也只是一个简写，把 <code>function</code> 定义的方法的 this 指向当前组件实例。所以解决方法很简单</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</div><div class="line">  methods:&#123;</div><div class="line">    methods3:throttle(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">      <span class="comment">// 可以正常使用 this</span></div><div class="line">      </div><div class="line">    &#125;)</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这个其实没什么好说的，<a href="https://cn.vuejs.org/v2/guide/computed.html" target="_blank" rel="external">在官网上面都有说明</a>，只是我没有想到而已。我没有注意到还是因为惯性思维，习惯了用箭头函数跟对象方法的简写定义，忘记直接用 function 才是最基本的做法。</p>
+<p>但是要留意的一点是这里可以 throttle 里的 function 可以绑定到组件实例的 this，一个重要的原因是，throttle 返回的包裹函数调用的时候一般会使用 apply 来将 this 传入调用的 function ，没有用 apply 直接调用的话 this 就不是组件实例了 。</p>
+<p>类似 Lodash ，都会细心的处理到这一点，如果你自己定义一些类似的工具函数，不要忘记在包裹函数里通过 apply 去调用。</p>
+<h2 id="问题二-实例共享"><a href="#问题二-实例共享" class="headerlink" title="问题二 实例共享"></a>问题二 实例共享</h2><p>如果说第一个问题还是个小问题，那么第二个问题要烦人许多。这不是单个特例，而同样的是一类特定函数会遇到，其中同样可以以 throttle 作为例子。</p>
+<p>让我们回看问题一的解决方法，其中解决了 this 的指向问题，不过，请考虑以下代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">&lt;template&gt;</div><div class="line">  &lt;div @click=&apos;click&apos;  v-text=&apos;num&apos;&gt;</div><div class="line">  &lt;/div&gt;</div><div class="line">&lt;/template&gt;</div><div class="line">&lt;script&gt;</div><div class="line">  export default &#123;</div><div class="line">    name:&apos;com&apos;</div><div class="line">    data()&#123;</div><div class="line">      return &#123;</div><div class="line">        num: 1</div><div class="line">      &#125;</div><div class="line">  	&#125;,</div><div class="line">    methods:&#123;</div><div class="line">      click:throttle(function()&#123;</div><div class="line">        // 可以正常使用 this</div><div class="line">        this.num+=1</div><div class="line">      &#125;,2000)</div><div class="line">  	&#125;</div><div class="line">  &#125;</div><div class="line">&lt;/script&gt;</div><div class="line">// -----------</div><div class="line">&lt;template&gt;</div><div class="line">  &lt;com&gt;&lt;/com&gt;  </div><div class="line">  &lt;com&gt;&lt;/com&gt;</div><div class="line">&lt;/template&gt;</div><div class="line">&lt;script&gt;</div><div class="line">  export default &#123;</div><div class="line">    name:&apos;parent&apos;</div><div class="line">    component:&#123;com&#125;</div><div class="line">  &#125;</div><div class="line">&lt;/script&gt;</div></pre></td></tr></table></figure>
+<p>按照预期，我们会希望子组件 com 的点击事件每隔 2s 触发一次，然而在上面的有两个 com 子组件的例子中，假如你在 2s 内分别点击了两个 com 子组件，就会发现只有第一个被点击的 com 子组件正常执行了 num + 1 操作。而第二个被点击的组件无法触发 num + 1 操作，这就是第二问题了。</p>
+<p>我们知道 throttle 可以控制函数的调用频率，即使不去看其实现，我们都知道它必然是通过<strong>闭包</strong>保存了一个计时器，以判断是否应该执行传入的函数。</p>
+<p>闭包当然保证了每个 throttle 都是独立的，这点毋庸置疑。问题依然在于 vue 的 methods 的定义方式。</p>
+<p>当我们如上例所示定义了一个函数的时候，需要注意的是我们的 throttle 实际上只在<strong>定义组件</strong>的时候执行了一次，赋值给 click ，因此这个组件的所有实例共享同一个静态的 click 方法，共享了同一个 throttle 返回的闭包计时器。</p>
+<p>这就导致了上面的问题，存在多个组件实例时，不是每个实例一个  throttle 计时器，而是共用了一个计时器，相互影响。</p>
+<p>从这里可以推论出，<strong>凡是形如 throttle 那样借助闭包保存私有变量比如计时的函数，如果用上面的使用方法，都会遇到闭包私有变量被多个组件实例共享的问题</strong>。</p>
+<p>目前来说，只要还是想要将方法都静态定义于 methods 中就没有什么解决方案。</p>
+<h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><p>所以，如果你想要避免这个问题，那就只能考虑在组件实例化的时候才去定义这些方法了。</p>
+<p>你可以在<code>mounted</code>及之前的生命周期中，又或者是 <code>data</code> 函数中去定义这些方法</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</div><div class="line">  data()&#123;</div><div class="line">    <span class="keyword">const</span> click = throttle(()=&gt;<span class="keyword">this</span>.num+ =<span class="number">1</span>, <span class="number">1000</span>)</div><div class="line">    <span class="keyword">return</span> &#123;</div><div class="line">      click,</div><div class="line">    &#125;</div><div class="line">  &#125;,</div><div class="line">  mounted()&#123;</div><div class="line">    <span class="comment">// 一个额外的好处是可以使用箭头函数 </span></div><div class="line">   	<span class="keyword">this</span>.click = throttle(()=&gt;<span class="keyword">this</span>.num+ =<span class="number">1</span>, <span class="number">1000</span>) </div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>不过，这样就失去了在 methods 定义函数的直观这一点，其次是在这两者中定义的时候，需要考虑到生命周期的问题，是否在定义的时候会使用到一些还未初始化的数据。</p>
+<p>比如这样就不行</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</div><div class="line">  created()&#123;</div><div class="line">    <span class="comment">// 此时 $el 未被初始化</span></div><div class="line">    <span class="keyword">const</span> name = <span class="keyword">this</span>.$el.name</div><div class="line">   	<span class="keyword">this</span>[name] = throttle(()=&gt;<span class="keyword">this</span>.num+ =<span class="number">1</span>, <span class="number">1000</span>) </div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>总的来说，本文展示了 vue component 的 methods 定义方式下的两个问题，分别是<strong>通过函数返回函数时，函数中 this 指向问题</strong>，以及<strong>通过函数返回函数时，闭包私用变量被共享的问题</strong>。</p>
+<p>第一个问题可以通过 <code>function</code> 关键字解决，第二个问题，如果不涉及到多实例会同时使用的情况，那么就没有问题，不然则只能通过在组件实例化的时候在各个生命周期中或者<code>data</code>函数中定义方法。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/vue/" rel="tag"># vue</a>
+          
+            <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          
+            <a href="/tags/throttle/" rel="tag"># throttle</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/12/17/通往广图的最后500米/" rel="next" title="通往广图的最后500米">
+                <i class="fa fa-chevron-left"></i> 通往广图的最后500米
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://cloud.githubusercontent.com/assets/18730194/15146790/dd39acee-16ef-11e6-8ee7-093d1ce74fce.png"
+                alt="Fszer" />
+            
+              <p class="site-author-name" itemprop="name">Fszer</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">38</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#vue-与-throttle-的坑"><span class="nav-number">1.</span> <span class="nav-text">vue 与 throttle 的坑</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#问题一-绑定不便"><span class="nav-number">1.1.</span> <span class="nav-text">问题一 绑定不便</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#解决方案"><span class="nav-number">1.1.1.</span> <span class="nav-text">解决方案</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题二-实例共享"><span class="nav-number">1.2.</span> <span class="nav-text">问题二 实例共享</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#解决方法"><span class="nav-number">1.2.1.</span> <span class="nav-text">解决方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">1.3.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Fszer</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/canvas_sphere.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
