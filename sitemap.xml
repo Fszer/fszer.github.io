@@ -2,9 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/2018/08/12/vue%E7%9A%84jsx%E5%A6%82%E4%BD%95%E5%8A%A8%E6%80%81%E6%B8%B2%E6%9F%93component/</loc>
+    
+    <lastmod>2018-08-12T16:20:23.114Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2017/08/24/%E3%80%8E%E8%AF%91%E3%80%8F%E5%9C%A8%20vue%20%E4%B8%AD%E4%BD%BF%E7%94%A8%E5%90%84%E7%A7%8D%E5%90%84%E6%A0%B7%E7%9A%84%20javascript%20%E5%BA%93/</loc>
     
-    <lastmod>2018-05-26T03:58:20.503Z</lastmod>
+    <lastmod>2018-05-26T03:58:20.504Z</lastmod>
     
   </url>
   
@@ -25,7 +32,7 @@
   <url>
     <loc>http://yoursite.com/2018/01/21/vue%E4%B8%8Ethroltte%E7%9A%84%E5%9D%91/</loc>
     
-    <lastmod>2018-01-24T15:46:53.028Z</lastmod>
+    <lastmod>2018-01-24T15:46:53.029Z</lastmod>
     
   </url>
   
@@ -67,7 +74,7 @@
   <url>
     <loc>http://yoursite.com/2017/04/25/reduce%E7%AE%80%E4%BB%8B/</loc>
     
-    <lastmod>2017-12-17T16:12:22.435Z</lastmod>
+    <lastmod>2017-12-17T16:12:22.436Z</lastmod>
     
   </url>
   
@@ -88,7 +95,7 @@
   <url>
     <loc>http://yoursite.com/2017/05/14/axios%E9%97%AE%E9%A2%98/</loc>
     
-    <lastmod>2017-05-15T14:11:22.705Z</lastmod>
+    <lastmod>2017-05-15T14:11:22.706Z</lastmod>
     
   </url>
   
@@ -130,21 +137,21 @@
   <url>
     <loc>http://yoursite.com/tags/index.html</loc>
     
-    <lastmod>2016-07-31T16:44:00.066Z</lastmod>
+    <lastmod>2016-07-31T16:44:00.067Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://yoursite.com/2016/07/14/%E4%BD%A0%E5%8F%AF%E8%83%BD%E5%B9%B6%E4%B8%8D%E9%9C%80%E8%A6%81React-router/</loc>
     
-    <lastmod>2016-07-31T16:35:42.167Z</lastmod>
+    <lastmod>2016-07-31T16:35:42.168Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://yoursite.com/2016/05/20/%E3%80%90%E8%AF%91%E3%80%91vuex%E5%9F%BA%E7%A1%80%EF%BC%9A%E6%8C%87%E5%BC%95%E4%B8%8E%E8%A7%A3%E6%9E%90/</loc>
     
-    <lastmod>2016-05-28T12:36:49.124Z</lastmod>
+    <lastmod>2016-05-28T12:36:49.125Z</lastmod>
     
   </url>
   
@@ -158,7 +165,7 @@
   <url>
     <loc>http://yoursite.com/2015/08/20/%E5%86%85%E5%AD%98%E6%B1%A0/</loc>
     
-    <lastmod>2016-05-10T12:33:10.811Z</lastmod>
+    <lastmod>2016-05-10T12:33:10.812Z</lastmod>
     
   </url>
   
@@ -172,7 +179,7 @@
   <url>
     <loc>http://yoursite.com/2016/05/09/hello-again/</loc>
     
-    <lastmod>2016-05-09T15:04:45.662Z</lastmod>
+    <lastmod>2016-05-09T15:04:45.663Z</lastmod>
     
   </url>
   
