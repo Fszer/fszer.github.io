@@ -278,6 +278,154 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/19/读书笔记-『the-undoing-thing』/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Fszer">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://cloud.githubusercontent.com/assets/18730194/15146790/dd39acee-16ef-11e6-8ee7-093d1ce74fce.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="聆听群山的怒号">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/08/19/读书笔记-『the-undoing-thing』/" itemprop="url">读书笔记 『the undoing project』</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-19T23:41:05+08:00">
+                2018-08-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/日常/" itemprop="url" rel="index">
+                    <span itemprop="name">日常</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p><a href="https://imgchr.com/i/PLduWt"><img src="https://s1.ax1x.com/2018/08/28/PLduWt.png" alt="PLduWt.png"></a></p>
+<p>我知道之所以知道这本书，源于去年的在 medium 翻看 javascript 相关技术文章的时候看到相关的介绍，该文章的作者对这本书的评价非常的高，因而引起了我的关注。</p>
+<p>先说结论，这本书确实很值得一看。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/08/19/读书笔记-『the-undoing-thing』/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/12/vue的jsx如何动态渲染component/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -375,10 +523,10 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&lt;template&gt;</div><div class="line">true&lt;compoment :is=&apos;someComponent&apos;&gt;&lt;/compoment&gt;</div><div class="line">&lt;/template&gt;</div></pre></td></tr></table></figure>
 <p>不过在 jsx 中使用 <code>&lt;component&gt;</code> 组件的话会报错，显示该组件不存在无法渲染。因此需要换一个方式。</p>
 <p>由于 jsx 本质就是 js 不需要 component 组件做中介，可以通过 js 直接找到对应组件</p>
-<figure class="highlight jsx"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">...</div><div class="line">render()&#123;</div><div class="line">    <span class="keyword">const</span> Comp = <span class="keyword">this</span>.someComponent</div><div class="line">    <span class="keyword">return</span> (<span class="xml"><span class="tag">&lt;<span class="name">Comp</span>&gt;</span><span class="tag">&lt;/<span class="name">Comp</span>&gt;</span></span>)</div><div class="line">&#125;</div><div class="line">...</div></pre></td></tr></table></figure>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">...</div><div class="line">render()&#123;</div><div class="line">    <span class="keyword">const</span> Comp = <span class="keyword">this</span>.someComponent</div><div class="line">    <span class="keyword">return</span> (&lt;Comp&gt;&lt;/Comp&gt;)</div><div class="line">&#125;</div><div class="line">...</div></pre></td></tr></table></figure>
 <p>这是由于如果一个变量指向了一个组件，那么这个变量名可以直接被 jsx 解析并渲染。</p>
 <p>因此在文档中也会提到到我们可以不将组件加载到父组件当中，直接经由 jsx 渲染出来的原因</p>
-<figure class="highlight jsx"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> componentA <span class="keyword">from</span> <span class="string">'xxx'</span></div><div class="line"></div><div class="line">...</div><div class="line">render()&#123;</div><div class="line">    <span class="keyword">return</span> (<span class="xml"><span class="tag">&lt;<span class="name">componentA</span>&gt;</span><span class="tag">&lt;/<span class="name">componentA</span>&gt;</span></span>)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> componentA <span class="keyword">from</span> <span class="string">'xxx'</span></div><div class="line"></div><div class="line">...</div><div class="line">render()&#123;</div><div class="line">    <span class="keyword">return</span> (&lt;componentA&gt;&lt;/componentA&gt;)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>完</p>
 
           
@@ -1594,152 +1742,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/03/如何实现一个滑动消除组件/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Fszer">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://cloud.githubusercontent.com/assets/18730194/15146790/dd39acee-16ef-11e6-8ee7-093d1ce74fce.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="聆听群山的怒号">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/05/03/如何实现一个滑动消除组件/" itemprop="url">如何实现一个滑动消除组件</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-03T22:23:00+08:00">
-                2017-05-03
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/javascript/" itemprop="url" rel="index">
-                    <span itemprop="name">javascript</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="如何用原生实现一个滑动消除卡片的组件"><a href="#如何用原生实现一个滑动消除卡片的组件" class="headerlink" title="如何用原生实现一个滑动消除卡片的组件"></a>如何用原生实现一个滑动消除卡片的组件</h1><p>今天看到chrome github 实现的一个通过左右滑动清除子卡片的的组件。感觉有点意思，学习一下<br>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/05/03/如何实现一个滑动消除组件/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1794,7 +1796,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-count">24</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1816,7 +1818,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">42</span>
+                  <span class="site-state-item-count">44</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
