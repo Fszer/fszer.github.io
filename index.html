@@ -278,6 +278,372 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/20/vue-Typescript问题两则/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Fszer">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://cloud.githubusercontent.com/assets/18730194/15146790/dd39acee-16ef-11e6-8ee7-093d1ce74fce.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="聆听群山的怒号">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/04/20/vue-Typescript问题两则/" itemprop="url">'vue/TypeScript问题两则'</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-20T11:31:35+08:00">
+                2019-04-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习/" itemprop="url" rel="index">
+                    <span itemprop="name">学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>最近尝试为 vue 项目配合 TypeScript 不过发现毕竟 vue 不是原生 TypeScript 开发，在对 TypeScript 支持方面显然还问题多多，这里稍微记录两则</p>
+<h2 id="自动注入-h-问题"><a href="#自动注入-h-问题" class="headerlink" title="自动注入 h 问题"></a>自动注入 h 问题</h2><p>如果你在 vue 中是用 jsx 你会明显感受到和 react 有明显的一个差异就是 react 中你可以很方便的到处写下 jsx，而 vue 中则限定的比较死，要么写在组建的 render 函数中，要么主动传递 h 函数到你想要写 jsx 的地方比如</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 找不到 h 函数</span></div><div class="line"><span class="keyword">const</span> component = &lt;button /&gt;</div><div class="line">// ok</div><div class="line">export default &#123;</div><div class="line">  render (h) &#123;</div><div class="line">    return &lt;button /&gt;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">// 主动将 h 传递到需要的地方</div><div class="line">const component2 = h =&gt;  &lt;button /&gt;</div><div class="line"></div><div class="line">export default &#123;</div><div class="line">  render (h) &#123;</div><div class="line">    return component2(h)</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>由于 h 函数是在编译后才会被使用到，而每次都要写 h，但实际少主动用到，所以 vue 官方为了进一步简化使用，开发了一个 babel 插件<code>babel-sugar-inject-h</code>, 检测 jsx 自动插入 h 函数，比如这样</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// With @vue/babel-sugar-inject-h</span></div><div class="line"><span class="keyword">const</span> component =（）=&gt; &lt;button /&gt;</div><div class="line">export default &#123;</div><div class="line">  render () &#123;</div><div class="line">    return &lt;button /&gt;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">// 不需要写h，编译后自动注入 h 函数，等价于</div><div class="line">const component =（h）=&gt; &lt;button /&gt;</div><div class="line">export default &#123;</div><div class="line">  render (h) &#123;</div><div class="line">    return &lt;button /&gt;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这让看起来让 vue/jsx 更加接近 react/jsx ，还稍微减轻了开发的工作。但我个人认为这样有些自做主张，并且关键是做的并不完美。如果你用了 vue-cli 那么他是自带且默认启动的，如果你没有用 vue-cli 自己配的环境，那么就有可能就忽略了这的插件，就容易导致同一段代码在两个环境下有不同的表现。而这如果不是用户主动去看文档，是不会被感知到的，一但出了问题就特别令人摸不着头脑，</p>
+<p>哦，跑题了，这篇文章应该说的是跟 TypeScript 相关的问题，其实也就是它做得不够好的一个体现，假如你要配合 TypeScript 使用，很有可能遇到以下代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">import &#123; Component, Vue &#125; from &quot;vue-property-decorator&quot;;</div><div class="line">@Component</div><div class="line">export default class App extends Vue &#123;</div><div class="line">  test = (h: any) =&gt; &lt;div&gt;123&lt;/div&gt;;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>其中 test 是你组件的内部变量，理论上这段代码应该等价于</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</div><div class="line">    data()&#123;</div><div class="line">        <span class="keyword">return</span> &#123;</div><div class="line">            test: (h)=&gt;&lt;div&gt;123&lt;/div&gt;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>然而假如你实际在 vue-cli 中跑这段代码，是可以跑起来的，但在浏览器中会报出类似以下错误，</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Error in data(): &quot;TypeError: Cannot read property &apos;$createElement&apos; of undefined&quot;</div></pre></td></tr></table></figure>
+<p>有了前面的铺垫，不用说问题的关键显然是出在 <code>babel-sugar-inject-h</code> 自动注入 h 的问题上，为了了解为什么，不妨看一下这段代码编译后的样子</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 略去前后无关代码</span></div><div class="line"><span class="function"><span class="keyword">function</span> (<span class="params">_Vue</span>) </span>&#123;</div><div class="line">  <span class="built_in">Object</span>(inherits[<span class="string">"a"</span> <span class="comment">/* default */</span>])(App, _Vue);</div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">function</span> <span class="title">App</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> _this;</div><div class="line"></div><div class="line">    <span class="built_in">Object</span>(classCallCheck[<span class="string">"a"</span> <span class="comment">/* default */</span>])(<span class="keyword">this</span>, App);</div><div class="line">    <span class="keyword">var</span> h = _this.$createElement;</div><div class="line">    _this = <span class="built_in">Object</span>(possibleConstructorReturn[<span class="string">"a"</span> <span class="comment">/* default */</span>])(<span class="keyword">this</span>, <span class="built_in">Object</span>(getPrototypeOf[<span class="string">"a"</span> <span class="comment">/* default */</span>])(App).apply(<span class="keyword">this</span>, <span class="built_in">arguments</span>));</div><div class="line"></div><div class="line">    _this.test = <span class="function"><span class="keyword">function</span> (<span class="params">h</span>) </span>&#123;</div><div class="line">      <span class="keyword">return</span> h(<span class="string">"div"</span>, [<span class="string">"123"</span>]);</div><div class="line">    &#125;;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> _this;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="keyword">return</span> App;</div><div class="line">&#125;(vue_property_decorator[<span class="string">"c"</span> <span class="comment">/* Vue */</span>]);</div></pre></td></tr></table></figure>
+<p>我撇去了无关的代码和不压缩，这里的问题就显而易见了。</p>
+<p>尽管在 test 上我主动显式的传入了 h 函数，但是对于构造函数 data()  来说，似乎依然被判断为应当注入 h 的情况，这也其实没有关系，不过它注入 <code>var h = _this.$createElement;</code> 的位置就有些问题了 ，默认情况下，它一般事插入到 this 声明定义之后。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">App</span>(<span class="params"></span>) </span>&#123;</div><div class="line">   <span class="comment">// 一般情况下编译后 _this 的声明和定义实在同一行的，因此注入后不会报错</span></div><div class="line">   <span class="keyword">var</span> _this = something;</div><div class="line">   <span class="keyword">var</span> h = _this.$createElement;</div><div class="line">   <span class="keyword">return</span> _this;</div><div class="line"> &#125;</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">App</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  	<span class="comment">// 在 ts/vue-property-decorato 中的 this 是先声明后定义</span></div><div class="line">   <span class="keyword">var</span> _this;</div><div class="line">   <span class="keyword">var</span> h = _this.$createElement;</div><div class="line"> 	_this = something;</div><div class="line">   <span class="keyword">return</span> _this;</div><div class="line"> &#125;</div></pre></td></tr></table></figure>
+<p>然而由于用了ts和vue-property-decorator，_this 的是先声明后定义，导致插入在声明之后的 h 是找不到的 <code>_this.$createElement</code> 的</p>
+<h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><p>最好的方法当然是这个插件更新并考虑 ts 这种 edge case ，不过在此之前我其实建议直接关掉自动注入 h 的功能，毕竟 vue/jsx 本身就不是可以到处写 jsx ，本来就需要 h 却隐蔽起来并不会解决太多问题，反而会造成一些认知问题。</p>
+<p>不过这里牵扯到另一个问题，如何关闭这个插件。</p>
+<p><a href="https://github.com/vuejs/jsx/tree/dev/packages/babel-preset-jsx" target="_blank" rel="external">vue/jsx</a> 的文档中写明的修改配置方法是在 babel config 中修改  <code>@vue/babel-preset-jsx</code> 的配置，假如你是自己配置环境那么直接如此就可以了。</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="attr">"presets"</span>: [</div><div class="line">    [</div><div class="line">      <span class="string">"@vue/babel-preset-jsx"</span>,</div><div class="line">      &#123;</div><div class="line">        <span class="attr">"injectH"</span>: <span class="literal">false</span></div><div class="line">      &#125;</div><div class="line">    ]</div><div class="line">  ]</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>但是</strong>，假如你用 vue-cli 构建的项目的话，你会发现这样写并没有用，这是因为 vue-cli 非常“聪明”的封装了另一个  <code>@vue/babel-preset-app</code> ，这 preset 内部引入了 <code>@vue/babel-preset-jsx</code>自己包裹了一层配置的传递, <a href="https://github.com/vuejs/vue-cli/blob/dev/packages/%40vue/babel-preset-app/index.js#L37" target="_blank" rel="external">源码在这里</a></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> (options.jsx !== <span class="literal">false</span>) &#123;</div><div class="line">  presets</div><div class="line">      .push([</div><div class="line">          <span class="built_in">require</span>(<span class="string">'@vue/babel-preset-jsx'</span>), </div><div class="line">          <span class="keyword">typeof</span> options.jsx === <span class="string">'object'</span> ? options.jsx : &#123;&#125;</div><div class="line">  	])</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>可以看到它根本不会去读取 babel config  中  <code>@vue/babel-preset-jsx</code> 的配置参数，因此正确的配置方法是</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  "presets": [</div><div class="line">    [</div><div class="line">      "@vue/babel-preset-app",</div><div class="line">      &#123;</div><div class="line">          // 要扔到 @vue/babel-preset-app 的 jsx 字段上</div><div class="line">          jsx:&#123;</div><div class="line">              "injectH": false</div><div class="line">          &#125;</div><div class="line">      &#125;</div><div class="line">    ]</div><div class="line">  ]</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>而关于 jsx 可配置  <code>@vue/babel-preset-jsx</code> 参数这一点，官方一开始并没有任何说明（现在有了），在<a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/babel-preset-app" target="_blank" rel="external">文档</a>中也只提到，<code>jsx</code> 是一个布尔值用于开启关闭 jsx 支持，如果不去看源码谁又知道，它还可以传入 object 来做进一步的配置?</p>
+<p>所以说，为了搞清 <code>babel-sugar-inject-h</code> 这一个小问题，不得不跑去看 vue-cli/babel-preset-jsx/babel-preset-app 等一长串的相关源码配置方法才摸索清楚，这说不定就是封装之美？</p>
+<p><strong>真有你的啊 vue-cli</strong></p>
+<h2 id="tsx-中组件属性类型推断问题"><a href="#tsx-中组件属性类型推断问题" class="headerlink" title="tsx  中组件属性类型推断问题"></a>tsx  中组件属性类型推断问题</h2><p>tsx 中无法正确给出自定义 component 的属性类型定义，甚至会报错。相比之下这个问题更加简单也更加恼人，假如你定义了一个组件，比如</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">import Vue from &quot;vue&quot;;</div><div class="line"></div><div class="line">const MyComponent = Vue.extend(&#123;</div><div class="line">    props: &#123;</div><div class="line">        text: &#123; type: String, required: true &#125;,</div><div class="line">        important: Boolean,</div><div class="line">    &#125;,</div><div class="line">    computed: &#123;</div><div class="line">        className() &#123;</div><div class="line">            return this.important ? &quot;label-important&quot; : &quot;label-normal&quot;;</div><div class="line">        &#125;</div><div class="line">    &#125;,</div><div class="line">    methods: &#123;</div><div class="line">        onClick(event) &#123; this.$emit(&quot;ok&quot;, event); &#125;</div><div class="line">    &#125;,</div><div class="line">    template: &quot;&lt;span :class=&apos;className&apos; @click=&apos;onClick&apos;&gt;&#123;&#123; text &#125;&#125;&lt;/span&gt;&quot;</div><div class="line">&#125;);</div><div class="line"></div><div class="line">// 在别的组件中调用，则会报错</div><div class="line">// Compilation error(TS2339): Property `text` does not exist on type &apos;...&apos;</div><div class="line">&lt;MyComponent text=&quot;foo&quot; /&gt;;</div></pre></td></tr></table></figure>
+<p>这个问题如果是从官方角度来说，几乎除了等待 vue3 重构以后得到 TypeScript 更好的支持以外，看来别无其他折中的办法，详情可参见这个 <a href="https://github.com/vuejs/vue-cli/issues/2417" target="_blank" rel="external">issue</a> 。</p>
+<p>所幸这个 issue 中也给出了一个比较成熟的第三方解决方案  <a href="https://github.com/wonderful-panda/vue-tsx-support" target="_blank" rel="external">vue-tsx-support</a>，这个库的文档已经非常详细了，这里没有必要赘述。总而言之这个库可以相当好的解决目前的 tsx component prop 缺少类型推导的问题，不过，代价是引入了他自己的一套定义组件的方式。</p>
+<h3 id="兼容？升级？"><a href="#兼容？升级？" class="headerlink" title="兼容？升级？"></a>兼容？升级？</h3><p>首先这个库虽然得到推荐，但官方对其的态度也停留在可以有的暧昧程度，不如 <code>**vue-property-decorator**</code>  那样得到官方认可并且整合到官方工具链中这个级别的对待。在这个问题上 vue 官方寄希望于 vue3 重构能解决，而没有给出现在的过度方案，显然你不可能寄希望于他们能去兼容现在的第三方过度方案……</p>
+<p>因此另外一个不甚优雅的解决方案，那就是通过 d.ts 文件让 component 的参数允许任何属性</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">declare</span> <span class="keyword">module</span> 'vue/types/options' &#123;</div><div class="line">  <span class="keyword">interface</span> ComponentOptions&lt;V <span class="keyword">extends</span> Vue&gt; &#123;</div><div class="line">    [propName: <span class="built_in">string</span>]: <span class="built_in">any</span></div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这样 component 实际上就可以接受任何参数而不报错，然而无法正确推导出对应的 component 有什么属性的问题并没有解决，所以依然的不到任何提示，这某种程度上就损失了 TypeScript 一个大优势。</p>
+<p>而好处是，没有引入任何新的东西，也不需要魔改任何旧的代码，在兼容性上和其他的 vue2 代码处于一个级别。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>目前来说，ts + vue 当然可用，但是依然相当多的问题，没法如丝般顺滑的相互配合。对于他们完全打算通过 vue3 去彻底（？）解决于 ts 共用的的问题，而不打算优化一下 2.x 当前存在问题的决定……我是比较不赞同的</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/09/2018-five-总结/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Fszer">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://cloud.githubusercontent.com/assets/18730194/15146790/dd39acee-16ef-11e6-8ee7-093d1ce74fce.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="聆听群山的怒号">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/01/09/2018-five-总结/" itemprop="url">2018 five总结</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-09T23:16:10+08:00">
+                2019-01-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/杂谈/" itemprop="url" rel="index">
+                    <span itemprop="name">杂谈</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="序言"><a href="#序言" class="headerlink" title="序言"></a>序言</h2><p>不得不说，我实际上并没有正儿八经的为自己写过一篇年度总结。所以这某种意义上来说也是一种“新年新气象”的行为，尽管这实际上是在回顾过去。</p>
+<h2 id="2018-我干了什么"><a href="#2018-我干了什么" class="headerlink" title="2018 我干了什么"></a>2018 我干了什么</h2><p>今年是我在我的第一家公司工作的第二年，也是我正式工作的第二年。工作上今年其实并不是很有意思。</p>
+<h3 id="不上不下的组件库"><a href="#不上不下的组件库" class="headerlink" title="不上不下的组件库"></a>不上不下的组件库</h3><p>年初我完成了公司内部的一套统一的 ui 组件库，现在看来只是马马虎虎，不足之处也数不胜数。但是实现的过程中可以说是对我个人的提升最大的一项工作，这对让我对需对组件的整合设计逻辑，以及这个组件概念本身都有了更多的了解。</p>
+<p>但是不得不说，一个要维护一个成熟的 ui 库其实是非常花费精力的，看似一个 ui 组件库的核心是他自己，然而有没有方便的使用方法，明确的文档，<strong>能否有一套成熟的管理协作开发流程</strong>都对这个 ui 组件最终能发展成怎么样，有着非常大的影响。</p>
+<h3 id="ts-rx-react"><a href="#ts-rx-react" class="headerlink" title="ts/rx/react"></a>ts/rx/react</h3><p>不得不承认我还是一个相当跟风又懒的人，在周围各种大佬的案例下，我最终可喜可贺的有时间“入门”了一下以上提到的这三个东西，的确可以说是打开了一些新方向</p>
+<p>不过，可惜的是这些依然处于一个“入门”的阶段，能看懂使用了这些库的项目的源码，并一定程度理解到其实现思路的特殊之处，甚至自己写一些小玩意也不是什么问题。</p>
+<p>然而，实际工作中没还是能有机会使用到，因此在这几项东西中必然还有更多我所没有了解到的，水面下的东西。</p>
+<h3 id="再一次，早上好，药丸市"><a href="#再一次，早上好，药丸市" class="headerlink" title="再一次，早上好，药丸市"></a>再一次，早上好，药丸市</h3><p>我是一个相对孤僻的人，求学时期虽然也缺钱，但更重要的的是我缺少那些能引领我到处出去玩的朋友，因此即使说我是在广州长大，对于这里的很多地方我也非常陌生。过去的一年里我依然还是蛮孤僻的，但是由于某种我已经忘记了的理由，我决定不再呆在室内孤僻。</p>
+<p>因此这一年里我去了许多广州的许多地方，一般开始的目的是为了某一处的食物，最终总是会变成吃完以后漫无目的的到处晃，有很多我之前没有去过的地方，也有那些我很久没有去过的地方，或许对于许多真正意义上的“老广”来说，我去的那些地方或许还是相当的“大众化”，但无论如何工作后以一种新的角度游历这个城市，带给我非常新鲜的感觉。</p>
+<h2 id="2018-我没干成什么"><a href="#2018-我没干成什么" class="headerlink" title="2018 我没干成什么"></a>2018 我没干成什么</h2><p>emmmm，要说这个，那可就太多了。</p>
+<p>比如我现在依然没有减下体重到 70kg 以下，虽然也能维持在 70~71，偶尔因为生病脱水落到 70 以下，但毕竟没有到达目标。</p>
+<p>工作上，就像我上一篇文章里面所说的，这个最终走到垃圾堆里的失败项目对我的打击实在不是一点半点，但是那篇也写得够多的了，这里不再赘述。</p>
+<p>除了这个，上面提到的 ui 库某种程度上也应该列入到这一 part。虽然根据最初的计划，我确实是完成了一版 ui 可用的ui组件库，但是，完成可用只不过是一个开始。就像上面说的维护和不断的迭代才是决定了它能走多远的核心。</p>
+<p>然而就公司而言，业务需求始终是优先，以及这个项目缺少良性的反馈参与，在后期维护上变的越发吃力，现在虽然我还能接着用，却无力在公司内部进一步推广，因为无法适应设计多变的要求，如果明年还是没有时间抽出做专门的维护，最终荒废掉的结局大概是不可避免的。</p>
+<p>个人方面，在我的 blog 有两问题，一个是更新，连月更都算不上，每年年初都想着要写多一点，每次是败给自己的惰性。</p>
+<p>更加可惜的是另一个，同样在年初定下的自建博客也没有能完成，大概只做到了 1/3 的代码就因为这样那样的借口最终没能坚持下来。再一次让我体会到自己的堕落之处。</p>
+<p>尽管我大言不惭的把说我去年一年学了新的东西，但我真的有足够的提升到了自我了吗？</p>
+<p>举个例子，在重复的业务开发中，我能有一些比较固定的套路来提升自己的工作效率，然而这这些套路也没有能到达随手捏出一个成型的辅助类库的地步，其中多多少少还是只不过是换种花样的复制粘贴。另一方面，有固定的套路真的好事吗，这某种意义上或者也可以说是一种思路的僵化。尤其是周遭环境缺少有效的参考让我很难意识到自己做的到底行不行，尽管网络如此发达总是能找到解决方法，但是总觉得隔了一层纱，让我难以得到及时的反馈。</p>
+<h2 id="8102-年"><a href="#8102-年" class="headerlink" title="8102 年"></a>8102 年</h2><p>这一 part 就是纯粹的杂谈了，说不上是完成了什么，也没有搞砸了什么。只是想记录今年里面那些还能让我想起来的片段。</p>
+<h3 id="姜维传"><a href="#姜维传" class="headerlink" title="姜维传"></a>姜维传</h3><p>游戏方面，下半年印象最深刻的莫过于【姜维传】这部神仙作品。尽管他是一个 mod ，尽管我的战旗水平很差以至于后期全靠修改器。但是这个游戏再一次为我展现了一个不同的三国世界，其中的考究和脑洞实在令人佩服。尤其是今年我还玩了 358 这部贫瘠得可怜的开放世界，相比之下你只会想要问候暗荣那一家子开发人员到底在搞什么飞机。</p>
+<p>我怎么都没有想到我人生中屈指可数的通宵居然能有姜维传一席之地。</p>
+<h3 id="社交媒体"><a href="#社交媒体" class="headerlink" title="社交媒体"></a>社交媒体</h3><p>我其实一直不习惯国内社交媒体，多数时候对我来说他们不过又是另一种通讯工具，而非社交。我这些年流连最多的是 A 岛这样一个“匿名”的地方，他给我一种个人隐藏于话题之后的安心感，可以专注于话题而非多数社交媒体上的角色扮演。</p>
+<p>不过从前年开始，telegram 这个im软件走入我的社交圈子中，对我来说它有种当年 qq 的感觉，却更加自由，现在这个时代这个地方，能有一份自由相当难得。今年我花了更多的时间在这里，显然，它让我意识到我并没有我想象中那么不需要社交。如果你厌烦于国内吵杂的社交环境，不如尝试以下 telegram。</p>
+<p>最后是 g+ ，嚷嚷了那么久的鬼城鬼城，一旦真到了要倒闭的时候，还是会感到不舍，毕竟是陪伴了我相当一段时间的地方，要关门了，理性上可以接受，情感上依然会感到失落，只能说有缘再见。</p>
+<h3 id="“绝症”患者与现代医学"><a href="#“绝症”患者与现代医学" class="headerlink" title="“绝症”患者与现代医学"></a>“绝症”患者与现代医学</h3><p>已经不知道是什么时候开始的了，我居然会有耳鸣…我尤为记得，当我第一次在 A 岛看到有人描述他自己是耳鸣，我才突然意识到我也有耳鸣。那种出其不意的感觉，犹如凤雏突然意识到自己所在的地方叫落凤坡一样。从此耳鸣就成为我生活中并不能被舍弃的一环。</p>
+<p>我所患上的是神经性耳鸣，这个东西非常简单，简单到谷歌一下可以理解是什么，然而它又非常复杂，复杂到发生的原因？不知道，耳鸣响在哪里？不清楚，耳鸣的感受？只能靠患者描述（无法有客观物理的设备检测到），也没有确实有效的缓解药物，更不要说根治方法方法了。各种意义上都可以说是“绝症”了。</p>
+<p>我今年终于鼓起勇气去医院检查了一番。就结果而言，基本上跟我自己查得到的资料是一致的。与其说做了无用功，不如说被医生确认了长久萦绕在心头上的想法，反而落得轻松。毕竟已经相当接受了耳鸣的存在。不过遇上失眠的夜晚加上耳朵吱吱作响依然是令人倍感绝望。</p>
+<p>值得一提的是，在我检查我的耳鸣的时候，其中最核心的一项检查是判断我到底是不是有耳鸣，其实就是按顺序播放不同频率的声音，直到有一个频率的声音被你的耳鸣覆盖住，你觉得你听不到了，那么你就是患上了这个频率附近的耳鸣。这个方法异常简单，甚至你自己都可以在家做。</p>
+<p>整个过程的主观性质非常的强，到底听没听到都是患者说了算，比如说一个听力正常的人，完全可以故意作假而很难被医生看出来。不像验血结果有就有没有就没有，可以客观的检查到。</p>
+<p>最终结果也有些哭笑不得，除了耳鸣这个问题以外，各项检查都表示我的听力水平居然属于相当优秀那一拨，人生真是充满黑色幽默。现代医学已经解决了相当多的问题，然而现代医学也依然有相当多的问题还不能解决。就像知道自己不能做什么和知道自己能做什么同样重要。</p>
+<p>所以这个时候，除了微笑还有什么更好的方法吗？</p>
+<h3 id="书籍的边界"><a href="#书籍的边界" class="headerlink" title="书籍的边界"></a>书籍的边界</h3><p>今年我在学 react/ts/rx 这一堆的东西的时候，也都找了一下相关的书籍来看，结果每一本都有相当程度的过气跟不上版本的部分，其中以 react 的书籍尤其严重，同时 react 相关书籍的复读程度也是最高的，几乎每本书都要把相同的东西复读一边。</p>
+<p>所以就像《疯投圈》有一期提到的读书观点，并不是不喜欢读书，而是作为技术类书籍，除非是很学院派的知识内容，否则一般程度的技术资讯类都不值得出书，尤其是各种这个入门那个初见，大多数都很令人失望……因为滞后性实在太强了，这或许本身就是书籍这种载体的局限所在。</p>
+<h3 id="报复性消费"><a href="#报复性消费" class="headerlink" title="报复性消费"></a>报复性消费</h3><p>根据支付宝记录，我去年花费并不低，可以说是新高了。其实我刚开始工作的时候对消费是很有负罪感的，即便那些钱是我自己的工资。结果在一次次面那些对由不得你的支出的时候，报复性消费的欲望最终盖过了所剩无几的负罪感，从此，消费水平直线上升。</p>
+<h2 id="所以-2019-就这样来了"><a href="#所以-2019-就这样来了" class="headerlink" title="所以 2019 就这样来了"></a>所以 2019 就这样来了</h2><p>太多的事情让我对新的一年没有更多的好感，虽然还有那么一些期望的东西，整体来说却有些提不起兴致。</p>
+<p>姑且也写下了，方便我明年这个时候回来打脸</p>
+<ol>
+<li><strong>更换自己的 blog</strong>，不得不说就算去年中途停止了，我还是从中学到了一些东西，折腾本身就是充满乐趣，既然如此，今年也不妨也继续折腾。</li>
+<li><strong>更新更多的 blog 文章</strong>，至少要比去年多吧，缺少人际交流的时候其实适合发牢骚。</li>
+<li><strong>把去年学到的东西用上</strong>，只有学以致用才能学到更多东西，不然这个入门那个尝鲜，和我看不起的那些无聊的书籍又有什么不一样呢？</li>
+<li><strong>旅游</strong>，想去日本见识一下，自已一个人去……</li>
+<li><strong>做出一些更加有意义的东西</strong>，那么，什么是有意义的东西呢？</li>
+<li><strong>好想要钱啊</strong></li>
+</ol>
+<p>完</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/11/JavaScript函数式编程备忘录-上/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -377,154 +743,6 @@
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2018/11/11/JavaScript函数式编程备忘录-上/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/08/第二次参与一个失败的项目组是什么感觉/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Fszer">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://cloud.githubusercontent.com/assets/18730194/15146790/dd39acee-16ef-11e6-8ee7-093d1ce74fce.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="聆听群山的怒号">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/11/08/第二次参与一个失败的项目组是什么感觉/" itemprop="url">第二次参与一个失败的项目组是什么感觉</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-08T22:55:11+08:00">
-                2018-11-08
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/日常/" itemprop="url" rel="index">
-                    <span itemprop="name">日常</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p><img src="https://s1.ax1x.com/2018/11/17/iz4bgf.png" alt="iz4bgf.png"></p>
-<h2 id="第二次参与一个失败的项目组是什么感觉"><a href="#第二次参与一个失败的项目组是什么感觉" class="headerlink" title="第二次参与一个失败的项目组是什么感觉"></a>第二次参与一个失败的项目组是什么感觉</h2><p>不管愿不愿意承认，失败才是常态，有的时候失败几乎不以人的意志为转移，更何况是码农行业，过分渲染有如选秀买惨。</p>
-<p>尽管如此，这次的参与对我来说还是如此的，令人印象深刻。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/11/08/第二次参与一个失败的项目组是什么感觉/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -820,10 +1038,10 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&lt;template&gt;</div><div class="line">true&lt;compoment :is=&apos;someComponent&apos;&gt;&lt;/compoment&gt;</div><div class="line">&lt;/template&gt;</div></pre></td></tr></table></figure>
 <p>不过在 jsx 中使用 <code>&lt;component&gt;</code> 组件的话会报错，显示该组件不存在无法渲染。因此需要换一个方式。</p>
 <p>由于 jsx 本质就是 js 不需要 component 组件做中介，可以通过 js 直接找到对应组件</p>
-<figure class="highlight jsx"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">...</div><div class="line">render()&#123;</div><div class="line">    <span class="keyword">const</span> Comp = <span class="keyword">this</span>.someComponent</div><div class="line">    <span class="keyword">return</span> (<span class="xml"><span class="tag">&lt;<span class="name">Comp</span>&gt;</span><span class="tag">&lt;/<span class="name">Comp</span>&gt;</span></span>)</div><div class="line">&#125;</div><div class="line">...</div></pre></td></tr></table></figure>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">...</div><div class="line">render()&#123;</div><div class="line">    <span class="keyword">const</span> Comp = <span class="keyword">this</span>.someComponent</div><div class="line">    <span class="keyword">return</span> (&lt;Comp&gt;&lt;/Comp&gt;)</div><div class="line">&#125;</div><div class="line">...</div></pre></td></tr></table></figure>
 <p>这是由于如果一个变量指向了一个组件，那么这个变量名可以直接被 jsx 解析并渲染。</p>
 <p>因此在文档中也会提到到我们可以不将组件加载到父组件当中，直接经由 jsx 渲染出来的原因</p>
-<figure class="highlight jsx"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> componentA <span class="keyword">from</span> <span class="string">'xxx'</span></div><div class="line"></div><div class="line">...</div><div class="line">render()&#123;</div><div class="line">    <span class="keyword">return</span> (<span class="xml"><span class="tag">&lt;<span class="name">componentA</span>&gt;</span><span class="tag">&lt;/<span class="name">componentA</span>&gt;</span></span>)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> componentA <span class="keyword">from</span> <span class="string">'xxx'</span></div><div class="line"></div><div class="line">...</div><div class="line">render()&#123;</div><div class="line">    <span class="keyword">return</span> (&lt;componentA&gt;&lt;/componentA&gt;)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>完</p>
 
           
@@ -1598,152 +1816,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/26/npm 如何安装私有包/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Fszer">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://cloud.githubusercontent.com/assets/18730194/15146790/dd39acee-16ef-11e6-8ee7-093d1ce74fce.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="聆听群山的怒号">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/10/26/npm 如何安装私有包/" itemprop="url">npm 如何安装私有包</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-26T23:53:02+08:00">
-                2017-10-26
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/javascript/" itemprop="url" rel="index">
-                    <span itemprop="name">javascript</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>最近在公司负责了一个类似 element-ui 的 vue ui 库的开发，然后在如何合理分发的问题上遇到了麻烦。<br>因为想要用起来更加方便，那么如何简单的安装使用起来显然也是需要考虑的问题。<br>最终我们决定通过 npm 包管理的方式来分发使用我们的内部 ui 库。<br>毕竟 npm install package 几乎是现实的标准了，也是前端最为熟悉的方式了，不过这也引发了额外一个问题。<br>我们的内部 ui 库是放在公司内部的私有 gitlab 仓库当中，也并没有发包到 npm 上，自然还是需要格外做一些工作。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/10/26/npm 如何安装私有包/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1798,7 +1870,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-count">27</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1820,7 +1892,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">45</span>
+                  <span class="site-state-item-count">48</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -1859,7 +1931,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
