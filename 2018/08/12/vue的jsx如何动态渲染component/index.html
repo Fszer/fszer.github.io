@@ -380,10 +380,10 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&lt;template&gt;</div><div class="line">true&lt;compoment :is=&apos;someComponent&apos;&gt;&lt;/compoment&gt;</div><div class="line">&lt;/template&gt;</div></pre></td></tr></table></figure>
 <p>不过在 jsx 中使用 <code>&lt;component&gt;</code> 组件的话会报错，显示该组件不存在无法渲染。因此需要换一个方式。</p>
 <p>由于 jsx 本质就是 js 不需要 component 组件做中介，可以通过 js 直接找到对应组件</p>
-<figure class="highlight jsx"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">...</div><div class="line">render()&#123;</div><div class="line">    <span class="keyword">const</span> Comp = <span class="keyword">this</span>.someComponent</div><div class="line">    <span class="keyword">return</span> (&lt;Comp&gt;&lt;/Comp&gt;)</div><div class="line">&#125;</div><div class="line">...</div></pre></td></tr></table></figure>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">...</div><div class="line">render()&#123;</div><div class="line">    <span class="keyword">const</span> Comp = <span class="keyword">this</span>.someComponent</div><div class="line">    <span class="keyword">return</span> (<span class="xml"><span class="tag">&lt;<span class="name">Comp</span>&gt;</span><span class="tag">&lt;/<span class="name">Comp</span>&gt;</span></span>)</div><div class="line">&#125;</div><div class="line">...</div></pre></td></tr></table></figure>
 <p>这是由于如果一个变量指向了一个组件，那么这个变量名可以直接被 jsx 解析并渲染。</p>
 <p>因此在文档中也会提到到我们可以不将组件加载到父组件当中，直接经由 jsx 渲染出来的原因</p>
-<figure class="highlight jsx"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> componentA <span class="keyword">from</span> <span class="string">'xxx'</span></div><div class="line"></div><div class="line">...</div><div class="line">render()&#123;</div><div class="line">    <span class="keyword">return</span> (&lt;componentA&gt;&lt;/componentA&gt;)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> componentA <span class="keyword">from</span> <span class="string">'xxx'</span></div><div class="line"></div><div class="line">...</div><div class="line">render()&#123;</div><div class="line">    <span class="keyword">return</span> (<span class="xml"><span class="tag">&lt;<span class="name">componentA</span>&gt;</span><span class="tag">&lt;/<span class="name">componentA</span>&gt;</span></span>)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>完</p>
 
       
@@ -503,7 +503,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">27</span>
+                  <span class="site-state-item-count">28</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -525,7 +525,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">48</span>
+                  <span class="site-state-item-count">51</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

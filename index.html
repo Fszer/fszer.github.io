@@ -278,6 +278,191 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/24/service-worker-缓存原理/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Fszer">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://cloud.githubusercontent.com/assets/18730194/15146790/dd39acee-16ef-11e6-8ee7-093d1ce74fce.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="聆听群山的怒号">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/08/24/service-worker-缓存原理/" itemprop="url">service worker 缓存原理</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-24T12:12:24+08:00">
+                2019-08-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="workbox-的-service-worker-缓存实现"><a href="#workbox-的-service-worker-缓存实现" class="headerlink" title="workbox  的 service worker 缓存实现"></a>workbox  的 service worker 缓存实现</h2><p>正如其名 workbox 是 google 封装的一个工具箱，旨在提供开箱即用的 service worker 相关特性。</p>
+<p>precaching 缓存应该其中适用性最广的一个特性。正好最近在项目中使用的到，于是便去研究了一下其原理</p>
+<h3 id="service-Worker-cache-api-precache"><a href="#service-Worker-cache-api-precache" class="headerlink" title="service Worker + cache api = precache"></a>service Worker + cache api = precache</h3><p>我们说 service worker 缓存其实并不正确，service worker 本身并不提供缓存功能，而是配合了 <code>Cache</code>  的 api 才提供完整的缓存功能。</p>
+<p>在 workbox 中将这两者封装成一个 <em>workbox</em>-<em>precaching</em></p>
+<h3 id="Service-Worker-生命周期"><a href="#Service-Worker-生命周期" class="headerlink" title="Service Worker 生命周期"></a>Service Worker 生命周期</h3><p>在缓存功能中 Service Worker 的作用主要有两个</p>
+<ul>
+<li>提供生命周期的钩子给 PrecacheController 进入执行缓存控制的相关逻辑</li>
+<li>提供拦截请求的功能</li>
+</ul>
+<p>Service Worker  的生命周期包括</p>
+<ul>
+<li><strong>installing</strong> 每个 service worker 只触发一次，初始化和注册 Service Worker </li>
+<li><strong>installed</strong> Service Worker 已经完成了安装，并且等待其他的 Service Worker 线程被关闭。</li>
+<li><strong>activetaing</strong> 在这个状态下没有被其他的 Service Worker 控制的客户端，允许当前的 worker 完成安装，并且清除了其他的 worker 以及关联缓存的旧缓存资源，等待新的 Service Worker 线程被激活。</li>
+<li><strong>activate</strong> 在这个状态会处理 <code>activate</code> 事件回调 (提供了更新缓存策略的机会)。并可以处理功能性的事件 <code>fetch (请求)</code>、<code>sync (后台同步)</code>、<code>push (推送)</code>。</li>
+<li><strong>redundant</strong> 这个状态表示一个 Service Worker 的生命周期结束。</li>
+</ul>
+<p><img src="https://mdn.mozillademos.org/files/12636/sw-lifecycle.png" alt="img"></p>
+<p>其中 precaching 用到的主要是 <strong>installing</strong> 和 <strong>activate</strong> 两个声明周期的钩子，分别对应了静态资源缓存的初始化，更新以及拦截请求</p>
+<h3 id="Cache-API"><a href="#Cache-API" class="headerlink" title="Cache API"></a>Cache API</h3><p>precaching 的另一部分则是 Cache Api</p>
+<p>Cache 的缓存机制可以直接对 <code>Request</code> / <code>Response</code> 对象对提供存储机制。有意思的是，虽然他定义在 service worker 的标准中，但是它直接暴露在 window 的作用域下，因此你实际上不一定需要配合 service worker 使用</p>
+<p>cache 包括这样一些有趣的特性</p>
+<ul>
+<li>一个域可以有多个命名 Cache 对象</li>
+<li>你需要自定义更新方式，除非明确地更新缓存，否则缓存将不会被更新</li>
+<li>你需要自定义清理缓存逻辑，除非删除，否则缓存数据不会过期</li>
+<li>Cache 的 <a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Cache/put" target="_blank" rel="external"><code>Cache.put</code></a>, <a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Cache/add" target="_blank" rel="external"><code>Cache.add</code></a>和<a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Cache/addAll" target="_blank" rel="external"><code>Cache.addAll</code></a>只能在<code>GET</code>请求下使用。</li>
+</ul>
+<p>可以看到 Cache api 保存的直接就是一个 Request/ Response 的对象，因此可以直接其作为请求的返回。</p>
+<p>另外，在写下这篇文章的节点， mdn 中 关于 Cache api 的部分文档和实际的 api 行为有不一致，我估计是没来得及更新。一个比较明显的差异在于 <code>Cache.keys()</code></p>
+<p>根据文档的说明和示例， <code>Cache.keys()</code> 返回应该是一个<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Promise" target="_blank" rel="external"><code>Promise</code></a>对象，其 resolve 的结果是<a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Cache" target="_blank" rel="external"><code>Cache</code></a>对象key值组成的数组</p>
+<p>如果用 ts 类型标注出来应该是 <code>Promise&lt;string[]|null&gt;</code>  ，但是在 workbox 的源码中其标注的 types 是 <code>Promise&lt;Request[] | null&gt;</code>，两者显然不可相比。</p>
+<h4 id="额外的缓存清除机制"><a href="#额外的缓存清除机制" class="headerlink" title="额外的缓存清除机制"></a>额外的缓存清除机制</h4><p>虽然说除非主动删除，否则缓存数据不会过期一直缓存下来，但有一种额外的的情况，那就是浏览器上的可控制存储大小实际上受限于硬盘的大小。</p>
+<p>而浏览器会根据可控制存储大小，硬性的限制每个域下缓存数据的大小。所以 cache 的容量是有上限。如果某个域配额不够，或者磁盘空间不够的话，浏览还是会根据 LRU 最近最少使用的规则，清除某个域下面的缓存信息。清除的时候会以整个域作为单位进行清除，而不是再深入细分清除。</p>
+<p>因此一个 workbox 完整的缓存控制流程如下</p>
+<ul>
+<li>webpack 中 workbox 根据我们打包出来的 chunk 和相关的过滤配置，生成了 Manifest.js 记录所有要缓存的静态资源<ul>
+<li>manfest 的结构 {revision:string, url:string}</li>
+<li>revision 保存文件的 md5 hash 作为文件的版本</li>
+<li>url 则是 Cache 的 key 值和请求地址</li>
+</ul>
+</li>
+<li>在 <strong>installing</strong> 回调中读取 Manifest.js ，获取所需的静态资源索引，调用 cache api 进行缓存</li>
+<li>在 <strong>activate</strong> 时根据 manifest ，对资源文件进行遍历检查，删除无用资源或者更新资源文件</li>
+<li>在 <strong>fetch</strong> 事件中拦截 cache 中已经存在的静态资源文件请求直接返回缓存数据</li>
+</ul>
+<h3 id="对比其他缓存方式"><a href="#对比其他缓存方式" class="headerlink" title="对比其他缓存方式"></a>对比其他缓存方式</h3><h4 id="http-缓存"><a href="#http-缓存" class="headerlink" title="http 缓存"></a>http 缓存</h4><p>http 主要依赖 304 进行缓存，包括</p>
+<ul>
+<li>强缓存：通过 Cache-Control max-age 设定一个过期时间，再这个时间之前都不会再次发请求</li>
+<li>协商缓存：强缓存失效之后，则可以通过 last-modified 或者 etag 向服务器请求判断是否需要更新缓存</li>
+</ul>
+<p>http 的问题在于用户主动刷新的时候，就会让强缓存失效，直接进行协商缓存。</p>
+<h4 id="localstorage-缓存"><a href="#localstorage-缓存" class="headerlink" title="localstorage 缓存"></a>localstorage 缓存</h4><p>localstorage 缓存相比 http 缓存可以进一步控制资源，也可以缓存比较大的资源，不过 localstorage 也有其问题</p>
+<ul>
+<li>需要自己实现资源的请求管理的机制，管理资源文件的读取和写入。</li>
+<li>localstorage 只能保存字符串数据，因此也需要自己实现对资源的序列化，反序列化，以及添加的逻辑</li>
+<li>seo 不友好</li>
+<li>版本更新机制</li>
+</ul>
+<p>所以相比之下 Cache + Service Worker 的优势就是对 localstorage 缓存方案的进一步改进</p>
+<ul>
+<li>不需要自己去维护资源的请求机制</li>
+<li>service Worker 可以直接拦截请求，cache 直接保存 <code>Request</code> / <code>Response</code>不需要进行序列化</li>
+<li>seo 优化</li>
+<li>可控性更加的高</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/20/vue-Typescript问题两则/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -373,14 +558,14 @@
           
             <p>最近尝试为 vue 项目配合 TypeScript 不过发现毕竟 vue 不是原生 TypeScript 开发，在对 TypeScript 支持方面显然还问题多多，这里稍微记录两则</p>
 <h2 id="自动注入-h-问题"><a href="#自动注入-h-问题" class="headerlink" title="自动注入 h 问题"></a>自动注入 h 问题</h2><p>如果你在 vue 中是用 jsx 你会明显感受到和 react 有明显的一个差异就是 react 中你可以很方便的到处写下 jsx，而 vue 中则限定的比较死，要么写在组建的 render 函数中，要么主动传递 h 函数到你想要写 jsx 的地方比如</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 找不到 h 函数</span></div><div class="line"><span class="keyword">const</span> component = &lt;button /&gt;</div><div class="line">// ok</div><div class="line">export default &#123;</div><div class="line">  render (h) &#123;</div><div class="line">    return &lt;button /&gt;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">// 主动将 h 传递到需要的地方</div><div class="line">const component2 = h =&gt;  &lt;button /&gt;</div><div class="line"></div><div class="line">export default &#123;</div><div class="line">  render (h) &#123;</div><div class="line">    return component2(h)</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 找不到 h 函数</span></div><div class="line"><span class="keyword">const</span> component = <span class="xml"><span class="tag">&lt;<span class="name">button</span> /&gt;</span></span></div><div class="line">// ok</div><div class="line">export default &#123;</div><div class="line">  render (h) &#123;</div><div class="line">    return <span class="tag">&lt;<span class="name">button</span> /&gt;</span></div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">// 主动将 h 传递到需要的地方</div><div class="line">const component2 = h =&gt;  <span class="tag">&lt;<span class="name">button</span> /&gt;</span></div><div class="line"></div><div class="line">export default &#123;</div><div class="line">  render (h) &#123;</div><div class="line">    return component2(h)</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>由于 h 函数是在编译后才会被使用到，而每次都要写 h，但实际少主动用到，所以 vue 官方为了进一步简化使用，开发了一个 babel 插件<code>babel-sugar-inject-h</code>, 检测 jsx 自动插入 h 函数，比如这样</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// With @vue/babel-sugar-inject-h</span></div><div class="line"><span class="keyword">const</span> component =（）=&gt; &lt;button /&gt;</div><div class="line">export default &#123;</div><div class="line">  render () &#123;</div><div class="line">    return &lt;button /&gt;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">// 不需要写h，编译后自动注入 h 函数，等价于</div><div class="line">const component =（h）=&gt; &lt;button /&gt;</div><div class="line">export default &#123;</div><div class="line">  render (h) &#123;</div><div class="line">    return &lt;button /&gt;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// With @vue/babel-sugar-inject-h</span></div><div class="line"><span class="keyword">const</span> component =（）=&gt; <span class="xml"><span class="tag">&lt;<span class="name">button</span> /&gt;</span></span></div><div class="line">export default &#123;</div><div class="line">  render () &#123;</div><div class="line">    return <span class="tag">&lt;<span class="name">button</span> /&gt;</span></div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">// 不需要写h，编译后自动注入 h 函数，等价于</div><div class="line">const component =（h）=&gt; <span class="tag">&lt;<span class="name">button</span> /&gt;</span></div><div class="line">export default &#123;</div><div class="line">  render (h) &#123;</div><div class="line">    return <span class="tag">&lt;<span class="name">button</span> /&gt;</span></div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>这让看起来让 vue/jsx 更加接近 react/jsx ，还稍微减轻了开发的工作。但我个人认为这样有些自做主张，并且关键是做的并不完美。如果你用了 vue-cli 那么他是自带且默认启动的，如果你没有用 vue-cli 自己配的环境，那么就有可能就忽略了这的插件，就容易导致同一段代码在两个环境下有不同的表现。而这如果不是用户主动去看文档，是不会被感知到的，一但出了问题就特别令人摸不着头脑，</p>
 <p>哦，跑题了，这篇文章应该说的是跟 TypeScript 相关的问题，其实也就是它做得不够好的一个体现，假如你要配合 TypeScript 使用，很有可能遇到以下代码</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">import &#123; Component, Vue &#125; from &quot;vue-property-decorator&quot;;</div><div class="line">@Component</div><div class="line">export default class App extends Vue &#123;</div><div class="line">  test = (h: any) =&gt; &lt;div&gt;123&lt;/div&gt;;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>其中 test 是你组件的内部变量，理论上这段代码应该等价于</p>
-<figure class="highlight jsx"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</div><div class="line">    data()&#123;</div><div class="line">        <span class="keyword">return</span> &#123;</div><div class="line">            test: (h)=&gt;&lt;div&gt;123&lt;/div&gt;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</div><div class="line">    data()&#123;</div><div class="line">        <span class="keyword">return</span> &#123;</div><div class="line">            test: (h)=&gt;<span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span>123<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>然而假如你实际在 vue-cli 中跑这段代码，是可以跑起来的，但在浏览器中会报出类似以下错误，</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Error in data(): &quot;TypeError: Cannot read property &apos;$createElement&apos; of undefined&quot;</div></pre></td></tr></table></figure>
 <p>有了前面的铺垫，不用说问题的关键显然是出在 <code>babel-sugar-inject-h</code> 自动注入 h 的问题上，为了了解为什么，不妨看一下这段代码编译后的样子</p>
@@ -1182,10 +1367,10 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&lt;template&gt;</div><div class="line">true&lt;compoment :is=&apos;someComponent&apos;&gt;&lt;/compoment&gt;</div><div class="line">&lt;/template&gt;</div></pre></td></tr></table></figure>
 <p>不过在 jsx 中使用 <code>&lt;component&gt;</code> 组件的话会报错，显示该组件不存在无法渲染。因此需要换一个方式。</p>
 <p>由于 jsx 本质就是 js 不需要 component 组件做中介，可以通过 js 直接找到对应组件</p>
-<figure class="highlight jsx"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">...</div><div class="line">render()&#123;</div><div class="line">    <span class="keyword">const</span> Comp = <span class="keyword">this</span>.someComponent</div><div class="line">    <span class="keyword">return</span> (&lt;Comp&gt;&lt;/Comp&gt;)</div><div class="line">&#125;</div><div class="line">...</div></pre></td></tr></table></figure>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">...</div><div class="line">render()&#123;</div><div class="line">    <span class="keyword">const</span> Comp = <span class="keyword">this</span>.someComponent</div><div class="line">    <span class="keyword">return</span> (<span class="xml"><span class="tag">&lt;<span class="name">Comp</span>&gt;</span><span class="tag">&lt;/<span class="name">Comp</span>&gt;</span></span>)</div><div class="line">&#125;</div><div class="line">...</div></pre></td></tr></table></figure>
 <p>这是由于如果一个变量指向了一个组件，那么这个变量名可以直接被 jsx 解析并渲染。</p>
 <p>因此在文档中也会提到到我们可以不将组件加载到父组件当中，直接经由 jsx 渲染出来的原因</p>
-<figure class="highlight jsx"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> componentA <span class="keyword">from</span> <span class="string">'xxx'</span></div><div class="line"></div><div class="line">...</div><div class="line">render()&#123;</div><div class="line">    <span class="keyword">return</span> (&lt;componentA&gt;&lt;/componentA&gt;)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> componentA <span class="keyword">from</span> <span class="string">'xxx'</span></div><div class="line"></div><div class="line">...</div><div class="line">render()&#123;</div><div class="line">    <span class="keyword">return</span> (<span class="xml"><span class="tag">&lt;<span class="name">componentA</span>&gt;</span><span class="tag">&lt;/<span class="name">componentA</span>&gt;</span></span>)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>完</p>
 
           
@@ -1667,153 +1852,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/30/『element-notification』组件解析/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Fszer">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://cloud.githubusercontent.com/assets/18730194/15146790/dd39acee-16ef-11e6-8ee7-093d1ce74fce.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="聆听群山的怒号">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/11/30/『element-notification』组件解析/" itemprop="url">『element-notification』组件解析</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-30T00:36:39+08:00">
-                2017-11-30
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/学习/" itemprop="url" rel="index">
-                    <span itemprop="name">学习</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="element-的-notification-消息组件解析"><a href="#element-的-notification-消息组件解析" class="headerlink" title="element 的 notification 消息组件解析"></a>element 的 notification 消息组件解析</h1><p><a href="https://imgchr.com/i/5Kq81"><img src="https://s1.ax1x.com/2017/12/03/5Kq81.png" alt="5Kq81.png"></a><br>题图无关</p>
-<p>这是承继上一篇——不知道哪一篇提到我在公司内部写一套 ui 控件的下一篇。因为最近也需要实现一个类似 element 的 notification 消息组件。<br>因此便直接研究参考了 element 的实现源码，相对简单，于是写一下记下来。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/11/30/『element-notification』组件解析/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1868,7 +1906,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">27</span>
+                  <span class="site-state-item-count">28</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1890,7 +1928,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">48</span>
+                  <span class="site-state-item-count">51</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
